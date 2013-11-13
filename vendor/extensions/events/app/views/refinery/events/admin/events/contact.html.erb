@@ -1,0 +1,43 @@
+<section id="records">
+<%= form_for @contact, :url => "/refinery/events/#{@event.id}/contact_info", :method => :post do |f| -%>
+  
+    <div class="field">
+      <label for="event_name">Enter Name(s), Phone or Email</label>
+      <%= text_area 'contact', 'name', :value => @contact.name, :size => '30' %>
+    </div>
+
+    <div class="field">
+      <label for="event_email"> Mailids for reports </label>
+      <%= text_field 'contact', 'emailids', :value => @contact.emailids %>
+    </div>
+    
+    <div class="field">
+      <label for="event_web">Website</label>
+      <%= text_field 'contact', 'website_url', :value => @contact.website_url %>
+    </div>
+
+    <div class="field">
+      <label for="event_fb">Facebook Link</label>
+      <%= text_field 'contact', 'facebook_link', :value => @contact.facebook_link %>
+    </div>
+
+
+
+    <div class="form-actions" style="border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+      <div class="form-actions-left">
+        <input class="wymupdate button" id="submit_button" type="submit" value="Save" style="border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
+
+      </div>
+
+    </div>
+
+<% end -%>
+</section>
+<aside id="actions">
+  <ul>
+    <li> <a href="/refinery/events/<%=@event.id%>/venue" class="add_icon">Venue</a> </li>
+    <li> <a href="/refinery/events/<%=@event.id%>/contact" class="add_icon">Contact Info</a> </li>
+    <li> <a href="#" class="add_icon">Tickets</a> </li>
+    <li> <a href="#" class="add_icon">Registration Form</a> </li>
+  </ul>
+</aside>

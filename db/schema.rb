@@ -11,7 +11,43 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131113125451) do
+ActiveRecord::Schema.define(:version => 20131113193613) do
+
+  create_table "refinery_events", :force => true do |t|
+    t.string   "title"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "category"
+    t.string   "sub_category"
+    t.string   "url"
+    t.text     "description"
+    t.integer  "position"
+    t.integer  "photo_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "refinery_events_contacts", :force => true do |t|
+    t.string   "name"
+    t.string   "emailids"
+    t.string   "website_url"
+    t.string   "facebook_link"
+    t.integer  "event_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "refinery_events_venues", :force => true do |t|
+    t.string   "venue"
+    t.string   "country"
+    t.string   "state"
+    t.string   "city"
+    t.string   "locality"
+    t.string   "pincode"
+    t.integer  "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "refinery_images", :force => true do |t|
     t.string   "image_mime_type"

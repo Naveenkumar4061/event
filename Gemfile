@@ -45,3 +45,5 @@ gem 'refinerycms-resources', '~> 2.1.0'
 
 # To use debugger
 # gem 'debugger'
+
+gem 'refinerycms-events', :path => 'vendor/extensions'

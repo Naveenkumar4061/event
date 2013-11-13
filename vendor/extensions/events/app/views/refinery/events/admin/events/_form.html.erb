@@ -1,0 +1,79 @@
+<section id="records">
+<%= form_for [refinery, :events_admin, @event] do |f| -%>
+  <%= render '/refinery/admin/error_messages',
+              :object => @event,
+              :include_object_name => true %>
+
+  <div class='field'>
+    <%= f.label :title -%>
+    <%= f.text_field :title, :class => 'larger widest' -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :start_date -%>
+    <%= f.datetime_select :start_date -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :end_date -%>
+    <%= f.datetime_select :end_date -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :category -%>
+    <%= f.text_field :category -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :sub_category -%>
+    <%= f.text_field :sub_category -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :url -%>
+    <%= f.text_field :url -%>
+  </div>
+
+  <div class='field'>
+    <%= render '/refinery/admin/wysiwyg',
+                :f => f,
+                :fields => [:description],
+                :object => "events/event" -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :position -%>
+    <%= f.number_field :position -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :photo -%>
+    <%= render '/refinery/admin/image_picker',
+               :f => f,
+               :field => :photo_id,
+               :image => @event.photo,
+               :toggle_image_display => false -%>
+  </div>
+
+  <%= render '/refinery/admin/form_actions', :f => f,
+             :continue_editing => false,
+             :delete_title => t('delete', :scope => 'refinery.events.admin.events.event'),
+             :delete_confirmation => t('message', :scope => 'refinery.admin.delete', :title => @event.title) -%>
+<% end -%>
+
+<% content_for :javascripts do -%>
+  <script>
+    $(document).ready(function(){
+      page_options.init(false, '', '');
+    });
+  </script>
+<% end -%>
+</section>
+<aside id="actions">
+  <ul>
+    <li> <a href="/refinery/events/<%=@event.id%>/venue" class="add_icon">Venue</a> </li>
+    <li> <a href="/refinery/events/<%=@event.id%>/contact" class="add_icon">Contact Info</a> </li>
+    <li> <a href="#" class="add_icon">Tickets</a> </li>
+    <li> <a href="#" class="add_icon">Registration Form</a> </li>
+  </ul>
+</aside>

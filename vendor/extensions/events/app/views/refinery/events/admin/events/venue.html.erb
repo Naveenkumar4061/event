@@ -1,0 +1,52 @@
+<section id="records">
+<%= form_for @venue, :url => "/refinery/events/#{@event.id}/venue_info", :method => :post do |f| -%>
+  
+    <div class="field">
+      <label for="event_venue">Venue Address</label>
+      <%= text_field 'venue', 'venue', :value => @venue.venue %>
+    </div>
+
+    <div class="field">
+      <label for="event_country">Country</label>
+      <%= select 'venue', 'country', ['India'] %>
+    </div>
+    
+    <div class="field">
+      <label for="event_state">State</label>
+      <%= select 'venue', 'state', ['Karnataka'] %>
+    </div>
+    
+    <div class="field">
+      <label for="event_city">City</label>
+      <%= text_field 'venue', 'city', :value => @venue.city %>
+    </div>
+
+    <div class="field">
+      <label for="event_locality">Locality</label>
+      <%= text_field 'venue', 'locality', :value => @venue.locality %>
+    </div>
+
+    <div class="field">
+      <label for="event_pincode">Pincode</label>
+      <%= text_field 'venue', 'pincode', :value => @venue.pincode %>
+    </div>
+
+
+    <div class="form-actions" style="border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+      <div class="form-actions-left">
+        <input class="wymupdate button" id="submit_button" type="submit" value="Save" style="border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
+
+      </div>
+
+    </div>
+
+<% end -%>
+</section>
+<aside id="actions">
+  <ul>
+    <li> <a href="/refinery/events/<%=@event.id%>/venue" class="add_icon">Venue</a> </li>
+    <li> <a href="/refinery/events/<%=@event.id%>/contact" class="add_icon">Contact Info</a> </li>
+    <li> <a href="#" class="add_icon">Tickets</a> </li>
+    <li> <a href="#" class="add_icon">Registration Form</a> </li>
+  </ul>
+</aside>
