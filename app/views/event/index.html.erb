@@ -1,0 +1,14 @@
+<%@events.each do |event|%>
+  <a href="/event/<%= event.id %>/show">
+    <div class="event" style="float:left;">
+      <div class="event-thumb">
+
+        <%= image_tag event.photo.blank? ? '' : event.photo.url, :size=>"100x100" %>
+      </div>
+      <div class="event-details">
+        <%= event.title %><br>
+        <%= event.start_date.strftime('%d/%m/%Y %H:%M:%S') %>
+      </div>
+    </div>
+  </a>
+<%end%>

@@ -25,6 +25,13 @@ module Goevent
       ::Refinery::AdminController.send :include, ::RestrictRefineryToRefineryUsers
       ::Refinery::AdminController.send :before_filter, :restrict_refinery_to_refinery_users
     end
+    
+    config.to_prepare do
+      Devise::SessionsController.layout "splash"
+      Devise::PasswordsController.layout "splash"
+      Devise::RegistrationsController.layout "splash"
+    end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

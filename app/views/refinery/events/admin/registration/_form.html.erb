@@ -1,0 +1,57 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('#field_field_type').change(function(){
+        var field_type_txt = $(this).val();
+        if( ( field_type_txt =='dropdown') || ( field_type_txt =='radiobutton') || ( field_type_txt =='checkbox')){
+          $('#field_options').show();
+        }else{
+          $('#field_options').hide();
+        }
+
+      });
+  });
+</script>
+<div>
+  <label for="field_name">Field Name</label>
+  <%= text_field 'field','field_name' %>
+</div>
+<div>
+  <label for="field_type">Field Type</label>
+  <%= select 'field','field_type', [['Textbox','textbox'],['Textarea','textarea'],['Radiobutton','radiobutton'],['Checkbox','checkbox'],['Dropdown','dropdown'],['Date','date']] %>
+</div>
+<% if !(["dropdown","checkbox","radiobutton"].include?(@field.field_type) ) %>
+
+  <div id="field_options" style="display:none;">
+    <label for="field_options">Field Options</label>
+    <div id="option">
+      <div class="data"><%= text_field_tag 'field_type_options[]'%> <a onclick="jQuery(this).parent().remove();return false;" href="#">remove</a></div>
+    </div>
+    <a href="#" onclick="jQuery('#option').append(jQuery('.data').first().clone());return false;">add more options</a>
+
+  </div>
+<% elsif (["dropdown","checkbox","radiobutton"].include?(@field.field_type) ) && @field.form_field_options.blank? %>
+  <div id="field_options" >
+    <label for="field_options">Field Options</label>
+    <div id="option">
+      <div class="data"><%= text_field_tag 'field_type_options[]'%> <a onclick="jQuery(this).parent().remove();return false;" href="#">remove</a></div>
+    </div>
+    <a href="#" onclick="jQuery('#option').append(jQuery('.data').first().clone());return false;">add more options</a>
+
+  </div>
+<% elsif (["dropdown","checkbox","radiobutton"].include?(@field.field_type) ) && !@field.form_field_options.blank? %>
+  <div id="field_options" >
+    <label for="field_options">Field Options</label>
+    <div id="option">
+      <% @field.form_field_options.each do |ffoption|%>
+        <div class="data"><%= text_field_tag 'field_type_options[]', ffoption.value %> <a onclick="jQuery(this).parent().remove();return false;" href="#">remove</a></div>
+      <% end %>
+    </div>
+    <a href="#" onclick="jQuery('#option').append(jQuery('.data').first().clone());return false;">add more options</a>
+
+  </div>
+<% end %>
+<div>
+  <label for="field_is_mandatory">Is Mandatory</label>
+  <%= check_box_tag 'field[is_mandatory]',@field.is_mandatory, @field.is_mandatory %>
+</div>
+<%= submit_tag 'Save' %>

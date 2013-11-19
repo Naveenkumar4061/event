@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131113193613) do
+ActiveRecord::Schema.define(:version => 20131113200604) do
 
   create_table "refinery_events", :force => true do |t|
     t.string   "title"
@@ -27,6 +27,22 @@ ActiveRecord::Schema.define(:version => 20131113193613) do
     t.datetime "updated_at",   :null => false
   end
 
+  create_table "refinery_events_attendee_details", :force => true do |t|
+    t.integer  "field_id"
+    t.string   "value"
+    t.integer  "attendee_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "refinery_events_attendees", :force => true do |t|
+    t.integer  "registration_id"
+    t.integer  "ticket_id"
+    t.string   "is_master"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "refinery_events_contacts", :force => true do |t|
     t.string   "name"
     t.string   "emailids"
@@ -35,6 +51,67 @@ ActiveRecord::Schema.define(:version => 20131113193613) do
     t.integer  "event_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "refinery_events_form_field_options", :force => true do |t|
+    t.integer  "form_field_id"
+    t.string   "value"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "refinery_events_form_fields", :force => true do |t|
+    t.string   "field_name"
+    t.string   "field_type"
+    t.boolean  "is_mandatory"
+    t.integer  "form_id"
+    t.integer  "sequence_no"
+    t.datetime "deleted_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "refinery_events_forms", :force => true do |t|
+    t.integer  "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "refinery_events_registrations", :force => true do |t|
+    t.integer  "no_of_tickets"
+    t.decimal  "total",         :precision => 10, :scale => 0
+    t.decimal  "discount",      :precision => 10, :scale => 0
+    t.decimal  "sales_tax",     :precision => 10, :scale => 0
+    t.decimal  "adjustment",    :precision => 10, :scale => 0
+    t.integer  "event_id"
+    t.integer  "user_id"
+    t.string   "state"
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
+  end
+
+  create_table "refinery_events_tickets", :force => true do |t|
+    t.string   "ticket_name"
+    t.string   "description"
+    t.datetime "sale_start_on"
+    t.datetime "sale_end_on"
+    t.decimal  "original_price",       :precision => 10, :scale => 0
+    t.decimal  "discounted_price",     :precision => 10, :scale => 0
+    t.decimal  "commission",           :precision => 10, :scale => 0
+    t.boolean  "is_service_tax"
+    t.decimal  "service_tax_percent",  :precision => 10, :scale => 0
+    t.integer  "max_quantity"
+    t.integer  "min_quantity"
+    t.integer  "max_quantity_on_sale"
+    t.integer  "display_order"
+    t.string   "status"
+    t.datetime "deleted_at"
+    t.boolean  "is_sold_out"
+    t.boolean  "is_not_display"
+    t.integer  "tickets_sold"
+    t.integer  "event_id"
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
   end
 
   create_table "refinery_events_venues", :force => true do |t|

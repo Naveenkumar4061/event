@@ -1,1 +1,35 @@
-<h1>You are inside the vault.</h1>
+<div class="span8">
+<%=@event.title%>
+<%= form_for @event,:url => "/event/#{@event.id}/registration_step1", :method=>"post" do %>
+  <table width="100%">
+    <tr>
+      <td>Ticket Type</td>
+      <td>Price</td>
+      <td>Quantity</td>
+      <td>Total</td>
+    </tr>
+    <%@event.tickets.each do |t|%>
+      <tr>
+        <td><%= t.ticket_name %></td>
+        <td><%= t.discounted_price %>(<span style="text-decoration:line-through;"><%=t.original_price%></span>)</td>
+        <td><%= select 'ticket',t.id,1..9%></td>
+        <td><div id="total">0</div></td>
+      </tr>
+    <%end%>
+  </table>
+  <div style="float:right;">Purchase Total(INR):<%=%></div><br>
+  <div style="float:right;"><%= submit_tag 'save'%></div>
+</div>
+<%end%>
+<div class="container">
+  <div class="span4">
+    <div style="text-align:center;">Event Details/ID:<%= @event.id %></div>
+    <div>
+  </div>
+</div>
+
+<script type = "text/javascript">
+  $(document).ready(function(){
+
+  });
+</script>

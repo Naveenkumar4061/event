@@ -1,0 +1,9 @@
+<section id="records">
+  <div>
+    <h2>New Field</h2>
+  </div>
+  <%= form_for @field, :url => "/refinery/events/#{@event.id}/registration"  do %>
+    <%= render 'form' %>
+  <%end%>
+</section>
+<%= render 'sidebar' %>

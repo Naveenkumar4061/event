@@ -1,0 +1,27 @@
+<section id="records">
+<div>
+  <h2>Registration Form</h2>
+  <%= link_to 'New Custom Field', "/refinery/events/#{@event.id}/registration/new" %>
+</div>
+  <table width="100%" cellspacing="0" cellpadding="2" border="1" id="OrganizaerTableDetails">
+    <tbody>
+      <tr>
+        <td align="center">Field Name</td>
+        <td align="center">Field Type</td>
+        <td align="center">Mandatory</td>
+        <td align="center">Sequence No<br>(-1 will not display)</td>
+        <td align="center">Action</td>
+      </tr>
+      <%@form_fields.each do |f|%>
+      <tr>
+        <td align="center"><%= f.field_name %></td>
+        <td align="center"><%= f.field_type.capitalize %></td>
+        <td align="center"><%= check_box_tag 'field','is_mandatory', f.is_mandatory %></td>
+        <td align="center"><%= text_field 'field','seq_no',:value=>'',:size=>'1' %></td>
+        <td align="center"><%= link_to 'Edit',"/refinery/events/#{@event.id}/registration/#{f.id}/edit"%>/<%= link_to 'Delete',"/refinery/events/#{@event.id}/registration/#{f.id}/destroy" %></td>
+      </tr>
+      <%end%>
+    </tbody>
+  </table>
+</section>
+<%= render 'sidebar' %>

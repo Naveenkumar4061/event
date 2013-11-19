@@ -1,0 +1,7 @@
+<%@registration.attendees.each do |a|%>
+  <div>Ticket:<%= a.ticket.ticket_name %></div>
+  Attendee Details
+  <% @event.form.form_fields.each do |t| %>
+    <div> <%= t.field_name %><%=text_field 'event','i',:value=>''%></div>
+  <% end %>
+<%end %>

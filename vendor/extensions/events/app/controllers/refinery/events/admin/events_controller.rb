@@ -37,7 +37,9 @@ module Refinery
           end
           @contact = @event.contact
           redirect_to (:back)
+        end
 
+        def tickets
         end
 
       end

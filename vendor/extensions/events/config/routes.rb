@@ -15,6 +15,10 @@ Refinery::Core::Engine.routes.draw do
           get 'contact'
           post 'contact_info'
         end
+        resources :tickets do
+          get 'update_ticket_status'
+        end
+        resources :registration
         collection do
           post :update_positions
         end

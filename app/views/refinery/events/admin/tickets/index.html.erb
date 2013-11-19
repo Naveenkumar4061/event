@@ -1,0 +1,27 @@
+<%= render 'topbar' %>
+<section id="records">
+  <table width="100%" border="0" cellspacing="2" cellpadding="0" style="border:solid 1px #CCCCCC;" id="OrganizaerTable">
+    <tr>
+      <td>Name</td>
+      <td>Price</td>
+      <td>Dates</td>
+      <td>Order</td>
+      <td>Tickets Sold</td>
+      <td>Action</td>
+    </tr>
+    <%@tickets.each do |t|%>
+      <tr>
+        <td><%= t.ticket_name %></td>
+        <td><%= t.original_price %></td>
+        <td>
+          Start:<%= t.sale_start_on.strftime('%d/%m/%Y') %> <br>
+          End:<%= t.sale_end_on.strftime('%d/%m/%Y') %>
+        </td>
+        <td><%= t.display_order %></td>
+        <td><%= t.tickets_sold %></td>
+        <td><%= link_to 'Edit',"/refinery/events/#{params[:event_id]}/tickets/#{t.id}/edit" %>|<%= link_to 'Delete', "/refinery/events/#{params[:event_id]}/tickets/#{t.id}", :method => :delete %><%= check_box_tag 'tickets_is_sold_out', t.is_sold_out %>Sold Out<%= check_box_tag 'tickets_is_sold_out', t.is_not_display %>Not Display</td>
+      </tr>
+    <%end%>
+  </table>
+</section>
+<%= render 'sidebar' %>

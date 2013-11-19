@@ -6,16 +6,34 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-  <div class="login_status" style="float:right;">
-    <% if user_signed_in? %>
-      <%= current_user.email %>
-      <%= link_to 'Logout', 'users/sign_out', :method => :delete %>
-    <% else %>
-      <%= link_to 'SignIn', 'users/sign_in' %> | <%= link_to 'SignUp', new_user_registration_path %>
-    <% end %>
-  </div>
-  <%= yield %>
+<body style="background-color:#e3e3e3">
 
+  <div class="container">
+    <div class="login_status" style="float:right;">
+      <% if user_signed_in? %>
+        <%= current_user.email %> | 
+        <%= link_to 'Logout', 'users/sign_out', :method => :delete %>
+      <% else %>
+        <%= link_to 'SignIn', 'users/sign_in' %> | <%#= link_to 'SignUp', new_user_registration_path %>
+      <% end %>
+    </div>
+  </div>
+  <div class="container" id="bodyc">
+    <div class="jcarousel">
+      <ul>
+
+      </ul>
+    </div>
+
+    <%= yield %>
+  </div>
+  <script type="text/javascript">
+    $(function() {
+        $('.jcarousel').jcarousel({
+          // Configuration goes here
+        });
+    });
+  </script>
 </body>
 </html>
+

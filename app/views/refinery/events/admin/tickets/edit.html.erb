@@ -1,0 +1,63 @@
+<%= render 'topbar' %>
+<section id="records">
+<%= form_for @ticket, :url => "/refinery/events/#{params[:event_id]}/tickets/#{params[:id]}", :method => :put do |f| -%>
+
+    <div class="field">
+      <label for="ticket_ticket_name">Ticket Name</label>
+      <%= text_field 'ticket', 'ticket_name', :value => @ticket.ticket_name %>
+    </div>
+    <div class="field">
+      <label for="ticket_description">Description</label>
+      <%= text_field 'ticket', 'description', :value => @ticket.description %>
+    </div>
+    <div class="field">
+      <label for="ticket_sale_start_on">Sale Start On</label>
+      <%= datetime_select 'ticket', 'sale_start_on' %>
+    </div>
+    <div class="field">
+      <label for="ticket_sale_end_on">Sale Ends On</label>
+      <%= datetime_select 'ticket', 'sale_end_on' %>
+    </div>
+    <div class="field">
+      <label for="ticket_original_price">Original Price</label>
+      <%= text_field 'ticket', 'original_price', :value => @ticket.original_price %>
+    </div>
+    <div class="field">
+      <label for="ticket_discounted_price">Discounted Price</label>
+      <%= text_field 'ticket', 'discounted_price', :value => @ticket.discounted_price %>
+    </div>
+    <div class="field">
+      <label for="ticket_commission">Commission</label>
+      <%= text_field 'ticket', 'commission' %>
+    </div>
+    <div class="field">
+      <label for="ticket_is_service_tax">Add Service Tax</label>
+      <%= check_box 'ticket', 'is_service_tax' %>
+      <%= select 'ticket','service_tax_percent',['12.36%','12.5%'] %>
+    </div>
+    <div class="field">
+      <label for="ticket_max_quantity">Maximum Quantity</label>
+      <%= text_field 'ticket', 'max_quantity', :value => @ticket.max_quantity %>
+    </div>
+    <div class="field">
+      <label for="ticket_min_quantity">Minimum Quantity</label>
+      <%= text_field 'ticket', 'min_quantity', :value => @ticket.min_quantity %>
+    </div>
+    <div class="field">
+      <label for="ticket_max_quantity_on_sale">Maximum Quantity On Sale</label>
+      <%= text_field 'ticket', 'max_quantity_on_sale', :value => @ticket.max_quantity_on_sale %>
+    </div>
+    <div class="field">
+      <label for="ticket_display_order">Display Order</label>
+      <%= text_field 'ticket', 'display_order' %>
+    </div>
+    
+    <div class="form-actions" style="border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+      <div class="form-actions-left">
+        <input class="wymupdate button" id="submit_button" type="submit" value="Save" style="border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
+      </div>
+    </div>
+
+<% end -%>
+</section>
+<%= render 'sidebar' %>

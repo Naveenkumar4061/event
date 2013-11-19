@@ -6,10 +6,10 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  # attr_accessible :title, :body
   
   has_and_belongs_to_many :roles, :join_table => ::RolesUsers.table_name
   has_many :plugins, :class_name => "UserPlugin", :order => "position ASC", :dependent => :destroy
+  has_many :registrations, :class_name => "Refinery::Events::Registration"
 
   def plugins=(plugin_names)
     if persisted? # don't add plugins when the user_id is nil.

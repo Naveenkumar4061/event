@@ -1,1 +1,10 @@
-<h1>Home is where you hang your hat.</h1>
+<%= form_for User.new, :url => user_session_path, :html => {:name => "signin-form", :id => "signin-form"} do |f| %>
+  <%#= flash_messages %>
+  <%= f.email_field :email, :class => 'title', :placeholder => 'Email' %>
+  <%= f.password_field :password, :class => 'title', :placeholder => 'Password' %>
+  <br>
+  <%= f.submit "Sign In", :class => 'btn btn-green', :id => "submit" %>
+  <%= link_to "Sign Up", new_user_registration_path, :class => 'btn btn-green' %>
+  <br>
+  <%= link_to "Forgot password?", new_user_password_path, :style=>"color:orange;" %>
+<% end %>

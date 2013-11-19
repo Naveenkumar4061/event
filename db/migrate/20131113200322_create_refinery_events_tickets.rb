@@ -19,6 +19,7 @@ class CreateRefineryEventsTickets < ActiveRecord::Migration
       t.boolean :is_sold_out
       t.boolean :is_not_display
       t.integer :tickets_sold
+      t.integer :event_id
       t.timestamps
     end
   end

@@ -12,6 +12,7 @@ class CreateEventsEvents < ActiveRecord::Migration
       t.integer :position
       t.integer :photo_id
       t.integer :position
+      t.integer :user_id
 
       t.timestamps
     end

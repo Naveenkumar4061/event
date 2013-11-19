@@ -8,7 +8,10 @@ Goevent::Application.routes.draw do
 
   devise_for :users
   
-  get 'event', :to=>'event#show'
+  get 'event', :to=>'event#index'
+  get 'event/:id/show', :to => 'event#show'
+  post 'event/:id/registration_step1', :to => 'event#registration_step1'
+  get 'event/:id/registration_step2', :to => 'event#registration_step2'
   root :to => 'static#home'
   mount Refinery::Core::Engine, :at => '/'
   # The priority is based upon order of creation:
