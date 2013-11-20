@@ -1,0 +1,22 @@
+<h2><%= t 'devise.invitations.edit.header' %></h2>
+
+<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
+  <%= devise_error_messages! %>
+  <%= f.hidden_field :invitation_token %>
+  
+  <p><%= f.label :full_name %><%= f.text_field :full_name %></p>
+
+  <p><%= f.label :age %><%= f.text_field :age %></p>
+
+  <p><%= f.label :gender %><%= f.select :gender, ['male','female'] %></p>
+  
+  <p><%= f.label :company %><%= f.text_field :company %></p>
+  
+  <p><%= f.label :designation %><%= f.text_field :designation %></p>
+
+  <p><%= f.label :password %><%= f.password_field :password %></p>
+
+  <p><%= f.label :password_confirmation %><%= f.password_field :password_confirmation %></p>
+
+  <p><%= f.submit t("devise.invitations.edit.submit_button") %></p>
+<% end %>

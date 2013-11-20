@@ -27,6 +27,7 @@ end
 gem 'jquery-rails', '~> 2.3.0'
 gem 'therubyracer'
 gem 'devise'
+gem 'devise_invitable', '~> 1.3.1'
 gem 'refinerycms-dashboard', '~> 2.1.0'
 gem 'refinerycms-images', '~> 2.1.0'
 gem 'refinerycms-pages', '~> 2.1.0'

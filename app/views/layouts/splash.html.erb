@@ -10,7 +10,8 @@
     <div class="navbar navbar-fixed-top main-menu">
       <div class="navbar-inner">
         <div class="container">
-          <a class="brand" href="/">Goevents</a>
+          <a class="brand" id="logo" href="/"><b>Goevents</b></a>
+          <a href="/users/sign_in" style="float:right;margin-top:10px"><%= image_tag 'sign-button-hover.gif'%></a>
           <div class="nav-collapse collapse"></div>
         </div>
       </div>
@@ -18,14 +19,21 @@
 
     <div id="main-body" class="row-fluid">
       <div class="container">
-        <div class="row-fluid">                    
-          <div class="span8 ofvis ml0 splash-banner-holder">
-            <%#= image_tag 'splash-banner.jpg', :alt => 'Splash Banner', :title => 'Splash Banner' %>
-          </div>
+        <hr>
+        <div class="row-fluid">
           <div class="span4">
             <%= yield %>
           </div>
+          <div class="span8 ofvis ml0 splash-banner-holder">
+            <div id="gallery">
+              <img data-src="/assets/banner1.jpg" />
+              <img data-src="/assets/banner2.jpg" />
+              <img data-src="/assets/banner3.jpg" />
+              <img data-src="/assets/banner4.jpg" />
+            </div> <!-- .gallery -->
+          </div>
         </div>
+        <hr>
       </div>
     </div>
     
@@ -36,7 +44,21 @@
       </div>
     </div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery-1.9.1.min.js"><\/script>')</script>      
+    <script>
+
+        $(document).ready(function() {
+          var p = $("#gallery").portfolio({ 
+            enableKeyboardNavigation: true,
+            loop: true,
+            easingMethod: 'easeOutQuint',
+            height: '300px',
+            width: '100%',
+            lightbox: true,
+            showArrows: true          
+          });
+            p.init();
+        }); // end of ready();
+
+    </script>
   </body>
 </html>

@@ -1,10 +1,23 @@
-<%= form_for User.new, :url => user_session_path, :html => {:name => "signin-form", :id => "signin-form"} do |f| %>
+<!--<%#= form_for User.new, :url => user_session_path, :html => {:name => "signin-form", :id => "signin-form"} do |f| %>
   <%#= flash_messages %>
-  <%= f.email_field :email, :class => 'title', :placeholder => 'Email' %>
-  <%= f.password_field :password, :class => 'title', :placeholder => 'Password' %>
+  <%#= f.email_field :email, :class => 'title', :placeholder => 'Email' %>
+  <%#= f.password_field :password, :class => 'title', :placeholder => 'Password' %>
   <br>
-  <%= f.submit "Sign In", :class => 'btn btn-green', :id => "submit" %>
-  <%= link_to "Sign Up", new_user_registration_path, :class => 'btn btn-green' %>
+  <%#= f.submit "Sign In", :class => 'btn btn-green', :id => "submit" %>
+  <%#= link_to "Sign Up", new_user_registration_path, :class => 'btn btn-green' %>
   <br>
-  <%= link_to "Forgot password?", new_user_password_path, :style=>"color:orange;" %>
+  <%#= link_to "Forgot password?", new_user_password_path, :style=>"color:orange;" %>
+  <%# end %>-->
+
+<h2><%= t "devise.invitations.new.header" %></h2>
+
+<%= form_for @user, :url => invitation_path(@user), :html => {:method => :post} do |f| %>
+  <%#= devise_error_messages! %>
+
+<% @user.class.invite_key_fields.each do |field| -%>
+  <p><%= f.label field %><br />
+  <%= f.text_field field %></p>
+<% end -%>
+
+  <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
 <% end %>
