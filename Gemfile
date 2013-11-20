@@ -7,8 +7,8 @@ gem 'rails', '3.2.15'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-#gem 'pg'
-gem 'mysql2'
+gem 'pg'
+#gem 'mysql2'
 
 
 # Gems used only for assets and not required
@@ -32,7 +32,7 @@ gem 'refinerycms-dashboard', '~> 2.1.0'
 gem 'refinerycms-images', '~> 2.1.0'
 gem 'refinerycms-pages', '~> 2.1.0'
 gem 'refinerycms-resources', '~> 2.1.0'
-  
+gem 'rails_12factor', group: :production
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
