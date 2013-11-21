@@ -6,33 +6,57 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body style="background-color:#e3e3e3">
+<body>
+  <div class="navbar navbar-fixed-top main-menu">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" id="logo" href="/"><b>Goevents</b></a>
 
-  <div class="container">
-    <div class="login_status" style="float:right;">
-      <% if user_signed_in? %>
-        <%= current_user.email %> | 
-        <%= link_to 'Logout', 'users/sign_out', :method => :delete %>
-      <% else %>
-        <%= link_to 'SignIn', 'users/sign_in' %> | <%#= link_to 'SignUp', new_user_registration_path %>
-      <% end %>
+        <div class="login_status" style="float:right;margin-top:20px;">
+          <% if user_signed_in? %>
+            <%= current_user.email %> | 
+            <%= link_to 'Logout', 'users/sign_out', :method => :delete %>
+          <% else %>
+            <%= link_to 'SignIn', 'users/sign_in' %> | <%#= link_to 'SignUp', new_user_registration_path %>
+          <% end %>
+        </div>
+
+        <div class="nav-collapse collapse"></div>
+      </div>
     </div>
   </div>
+  <hr>
+  
   <div class="container" id="bodyc">
-    <div class="jcarousel">
-      <ul>
-
-      </ul>
+    <div>
+      <div style="float:left;"><%= text_field 'search','field', :style=>'width:400px;' %></div>
+      <div style="float:right;">
+        <%= link_to 'Booking History', '#' %> | 
+        <%= link_to 'Print Tickets', '#' %> | 
+        <%= link_to 'Support', '#' %>
+      </div>
     </div>
-
+    <div id="gallery2">
+      <img data-src="/assets/banner1.jpg" />
+      <img data-src="/assets/banner2.jpg" />
+      <img data-src="/assets/banner3.jpg" />
+      <img data-src="/assets/banner4.jpg" />
+    </div> <!-- .gallery -->
     <%= yield %>
   </div>
-  <script type="text/javascript">
-    $(function() {
-        $('.jcarousel').jcarousel({
-          // Configuration goes here
-        });
-    });
+  <script>
+    $(document).ready(function() {
+      var p = $("#gallery2").portfolio({ 
+        enableKeyboardNavigation: true,
+        loop: true,
+        easingMethod: 'easeOutQuint',
+        height: '300px',
+        width: '100%',
+        lightbox: true,
+        showArrows: true          
+      });
+      p.init();
+    }); // end of ready();
   </script>
 </body>
 </html>

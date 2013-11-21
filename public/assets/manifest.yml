@@ -13,6 +13,8 @@ glyphicons-halflings.png: glyphicons-halflings-2851b489e8c39f8fad44fc10efb99c3e.
 glyphicons-halflings/index.png: glyphicons-halflings-2851b489e8c39f8fad44fc10efb99c3e.png
 rails.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
 rails/index.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
+sample_event1.jpg: sample_event1-008e92fbaf2f6f8a653de49aa34c6c57.jpg
+sample_event1/index.jpg: sample_event1-008e92fbaf2f6f8a653de49aa34c6c57.jpg
 sign-button-hover.gif: sign-button-hover-64f71d260c8dd2afdb2965571c399f6f.gif
 sign-button-hover/index.gif: sign-button-hover-64f71d260c8dd2afdb2965571c399f6f.gif
 application.js: application-5339b8247e67c01aba3560d04f097e04.js
@@ -23,8 +25,8 @@ refinery/events/admin/tickets.js.cofee: refinery/events/admin/tickets.js-1b13569
 refinery/events/admin/tickets/index.js.cofee: refinery/events/admin/tickets.js-1b13569e9620782f423d4cd3ce931750.cofee
 refinery/tickets.js: refinery/tickets-1b13569e9620782f423d4cd3ce931750.js
 refinery/tickets/index.js: refinery/tickets-1b13569e9620782f423d4cd3ce931750.js
-application.css: application-1ed8672857ec36658fa40d1968661576.css
-application/index.css: application-1ed8672857ec36658fa40d1968661576.css
+application.css: application-7a4781f6973129fa3cf7286c19814226.css
+application/index.css: application-7a4781f6973129fa3cf7286c19814226.css
 refinery/events/admin/registration.css: refinery/events/admin/registration-1b13569e9620782f423d4cd3ce931750.css
 refinery/events/admin/registration/index.css: refinery/events/admin/registration-1b13569e9620782f423d4cd3ce931750.css
 refinery/events/admin/tickets.css: refinery/events/admin/tickets-1b13569e9620782f423d4cd3ce931750.css
