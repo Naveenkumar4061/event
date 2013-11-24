@@ -1,0 +1,27 @@
+<%= render 'topbar' %>
+<section id="records">
+<%= form_for @outlet, :url => "/refinery/events/#{params[:event_id]}/outlets", :method => :post do |f| -%>
+
+    <div class="field">
+      <label for="outlet_outlet">Outlet Name</label>
+      <%= text_field 'outlet', 'outlet', :value => @outlet.outlet %>
+    </div>
+    <div class="field">
+      <label for="outlet_address">Address</label>
+      <%= text_area 'outlet', 'address', :value => @outlet.address %>
+    </div>
+    <div class="field">
+      <label for="outlet_timing">Timings</label>
+      <%= text_field 'outlet', 'timing' %>
+    </div>
+    
+    
+    <div class="form-actions" style="border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+      <div class="form-actions-left">
+        <input class="wymupdate button" id="submit_button" type="submit" value="Save" style="border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
+      </div>
+    </div>
+
+<% end -%>
+</section>
+<%= render '/refinery/events/admin/events/sidebar' %>

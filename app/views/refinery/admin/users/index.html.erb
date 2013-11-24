@@ -1,0 +1,26 @@
+<section id="records">
+<%=link_to 'Registered Users','/refinery/admin/users'%> | <%=link_to 'Imported Users','/refinery/admin/users/imported_users'%>
+<table>
+	<tr>
+		<td>#</td>
+		<td>Email</td>
+		<td>Actions</td>		
+	</tr>
+	<% count = 1 %>
+	<% @users.each do |user| %>		
+		<tr>
+			<td><%= count %></td>
+			<td><%= user.email %></td>
+			<td><%= link_to 'Edit', "/refinery/admin/users/#{user.id}/edit"%> | <%= link_to 'Inactivate', '#'%></td>
+			<% count = count + 1 %>
+		</tr>
+	<% end %>
+</table>
+</section>
+<aside id="actions">
+  <ul>
+  	<li> <a href="/refinery/admin/users/new" class="add_icon">New User</a> </li>
+    <li> <a href="/refinery/admin/users/upload_new_users" class="add_icon">Upload Users</a> </li>
+    <li> <a href="#" class="add_icon">Inactivate Users</a> </li>
+  </ul>
+</aside>

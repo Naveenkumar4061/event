@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :full_name, :age, :gender, :company, :designation
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :full_name, :age, :gender, :company, :designation, :plugins
   
   has_and_belongs_to_many :roles, :join_table => ::RolesUsers.table_name
   has_many :plugins, :class_name => "UserPlugin", :order => "position ASC", :dependent => :destroy

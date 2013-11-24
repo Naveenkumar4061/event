@@ -1,0 +1,28 @@
+<nav id="menu">
+  <%# raise ::Refinery::Plugins.active.in_menu[.inspect %>
+  <% ::Refinery::Plugins.active.in_menu.each do |plugin| -%>
+    <% p "1"*100
+      p plugin.title
+      p "2"*100
+    %>
+    <% unless plugin.title == "Users" %>
+      <%= link_to plugin.title, refinery.url_for(plugin.url),
+              :class => ("active" if plugin.highlighted?(params)),
+              :id => "plugin_#{plugin.name}" %>
+    <% else %>
+      <%= link_to plugin.title, '/refinery/admin/users',
+                :class => ("active" if plugin.highlighted?(params)),
+                :id => "plugin_#{plugin.name}" %>      
+    <% end %>
+  <% end -%>
+  <% if ::Refinery::Plugins.active.in_menu.many? -%>
+    <%= link_to refinery_icon_tag('arrow_switch.png'), "",
+                :id => "menu_reorder",
+                :title => t('.reorder_menu') %>
+
+    <%= link_to refinery_icon_tag('tick.png'), "",
+                :id => "menu_reorder_done",
+                :title => t('.reorder_menu_done'),
+                :style => "display: none;" %>
+  <% end %>
+</nav>

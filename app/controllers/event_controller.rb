@@ -2,11 +2,11 @@ class EventController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @events = Refinery::Events::Event.all
+    @events = Refinery::Events::Event.where('start_date > ?', Time.now)
   end
 
   def show
-    @event = Refinery::Events::Event.find(params[:id])
+    @event = Refinery::Events::Event.where(:url => params[:url]).first
   end
 
   def registration_step1
@@ -30,6 +30,5 @@ class EventController < ApplicationController
   def registration_step2
     @event = Refinery::Events::Event.find(params[:id])
     @registration = current_user.registrations.where(:event_id=>@event.id,:state=>'cart').first
-
   end
 end

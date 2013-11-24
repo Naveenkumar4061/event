@@ -1,0 +1,22 @@
+<%= render 'topbar' %>
+<section id="records">
+<%= form_for @faq, :url => "/refinery/events/#{params[:event_id]}/faqs", :method => :post do |f| -%>
+
+    <div class="field">
+      <label for="faq_question">Question</label>
+      <%= text_field 'faq', 'question', :value => @outlet.question %>
+    </div>
+    <div class="field">
+      <label for="faq_answer">Answer</label>
+      <%= text_area 'faq', 'answer', :value => @outlet.answer %>
+    </div>
+    
+    <div class="form-actions" style="border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+      <div class="form-actions-left">
+        <input class="wymupdate button" id="submit_button" type="submit" value="Save" style="border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
+      </div>
+    </div>
+
+<% end -%>
+</section>
+<%= render '/refinery/events/admin/events/sidebar' %>

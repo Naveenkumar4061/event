@@ -1,12 +1,12 @@
-<div>
-  <%= link_to 'Current Events',''%>
-  <%= link_to 'Past Events',''%>
+<div class="container">
 
-</div>
 <section id='records'>
+<%= link_to 'Current Events',''%> | <%= link_to 'Past Events',''%>
+
   <%= render 'records' %>
 </section>
 <aside id='actions'>
   <%= render 'actions' %>
 </aside>
 <%= render '/refinery/admin/make_sortable', :tree => false if !searching? and ::Refinery::Events::Admin::EventsController.sortable? and ::Refinery::Events::Event.many? %>
+</div>	

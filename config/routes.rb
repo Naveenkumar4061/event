@@ -9,11 +9,26 @@ Goevent::Application.routes.draw do
   devise_for :users
   
   get 'event', :to=>'event#index'
-  get 'event/:id/show', :to => 'event#show'
+  #get 'event/:id/show', :to => 'event#show'
+  get 'event/:url', :to => 'event#show'
   post 'event/:id/registration_step1', :to => 'event#registration_step1'
   get 'event/:id/registration_step2', :to => 'event#registration_step2'
   root :to => 'static#home'
+  namespace :refinery do
+    namespace :admin do
+      resources :users do
+        collection do
+          get 'upload_new_users'
+          post 'upload_users'
+          get 'imported_users'
+          post 'import_user'
+        end
+      end
+    end
+  end  
+
   mount Refinery::Core::Engine, :at => '/'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

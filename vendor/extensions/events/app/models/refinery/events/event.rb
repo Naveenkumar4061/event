@@ -5,14 +5,17 @@ module Refinery
       
       after_create :create_default_registration_from
 
-      attr_accessible :title, :start_date, :end_date, :category, :sub_category, :url, :description, :position, :photo_id, :position
+      attr_accessible :title, :start_date, :end_date, :category, :sub_category, :url, :description, :position, :photo_id, :position, :created_by, :updated_by, :schedule, :terms_conditions, :published, :banner_id
 
       validates :title, :presence => true, :uniqueness => true
+      validates :url, :presence => true, :uniqueness => true
 
       belongs_to :photo, :class_name => '::Refinery::Image'
       has_one :venue, :class_name => '::Refinery::Events::Venue'
       has_one :contact, :class_name => '::Refinery::Events::Contact'
       has_many :tickets, :class_name => '::Refinery::Events::Ticket'
+      has_many :outlets, :class_name => '::Refinery::Events::Outlet'
+      has_many :faqs, :class_name => '::Refinery::Events::Faq'
       has_one :form, :class_name => '::Refinery::Events::Form'
       
       def create_default_registration_from

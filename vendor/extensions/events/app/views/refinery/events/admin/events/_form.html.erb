@@ -42,6 +42,22 @@
   </div>
 
   <div class='field'>
+    <%= render '/refinery/admin/wysiwyg',
+                :f => f,
+                :fields => [:schedule],
+                :object => "events/event" -%>
+  </div>
+
+
+  <div class='field'>
+    <%= render '/refinery/admin/wysiwyg',
+                :f => f,
+                :fields => [:terms_conditions],
+                :object => "events/event" -%>
+  </div>
+
+
+  <div class='field'>
     <%= f.label :position -%>
     <%= f.number_field :position -%>
   </div>

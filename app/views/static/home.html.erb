@@ -9,7 +9,7 @@
   <%#= link_to "Forgot password?", new_user_password_path, :style=>"color:orange;" %>
   <%# end %>-->
 
-<h2><%= t "devise.invitations.new.header" %></h2>
+<h2>Join Us</h2>
 
 <%= form_for @user, :url => invitation_path(@user), :html => {:method => :post} do |f| %>
   <%#= devise_error_messages! %>

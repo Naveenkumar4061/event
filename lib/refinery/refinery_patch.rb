@@ -6,6 +6,10 @@ module RefineryPatch
               :refinery_user_signed_in?, 
               :refinery_user? if base.respond_to? :helper_method
   end
+
+  def refinery_admin_users_path
+    '#'
+  end
  
   def current_refinery_user
     current_user

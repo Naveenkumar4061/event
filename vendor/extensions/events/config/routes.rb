@@ -14,10 +14,14 @@ Refinery::Core::Engine.routes.draw do
           post 'venue_info'
           get 'contact'
           post 'contact_info'
+          get 'publish'
+          get 'revoke'
         end
         resources :tickets do
           get 'update_ticket_status'
         end
+        resources :outlets
+        resources :faqs
         resources :registration
         collection do
           post :update_positions

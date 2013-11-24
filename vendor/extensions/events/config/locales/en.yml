@@ -1,6 +1,8 @@
 en:
   refinery:
     plugins:
+      users:
+        title: Users
       events:
         title: Events
     events:

@@ -1,0 +1,20 @@
+<%= render 'topbar' %>
+<section id="records">
+  <table width="100%" border="1"  style="border:solid 1px #CCCCCC;" id="OrganizaerTable">
+    <tr>
+      <td>#</td>
+      <td>Question</td>
+      <td>Action</td>
+    </tr>
+    <% count = 1 %>
+    <%@faqs.each do |t|%>
+      <tr>
+        <td><%= count %></td>
+        <td><%= t.question %></td>        
+        
+        <td><%= link_to 'Edit',"/refinery/events/#{params[:event_id]}/faqs/#{t.id}/edit" %>|<%= link_to 'Delete', "/refinery/events/#{params[:event_id]}/faqs/#{t.id}", :method => :delete %></td>
+      </tr>
+    <%end%>
+  </table>
+</section>
+<%= render '/refinery/events/admin/events/sidebar' %>

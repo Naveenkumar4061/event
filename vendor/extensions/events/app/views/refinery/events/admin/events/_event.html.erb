@@ -11,10 +11,15 @@
     
     <%= link_to refinery_icon_tag("application_edit.png"), refinery.edit_events_admin_event_path(event),
          :title => t('.edit') %>
-    <%= link_to refinery_icon_tag("delete.png"), refinery.events_admin_event_path(event),
+    <%#= link_to refinery_icon_tag("delete.png"), refinery.events_admin_event_path(event),
         :class => "cancel confirm-delete",
         :title => t('.delete'),
         :confirm => t('message', :scope => 'refinery.admin.delete', :title => event.title),
         :method => :delete %>
+    <% if event.published %>
+      <%= link_to 'Block', "/refinery/events/#{event.id}/revoke" %>  
+    <% else %>
+      <%= link_to 'Publish', "/refinery/events/#{event.id}/publish" %>
+    <% end %>
   </span>
 </li>

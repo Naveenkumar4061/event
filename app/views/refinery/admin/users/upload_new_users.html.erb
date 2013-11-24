@@ -1,0 +1,13 @@
+<section id="records">
+<%= form_tag '/refinery/admin/users/upload_users', multipart: true do -%>
+  <label for="file">File to Upload</label> <%= file_field_tag "file" %>
+  <%= submit_tag %>
+<% end -%>
+</section>
+<aside id="actions">
+  <ul>
+  	<li> <a href="/refinery/admin/users/new" class="add_icon">New User</a> </li>
+    <li> <a href="/refinery/admin/users/upload_new_users" class="add_icon">Upload Users</a> </li>
+    <li> <a href="#" class="add_icon">Inactivate Users</a> </li>
+  </ul>
+</aside>

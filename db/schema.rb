@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131119200336) do
+ActiveRecord::Schema.define(:version => 20131124204011) do
+
+  create_table "invites", :force => true do |t|
+    t.string   "email"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "refinery_events", :force => true do |t|
     t.string   "title"
@@ -23,8 +29,12 @@ ActiveRecord::Schema.define(:version => 20131119200336) do
     t.text     "description"
     t.integer  "position"
     t.integer  "photo_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "created_by"
+    t.integer  "updated_by"
+    t.text     "schedule"
+    t.text     "terms_conditions"
   end
 
   create_table "refinery_events_attendee_details", :force => true do |t|
@@ -53,6 +63,14 @@ ActiveRecord::Schema.define(:version => 20131119200336) do
     t.datetime "updated_at",    :null => false
   end
 
+  create_table "refinery_events_faqs", :force => true do |t|
+    t.text     "question"
+    t.text     "answer"
+    t.integer  "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "refinery_events_form_field_options", :force => true do |t|
     t.integer  "form_field_id"
     t.string   "value"
@@ -77,17 +95,26 @@ ActiveRecord::Schema.define(:version => 20131119200336) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "refinery_events_outlets", :force => true do |t|
+    t.string   "outlet"
+    t.string   "address"
+    t.string   "timing"
+    t.string   "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "refinery_events_registrations", :force => true do |t|
     t.integer  "no_of_tickets"
-    t.decimal  "total"
-    t.decimal  "discount"
-    t.decimal  "sales_tax"
-    t.decimal  "adjustment"
+    t.decimal  "total",         :precision => 10, :scale => 0
+    t.decimal  "discount",      :precision => 10, :scale => 0
+    t.decimal  "sales_tax",     :precision => 10, :scale => 0
+    t.decimal  "adjustment",    :precision => 10, :scale => 0
     t.integer  "event_id"
     t.integer  "user_id"
     t.string   "state"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
   end
 
   create_table "refinery_events_tickets", :force => true do |t|
@@ -95,11 +122,11 @@ ActiveRecord::Schema.define(:version => 20131119200336) do
     t.string   "description"
     t.datetime "sale_start_on"
     t.datetime "sale_end_on"
-    t.decimal  "original_price"
-    t.decimal  "discounted_price"
-    t.decimal  "commission"
+    t.decimal  "original_price",       :precision => 10, :scale => 0
+    t.decimal  "discounted_price",     :precision => 10, :scale => 0
+    t.decimal  "commission",           :precision => 10, :scale => 0
     t.boolean  "is_service_tax"
-    t.decimal  "service_tax_percent"
+    t.decimal  "service_tax_percent",  :precision => 10, :scale => 0
     t.integer  "max_quantity"
     t.integer  "min_quantity"
     t.integer  "max_quantity_on_sale"
@@ -110,8 +137,8 @@ ActiveRecord::Schema.define(:version => 20131119200336) do
     t.boolean  "is_not_display"
     t.integer  "tickets_sold"
     t.integer  "event_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                                          :null => false
+    t.datetime "updated_at",                                          :null => false
   end
 
   create_table "refinery_events_venues", :force => true do |t|
@@ -267,6 +294,7 @@ ActiveRecord::Schema.define(:version => 20131119200336) do
     t.string   "gender"
     t.string   "designation"
     t.string   "company"
+    t.datetime "deleted_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
