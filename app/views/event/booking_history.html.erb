@@ -1,0 +1,14 @@
+<table width = "100%">
+	<tr>
+		<td>Event Title</td>
+		<td>No of Tickets</td>
+		<td>Purchase Total</td>
+	</tr>
+<% @registrations.each do |registration| %>
+	<tr>
+		<td><%= registration.event.title %></td>
+		<td><%= registration.no_of_tickets %></td>
+		<td><%= registration.total %></td>
+	</tr>
+<% end %>
+</table>

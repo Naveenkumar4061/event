@@ -1,0 +1,22 @@
+<%= form_for @bank_detail , :url => '/refinery/update_bank_details', :method => :post do |f| -%>
+	
+	<%= f.label :account_number %>
+	<%= f.text_field :account_number %>
+
+	<%= f.label :account_name %>
+	<%= f.text_field :account_name %>
+
+	<%= f.label :bank_name %>
+	<%= f.text_field :bank_name %>
+
+	<%= f.label :branch %>
+	<%= f.text_field :branch %>
+
+	<%= f.label :ifsc %>
+	<%= f.text_field :ifsc %>	
+
+	<%= f.label :account_type %>
+	<%= f.select :account_type, ['Savings','Current'] %>
+
+	<%= submit_tag 'Save' %>
+<% end -%>

@@ -1,9 +1,25 @@
+<div id="gallery2">
+  <img data-src="/assets/banner1.jpg" />
+  <img data-src="/assets/banner2.jpg" />
+  <img data-src="/assets/banner3.jpg" />
+  <img data-src="/assets/banner4.jpg" />
+</div> <!-- .gallery -->
 <hr>
+<div class="ifilter container" >
+  <a href="#" class="ifilterlink">All</a>
+  <a href="#" class="ifilterlink">Today</a>
+  <a href="#" class="ifilterlink">Tomorrow</a>
+  <a href="#" class="ifilterlink">This Week</a>
+  <a href="#" class="ifilterlink">This Month</a>
+</div>
+
 <% @events.each_slice(5).each do |events| %>
   <% events.each do |event| %>
     <section>
       <div class="event_box">
-        <%= image_tag event.photo.url %>
+        <% unless event.photo.blank? %>
+          <%= image_tag event.photo.url %>
+        <% end %>
         <div class="event_name">
           <%= event.title %>
         </div>

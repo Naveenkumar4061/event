@@ -8,6 +8,7 @@ class Refinery::Events::Admin::FaqsController < ::Refinery::AdminController
   def new
     @event = Refinery::Events::Event.find(params[:event_id])
     @faq = Refinery::Events::Faq.new
+    render :new
   end
 
   def create    

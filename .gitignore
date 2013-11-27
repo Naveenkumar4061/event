@@ -13,6 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+/public
 # Rails
 .bundle
 db/*.sqlite3
@@ -20,7 +21,7 @@ db/*.sqlite3-journal
 *.log
 tmp
 tmp/**/*
-
+public/**/*
 # Documentation
 doc/api
 doc/app

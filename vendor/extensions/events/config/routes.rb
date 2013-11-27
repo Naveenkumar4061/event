@@ -22,6 +22,8 @@ Refinery::Core::Engine.routes.draw do
         end
         resources :outlets
         resources :faqs
+        resources :artists
+        resources :galleries
         resources :registration
         collection do
           post :update_positions

@@ -1,0 +1,9 @@
+<%= form_tag '/event/support_feedback', :method => :post %>
+	<label for="emailid">Your Email Address *</label>
+	<input type="textbox" id="emailid"></input>
+	<label for="subject">Subject *</label>
+	<input type="textbox" id="subject"></input>
+	<label for="desc">Description *</label>
+	<textarea id="desc"></textarea>	
+	<br>
+	<%= submit_tag 'Submit' %>

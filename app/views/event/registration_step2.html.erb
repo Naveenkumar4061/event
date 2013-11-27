@@ -1,7 +1,49 @@
-<%@registration.attendees.each do |a|%>
-  <div>Ticket:<%= a.ticket.ticket_name %></div>
-  Attendee Details
-  <% @event.form.form_fields.each do |t| %>
-    <div> <%= t.field_name %><%=text_field 'event','i',:value=>''%></div>
-  <% end %>
-<%end %>
+<div style="margin:20px 0px 125px 10px;">
+<% if @event.master_details_only %>
+  	<h3>Attendee Details</h3>
+    <%= form_for @event,:url => "/event/#{@event.id}/attendee_details", :method=>"post" do %>    	
+	  	<table width="100%">
+		  	<% @event.form.form_fields.each do |t| %>	  		
+	  			<tr>
+	  				<td>
+	  					<%= t.field_name %><% if t.is_mandatory %> * <% end %>
+	  				</td>
+	  				<td>
+	  					<% if t.field_type == "textbox" %>
+	  						<%= text_field_tag "attendee_detail[#{t.id}]" %>
+	  					<% elsif t.field_type == "textarea" %>
+	  						<%= text_area_tag "attendee_detail[#{t.id}]" %>
+	  					<% elsif t.field_type == "dropdown"  %>
+	  						<%= select "attendee_detail", t.id, t.form_field_options.map(&:value) %>
+	  					<% elsif t.field_type == "radiobutton"  %>
+	  						<% t.form_field_options.each do | option | %>
+	  							<%= radio_button "attendee_detail", t.id, option.value %><lable for=<%= "attendee_detail_#{t.id}" %>><%= option.value %></lable>
+	  						<% end %>
+	  					<% elsif t.field_type == "checkbox"  %>
+	  						<% t.form_field_options.each do | option | %>
+	  							<input id="attendee_detail_<%= t.id %>" name="attendee_detail[<%=t.id%>][]" type="checkbox" value=<%=option.value%>><lable for=<%= "attendee_detail_#{t.id}" %>><%=option.value%></lable>	  							
+	  						<% end %>
+	  					<% elsif t.field_type == "date"  %>
+	  						<%= text_field_tag "attendee_detail[#{t.id}]" %>
+	  					<% end %>
+	  				</td>
+	  			</tr>	  		
+	  		<% end %>
+	  	</table>	    	
+		<div class="payment_info">
+			<%= radio_button_tag 'pay_by','cash', true , :style => 'float:left;' %><label for="pay_by_cash"  style = 'float:left;'>Pay By Cash  </label>
+			<%= radio_button_tag 'pay_by','card', false, :style => 'float:left;' %><label for="pay_by_card"  style = 'float:left;'>  Pay By Card</label>
+		</div>
+		<br>
+		<%= submit_tag 'Pay' %>
+	<% end %>
+<% else %>
+	<% @registration.attendees.each do |a| %>
+	  <div>Ticket:<%= a.ticket.ticket_name %></div>
+	  Attendee Details
+	  <% @event.form.form_fields.each do |t| %>
+	    <div> <%= t.field_name %><%= text_field 'event','i',:value=>'' %></div>
+	  <% end %>
+	<% end %>
+<% end %>
+</div>

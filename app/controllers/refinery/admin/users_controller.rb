@@ -50,13 +50,9 @@ module Refinery
         end
 
         store_user_memento
-        p "@"*100
-        p @selected_plugin_names
 
         @user.plugins.delete_all
         @user.plugins = @selected_plugin_names
-        p "!"*100
-        p @user.plugins
 
         @user.roles = @selected_role_names.map { |r| Refinery::Role[r.downcase] }
         if @user.update_attributes params[:user]

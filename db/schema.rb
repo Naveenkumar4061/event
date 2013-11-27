@@ -11,12 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131124204011) do
+ActiveRecord::Schema.define(:version => 20131126195357) do
 
   create_table "invites", :force => true do |t|
     t.string   "email"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "refinery_bank_details", :force => true do |t|
+    t.string   "account_name"
+    t.integer  "account_number"
+    t.string   "bank_name"
+    t.string   "branch"
+    t.string   "ifsc"
+    t.string   "account_type"
+    t.integer  "user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "refinery_events", :force => true do |t|
@@ -29,12 +41,31 @@ ActiveRecord::Schema.define(:version => 20131124204011) do
     t.text     "description"
     t.integer  "position"
     t.integer  "photo_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
     t.text     "schedule"
     t.text     "terms_conditions"
+    t.boolean  "published",           :default => false
+    t.boolean  "pay_with_card",       :default => false
+    t.boolean  "pay_with_cash",       :default => false
+    t.boolean  "pay_with_check",      :default => false
+    t.string   "banner_file_name"
+    t.string   "banner_content_type"
+    t.integer  "banner_file_size"
+    t.datetime "banner_updated_at"
+  end
+
+  create_table "refinery_events_artists", :force => true do |t|
+    t.string   "artist_file_name"
+    t.string   "artist_content_type"
+    t.integer  "artist_file_size"
+    t.datetime "artist_updated_at"
+    t.text     "description"
+    t.integer  "event_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "refinery_events_attendee_details", :force => true do |t|
@@ -93,6 +124,17 @@ ActiveRecord::Schema.define(:version => 20131124204011) do
     t.integer  "event_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "refinery_events_galleries", :force => true do |t|
+    t.string   "gimage_file_name"
+    t.string   "gimage_content_type"
+    t.integer  "gimage_file_size"
+    t.datetime "gimage_updated_at"
+    t.boolean  "display"
+    t.integer  "event_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "refinery_events_outlets", :force => true do |t|
@@ -165,11 +207,11 @@ ActiveRecord::Schema.define(:version => 20131124204011) do
   end
 
   create_table "refinery_page_part_translations", :force => true do |t|
-    t.integer  "refinery_page_part_id", :null => false
-    t.string   "locale",                :null => false
+    t.integer  "refinery_page_part_id"
+    t.string   "locale"
+    t.text     "body"
     t.datetime "created_at",            :null => false
     t.datetime "updated_at",            :null => false
-    t.text     "body"
   end
 
   add_index "refinery_page_part_translations", ["locale"], :name => "index_refinery_page_part_translations_on_locale"
@@ -188,14 +230,14 @@ ActiveRecord::Schema.define(:version => 20131124204011) do
   add_index "refinery_page_parts", ["refinery_page_id"], :name => "index_refinery_page_parts_on_refinery_page_id"
 
   create_table "refinery_page_translations", :force => true do |t|
-    t.integer  "refinery_page_id", :null => false
-    t.string   "locale",           :null => false
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.integer  "refinery_page_id"
+    t.string   "locale"
     t.string   "title"
     t.string   "custom_slug"
     t.string   "menu_title"
     t.string   "slug"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   add_index "refinery_page_translations", ["locale"], :name => "index_refinery_page_translations_on_locale"

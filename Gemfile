@@ -32,7 +32,10 @@ gem 'refinerycms-dashboard', '~> 2.1.0'
 gem 'refinerycms-images', '~> 2.1.0'
 gem 'refinerycms-pages', '~> 2.1.0'
 gem 'refinerycms-resources', '~> 2.1.0'
+gem 'paperclip', ">=3" 
 gem 'rails_12factor', group: :production
+gem 'globalize3', '0.3.0'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

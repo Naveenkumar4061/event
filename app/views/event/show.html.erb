@@ -1,5 +1,198 @@
+<%= stylesheet_link_tag 'jquery-ui.css' %>
+<%= javascript_include_tag 'jquery-ui.js' %>
+<script type = "text/javascript">
+  $(function() {
+      var g = $("#event_gallery").portfolio({ 
+        enableKeyboardNavigation: true,
+        loop: true,
+        easingMethod: 'easeOutQuint',
+        height: '150px',
+        width: '80%',
+        lightbox: true,
+        showArrows: true          
+      });
+      g.init();
+    $( "#accordian" ).accordion();
+  });
+  var calculate_total = function(tis){
+    var total_no_of_tickets = 0;
+    var final_total = 0;
+    var tax_total = 0;
+    jQuery('.ticket-row').each(function(index){
+      p=jQuery(this).find('#dprice').text();
+      q=jQuery(this).find('#no_of_tickets').val();
+      if(q == 0)
+      {
+        jQuery(this).find('#total').text('0');
+      }else{
+        tot = (parseFloat(p) * parseFloat(q));
+        tt = parseFloat(jQuery(this).find('#tax_percent').val());
+        tax_total += ( tot * tt )/parseFloat('100.0');
+        final_total += (tot + ( tot * tt )/parseFloat('100.0'));
+        jQuery(this).find('#total').text(tot + ( tot * tt )/parseFloat('100.0'));
+        total_no_of_tickets += parseFloat(q);
+      }
+      
+    });
+    
+    jQuery('#tax_display').text(tax_total);
+    jQuery('#total_display').text(final_total);
+  }
+</script>
+
+<div class="span12">
+<%= @event.title %>
+</div>
+<% unless @event.banner_file_name.blank? %>
+  <%= image_tag @event.banner.url(:original), :height=>'300', :width=>"100%" %>
+<% end %>
+<div class="span12" style="margin-bottom:200px;">
+  <div id="accordian">
+    <!--<ul>
+      <li></li>
+      <li><a href="tabs-2">Venue</a></li>
+      <li><a href="tabs-3">Artist Lineup</a></li>
+      <li><a href="tabs-4">Schedule</a></li>
+      <li><a href="tabs-5">Gallery</a></li>
+      <li><a href="tabs-6">Outlets</a></li>
+      <li><a href="tabs-7">Faqs</a></li>
+      <li><a href="tabs-8">Terms & Conditions</a></li>
+    </ul>-->
+    
+      <h3>Buy Tickets</h3>
+      <div >      
+        <%= form_for @event,:url => "/event/#{@event.id}/registration_step1", :method=>"post" do %>
+          <table width="100%">
+            <tr>
+              <td>Ticket Type</td>
+              <td>Price</td>
+              <td>Quantity</td>
+              <td>Total</td>
+            </tr>
+            <%@event.tickets.each do |t|%>
+              <tr class="ticket-row">
+                <td><%= t.ticket_name %></td>
+                <td>
+                  <span id="dprice"><%= t.discounted_price %></span>(<span id="oprice" style="text-decoration:line-through;"><%=t.original_price%></span>)
+                  <%= hidden_field_tag 'tax_percent', t.is_service_tax ? t.service_tax_percent : 0 %>
+                </td>
+                <td><%= select 'ticket', t.id, 0..9, {} ,{:id=>'no_of_tickets',:onchange=>'calculate_total(this);'} %></td>
+                <td><div id="total">0</div></td>
+              </tr>
+            <%end%>
+          </table>
+          <%= hidden_field 'registration', 'no_of_tickets' %>
+          <%= hidden_field 'registration', 'total' %>
+          <%= hidden_field 'registration', 'discount' %>
+          <%= hidden_field 'registration', 'sales_tax' %>
+          <%= hidden_field 'registration', 'state', :value => 'cart' %>
+          
+          
+          <div style="float:right;clear:both;">Tax <span id='tax_display'> 0.0</span> </div>
+          <div style="float:right;clear:both;">Purchase Total(INR): <span id='total_display'> 0.0</span> </div>
+          <div style="float:right;clear:both;"><%= submit_tag 'Book'%></div>      
+        <%end%>      
+      </div>
+
+    
+      <% unless @event.venue.blank? %>
+        <h3>Venue</h3>
+        <div >
+          <p>
+            <%= @event.venue.venue %><br>
+            <%= @event.venue.locality %><br>
+            <%= @event.venue.city %> <br>
+            <%= @event.venue.state %> <br>
+            <%= @event.venue.country %> <br>
+            <%= @event.venue.pincode %>
+          </p>
+        </div>
+      <% end %>
+      
+      <% unless @event.artists.blank? %>
+        <h3>Artist Lineup</h3>
+        <div >
+          <p>
+            <% @event.artists.each do |a| %>
+              <div class="artist row" style="height:120px;">
+                <div class="aimage" style="float:left;width=150px;"><%= image_tag a.artist.url(:thumb) %></div>
+                <div class="adescription" style="float:left;"><%= a.description %></div>
+              </div>
+            <% end %>
+          </p>
+        </div>
+      <% end %>
+
+      <% unless @event.schedule.blank? %>
+        <h3>Schedule</h3>
+        <div >
+          <p><%= @event.schedule %></p>
+        </div>
+      <% end %>
+
+
+      <% unless @event.galleries.blank? %>
+        <h3>Gallery</h3>
+        <div >
+          <p>
+            <div id="event_gallery">
+              <% @event.galleries.each do |g| %>
+
+                <%=  image_tag g.gimage.url(:original), {:'data-src'=>g.gimage.url(:original)} %>
+              <% end %>
+            
+          </div> 
+          </p>
+        </div>
+      <% end %>
+
+
+      <% unless @event.outlets.blank? %>
+        <h3>Outlets</h3>
+        <div >
+          <p>
+            <table border = "1">
+              <tr>
+                <td>Outlet</td>
+                <td>Address</td>
+                <td>Timings</td>
+              </tr>
+              <% @event.outlets.each do |outlet| %>
+                <tr>
+                  <td><%= outlet.outlet %></td>
+                  <td><%= outlet.address %></td>
+                  <td><%= outlet.timing %></td>
+                </tr>
+              <% end %>
+            </table>
+          </p>
+        </div>
+      <% end %>
+
+      <% unless @event.faqs.blank? %>
+        <h3>Faqs</h3>
+        <div>
+          <p>
+            <%# count = 1 %>
+            <% @event.faqs.each do |faq| %>
+              <%= faq.question %><br>
+              <%= faq.answer %>
+            <% end %>
+          </p>
+        </div>
+      <% end %>
+
+      <% unless @event.terms_conditions.blank? %>
+        <h3>Terms & Conditions</h3>
+        <div >
+          <p><%= @event.terms_conditions %></p>
+        </div>
+      <% end %>
+  </div>
+</div>
+
+<!--
 <div class="span8">
-<%=@event.title%>
 <%= form_for @event,:url => "/event/#{@event.id}/registration_step1", :method=>"post" do %>
   <table width="100%">
     <tr>
@@ -26,10 +219,5 @@
     <div style="text-align:center;">Event Details/ID:<%= @event.id %></div>
     <div>
   </div>
-</div>
+</div>-->
 
-<script type = "text/javascript">
-  $(document).ready(function(){
-
-  });
-</script>

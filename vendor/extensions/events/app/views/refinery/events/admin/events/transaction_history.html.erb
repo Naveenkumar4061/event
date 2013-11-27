@@ -1,0 +1,19 @@
+<section id='records'>
+<table width = "100%">
+	<tr>
+		<td>Event Title</td>
+		<td>No of Tickets</td>
+		<td>Purchase Total</td>
+	</tr>
+<% @transctions.each do |registration| %>
+	<tr>
+		<td><%= registration.event.title %></td>
+		<td><%= registration.no_of_tickets %></td>
+		<td><%= registration.total %></td>
+	</tr>
+<% end %>
+</table>
+</section>
+<aside id='actions'>
+  <%= render 'actions' %>
+</aside>

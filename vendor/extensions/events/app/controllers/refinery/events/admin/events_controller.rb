@@ -74,6 +74,30 @@ module Refinery
           params[:event][:updated_by] = current_user.id
         end
 
+        def transaction_history
+          if current_user.roles.map(&:title).include?('Superuser')
+            @transctions = Refinery::Events::Registration.where(:state=>'complete')
+          else
+            created_events = Refinery::Events::Event.where(:created_by=>current_user.id).map(&:id)
+            @transctions = Refinery::Events::Registration.where('state= ? and event_id in (?)','complete',created_events)
+          end
+        end
+
+        def bank_detail
+          @bank_detail = current_user.bank_detail.blank? ? Refinery::BankDetail.new : current_user.bank_detail 
+        end
+
+        def update_bank_detail          
+          @bank_detail = current_user.bank_detail
+          if @bank_detail.blank?
+            params[:bank_detail][:user_id] = current_user.id
+            Refinery::BankDetail.create(params[:bank_detail])            
+          else
+            @bank_detail.update_attributes(params[:bank_detail])
+          end
+          redirect_to '/refinery/bank_details'
+        end
+
       end
     end
   end

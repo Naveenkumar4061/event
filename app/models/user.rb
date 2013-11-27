@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles, :join_table => ::RolesUsers.table_name
   has_many :plugins, :class_name => "UserPlugin", :order => "position ASC", :dependent => :destroy
   has_many :registrations, :class_name => "Refinery::Events::Registration"
+  has_one :bank_detail, :class_name => "Refinery::BankDetail"
 
   def plugins=(plugin_names)
     if persisted? # don't add plugins when the user_id is nil.

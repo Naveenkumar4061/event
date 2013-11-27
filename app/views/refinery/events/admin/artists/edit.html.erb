@@ -1,14 +1,15 @@
 <%= render 'topbar' %>
 <section id="records">
-<%= form_for @faq, :url => "/refinery/events/#{params[:event_id]}/faqs/#{params[:id]}", :method => :put do |f| -%>
+<%= form_for @artist, :url => "/refinery/events/#{params[:event_id]}/artists/#{params[:id]}", :method => :put do |f| -%>
 
     <div class="field">
-      <label for="faq_question">Question</label>
-      <%= text_field 'faq', 'question', :value => @faq.question %>
+      <label for="artist_question">Question</label>
+      <%= image_tag @artist.artist.url(:thumb) %>
+      <%= f.file_field :artist %>
     </div>
     <div class="field">
-      <label for="faq_answer">Answer</label>
-      <%= text_area 'faq', 'answer', :value => @faq.answer %>
+      <label for="faq_description">Answer</label>
+      <%= text_area 'artist', 'description', :value => @artist.description %>
     </div>
     
     

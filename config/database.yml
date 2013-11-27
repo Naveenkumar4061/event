@@ -1,10 +1,10 @@
 development:
-  #adapter: postgresql
-  adapter: mysql2
-  #encoding: unicode
+  adapter: postgresql
+  #adapter: mysql2
+  encoding: unicode
   database: goevent
-  #username: postgres
-  username: root
+  username: postgres
+  #username: root
   password: root
 
 production:

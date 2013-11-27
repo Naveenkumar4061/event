@@ -10,9 +10,16 @@ Goevent::Application.routes.draw do
   
   get 'event', :to=>'event#index'
   #get 'event/:id/show', :to => 'event#show'
+  get '/refinery/events/transaction_history', :to => 'refinery/events/admin/events#transaction_history'
+  get '/refinery/bank_details', :to => 'refinery/events/admin/events#bank_detail'
+  post '/refinery/update_bank_details', :to => 'refinery/events/admin/events#update_bank_detail'
+  get 'event/booking_history', :to => 'event#booking_history'
+  get 'event/support', :to => 'event#support'
+  post 'event/support_feedback', :to => 'event#support_feedback'
   get 'event/:url', :to => 'event#show'
   post 'event/:id/registration_step1', :to => 'event#registration_step1'
   get 'event/:id/registration_step2', :to => 'event#registration_step2'
+  post 'event/:id/attendee_details', :to => 'event#attendee_details'
   root :to => 'static#home'
   namespace :refinery do
     namespace :admin do

@@ -1,0 +1,35 @@
+<%#= render 'topbar' %>
+<%= form_for @gallery, :url => "/refinery/events/#{params[:event_id]}/galleries", :method => :post do |f| -%>
+  <%= f.file_field :gimage %>
+  <%= submit_tag 'Upload' %>
+<% end -%>
+<section id="records">
+  <table width="100%">
+    <% @galleries.each_slice(2) do |garr| %>
+      <tr>
+        <% garr.each do |g| %>
+          <td><%= image_tag g.gimage.url(:medium) %><%= link_to 'Remove',"/refinery/events/#{params[:event_id]}/galleries/#{g.id}", :method => :delete, :confirm => 'Are you sure?' %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <!--<table width="100%" border="1"  style="border:solid 1px #CCCCCC;" id="OrganizaerTable">
+    <tr>
+      <td>#</td>
+      <td>Artist</td>
+      <td>Description</td>
+    </tr>
+    <% #count = 1 %>
+    <%#@artists.each do |t|%>
+      <tr>
+        <td><%#= count %></td>
+        <td><%#= image_tag t.artist.url(:thumb) %></td>
+        <td><%#= t.description %></td>
+        
+        <td><%#= link_to 'Edit',"/refinery/events/#{params[:event_id]}/artists/#{t.id}/edit" %>|<%#= link_to 'Delete', "/refinery/events/#{params[:event_id]}/artists/#{t.id}", :method => :delete %></td>
+      </tr>
+    <%#end%>
+  </table>-->
+
+</section>
+<%= render '/refinery/events/admin/events/sidebar' %>

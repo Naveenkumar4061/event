@@ -7,13 +7,16 @@
   <li>
     <%= link_to t('.create_new'), refinery.new_events_admin_event_path,
                  :class => "add_icon" %>
-    <%= link_to 'Transaction History', refinery.new_events_admin_event_path,
+    <%= link_to 'Transaction History', '/refinery/events/transaction_history',
                  :class => "add_icon" %>
-    <%= link_to 'My Payments', refinery.new_events_admin_event_path,
+    <%#= link_to 'My Payments', refinery.new_events_admin_event_path,
                  :class => "add_icon" %>
-    <%= link_to 'Bank Deatils', refinery.new_events_admin_event_path,
+    <% if current_user.roles.map(&:title).include?('Superuser') %>
+    <% else %>
+      <%# = link_to 'Bank Deatils', refinery.new_events_admin_event_path,      
                  :class => "add_icon" %>
-    <%= link_to 'Payment Modes', refinery.new_events_admin_event_path,
+    <% end %>
+    <%#= link_to 'Payment Modes', refinery.new_events_admin_event_path,
                  :class => "add_icon" %>
   </li>
 <% if !searching? && ::Refinery::Events::Admin::EventsController.sortable? && ::Refinery::Events::Event.many? %>
