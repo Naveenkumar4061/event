@@ -38,6 +38,10 @@ module Refinery
         true
       end
 
+      def change_outlet_datatype
+        ActiveRecord::Base.connection.execute('ALTER TABLE refinery_events_outlets ALTER COLUMN event_id TYPE integer USING (event_id::integer);')
+      end
+
     end
   end
 end

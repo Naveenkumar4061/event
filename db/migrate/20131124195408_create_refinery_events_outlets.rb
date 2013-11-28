@@ -4,7 +4,7 @@ class CreateRefineryEventsOutlets < ActiveRecord::Migration
       t.string :outlet
       t.string :address
       t.string :timing
-      t.string :event_id
+      t.integer :event_id
       t.timestamps
     end
   end
