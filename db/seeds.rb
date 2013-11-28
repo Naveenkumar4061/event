@@ -9,7 +9,8 @@
 # Added by Refinery CMS Events extension
 #Refinery::Events::Engine.load_seed
 r1 = Role.find_or_create_by_title( 'Refinery' )
-r2 = Role.create( :title => 'Superuser' )
+r2 = Role.find_or_create_by_title( 'Superuser' )
 u = User.create( :email => 'admin@goevents.com', :password => 'password')
-u.roles << r1
-u.roles << r2
+
+RolesUsers.create(:user_id=>u.id,:role_id=>r1.id)
+RolesUsers.create(:user_id=>u.id,:role_id=>r2.id)

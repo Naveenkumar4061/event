@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html>
   <head>
     <title>Goevent</title>
-    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= stylesheet_link_tag    "application", :media => "all" %>    
     <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "jquery.js" %>    
+    <%= javascript_include_tag "jquery.jcarousel.min" %>
+    <%= javascript_include_tag "jcarousel.basic" %>
     <%= csrf_meta_tags %>
   </head>
   <body>
@@ -24,13 +27,22 @@
           <div class="span4">
             <%= yield %>
           </div>
-          <div class="span8 ofvis ml0 splash-banner-holder">
-            <div id="gallery">
-              <img data-src="/assets/banner1.jpg" />
-              <img data-src="/assets/banner2.jpg" />
-              <img data-src="/assets/banner3.jpg" />
-              <img data-src="/assets/banner4.jpg" />
+          <div class="span8 jcarousel-wrapper " style="height:260px !important;" >
+            <div id="gallery" class="jcarousel">
+              <ul>
+                <li><img src="/assets/banner1.jpg" height="400" width="600" alt=""/></li>
+                <li><img src="/assets/banner2.jpg" height="400" width="600" alt=""/></li>
+                <li><img src="/assets/banner3.jpg" height="400" width="600" alt=""/></li>
+                <li><img src="/assets/banner4.jpg" height="400" width="600" alt=""/></li>
+              </ul>
             </div> <!-- .gallery -->
+
+                <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+                <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+                
+                <p class="jcarousel-pagination">
+                    
+                </p>
           </div>
         </div>
         <hr>
@@ -38,16 +50,19 @@
     </div>
     
 
-    <div class="row-fluid" >
+    <div id="footer-div">
       <div class="container">
-
+        <a href="/about-us"> About Us </a>
+        <a href="/terms-conditions"> Terms & conditions | </a>
+        <a href="/disclaimers"> Disclaimers |</a>
+        <a href="/contact-us"> Contact Us |</a>
       </div>
     </div>
 
-    <script>
 
-        $(document).ready(function() {
-          var p = $("#gallery").portfolio({ 
+    <script>
+      $(document).ready(function() {
+          /*var p = $("#gallery").portfolio({ 
             enableKeyboardNavigation: true,
             loop: true,
             easingMethod: 'easeOutQuint',
@@ -56,9 +71,17 @@
             lightbox: true,
             showArrows: true          
           });
-            p.init();
-        }); // end of ready();
-
+            p.init();*/
+        $('.jcarousel').jcarousel({
+          animation: 'slow',
+          transitions: true,
+          wrap: 'circular'
+        }).jcarouselAutoscroll({
+          interval: 3000,
+          target: '+=1',
+          autostart: true
+        });
+      }); // end of ready();
     </script>
   </body>
 </html>

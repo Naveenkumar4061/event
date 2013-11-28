@@ -15,9 +15,9 @@
         <div class="login_status" style="float:right;margin-top:20px;">
           <% if user_signed_in? %>
             <%= current_user.email %> | 
-            <%= link_to 'Logout', 'users/sign_out', :method => :delete %>
+            <%= link_to 'Logout', '/users/sign_out', :method => :delete %>
           <% else %>
-            <%= link_to 'SignIn', 'users/sign_in' %> | <%#= link_to 'SignUp', new_user_registration_path %>
+            <%= link_to 'SignIn', '/users/sign_in' %> | <%#= link_to 'SignUp', new_user_registration_path %>
           <% end %>
         </div>
 
@@ -39,24 +39,26 @@
 
     <%= yield %>
   </div>
-  <div id="footer-div" class="container">
-    <a href="/about-us"> About Us </a>
-    <a href="/terms-conditions"> Terms & conditions | </a>
-    <a href="/disclaimers"> Disclaimers |</a>
-    <a href="/contact-us"> Contact Us |</a>
+  <div id="footer-div">
+    <div class="container">
+      <a href="/about-us"> About Us </a>
+      <a href="/terms-conditions"> Terms & conditions | </a>
+      <a href="/disclaimers"> Disclaimers |</a>
+      <a href="/contact-us"> Contact Us |</a>
+    </div>
   </div>
   <script>
     $(document).ready(function() {
-      var p = $("#gallery2").portfolio({ 
-        enableKeyboardNavigation: true,
-        loop: true,
-        easingMethod: 'easeOutQuint',
-        height: '300px',
-        width: '100%',
-        lightbox: true,
-        showArrows: true          
+      $('.jcarousel').jcarousel({
+            animation: 'slow',
+            transitions: true,
+            wrap: 'circular',
+            center: true
+          }).jcarouselAutoscroll({
+        interval: 3000,
+        target: '+=1',
+        autostart: true
       });
-      p.init();
     }); // end of ready();
   </script>
 </body>
