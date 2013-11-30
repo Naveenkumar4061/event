@@ -1,8 +1,8 @@
 <nav id="menu">
-
+<%#raise ::Refinery::Plugins.active.in_menu.map(&:title).inspect%>
   <% ::Refinery::Plugins.active.in_menu.each do |plugin| -%>
     
-    <% unless plugin.title == "Users" %>
+    <% unless plugin.title == "Users" || "Event Organizers" %>
       <%= link_to plugin.title, refinery.url_for(plugin.url),
               :class => ("active" if plugin.highlighted?(params)),
               :id => "plugin_#{plugin.name}" %>
@@ -21,7 +21,11 @@
       <%= link_to 'Bank Detail', '/refinery/bank_details',
             :class => (""),
             :id => "plugin_bank_detail" %>
+      <%= link_to 'Reports', '/refinery/events/transaction_history', :class=>'',:id=>"reports" %>
     <% end %>
+  <% else %>
+    <%= link_to 'Event Organizers', '/refinery/admin/bank_details', :class=>'',:id=>"reports" %>
+    <%= link_to 'Reports', '/refinery/events/transaction_history', :class=>'',:id=>"reports" %>
   <% end %>
 
   <!-- disabled the reorder button -->

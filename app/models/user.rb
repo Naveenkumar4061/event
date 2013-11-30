@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
   has_many :registrations, :class_name => "Refinery::Events::Registration"
   has_one :bank_detail, :class_name => "Refinery::BankDetail"
 
+  def username
+    self.email
+  end
+
   def plugins=(plugin_names)
     if persisted? # don't add plugins when the user_id is nil.
       UserPlugin.delete_all(:user_id => id)

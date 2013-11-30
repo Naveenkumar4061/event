@@ -11,7 +11,7 @@ end
 
 module Goevent
   class Application < Rails::Application
-    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.autoload_paths += Dir["#{config.root}/lib/**/*"]
     config.before_initialize do
       require 'refinery_patch'
       require 'restrict_refinery_to_refinery_users'
@@ -22,6 +22,7 @@ module Goevent
         c.send :include, ::RefineryPatch
       end
 
+      ::Refinery::AdminController.send :include, ::RefineryPatch
       ::Refinery::AdminController.send :include, ::RestrictRefineryToRefineryUsers
       ::Refinery::AdminController.send :before_filter, :restrict_refinery_to_refinery_users
     end

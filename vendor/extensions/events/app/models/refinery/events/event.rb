@@ -5,7 +5,7 @@ module Refinery
       
       after_create :create_default_registration_from
 
-      attr_accessible :title, :start_date, :end_date, :category, :sub_category, :url, :description, :position, :photo_id, :position, :created_by, :updated_by, :schedule, :terms_conditions, :published, :banner, :banner_file_name , :master_details_only
+      attr_accessible :title, :start_date, :end_date, :category, :sub_category, :url, :description, :position, :photo_id, :position, :created_by, :updated_by, :schedule, :terms_conditions, :published, :banner, :banner_file_name , :master_details_only, :only_master_attendee, :publish_banner, :published_by_eo
 
       has_attached_file :banner,
       :styles => { :medium => "300x300>", :thumb => "100x100>" },
@@ -35,7 +35,7 @@ module Refinery
       end
 
       def master_details_only
-        true
+        self.only_master_attendee        
       end
 
       def change_outlet_datatype

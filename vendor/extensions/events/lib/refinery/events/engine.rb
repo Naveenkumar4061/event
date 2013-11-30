@@ -7,6 +7,7 @@ module Refinery
 
       engine_name :refinery_events
       engine_name :users
+      #engine_name :bank_details
 
       initializer "register refinerycms_events plugin" do
         Refinery::Plugin.register do |plugin|
@@ -19,6 +20,17 @@ module Refinery
           
         end
       end
+      #initializer "register refinerycms_bank_details plugin" do
+        #Refinery::Plugin.register do |plugin|
+          #plugin.name = "bank_details"
+          #plugin.url = proc { Refinery::Core::Engine.routes.url_helpers.refinery_admin_bank_details_path }
+          #plugin.pathname = '/refinery/admin/bank_details'
+          #plugin.activity = {
+            #:class_name => :'refinery/admin/bank_details'
+          #}
+          
+        #end
+      #end
       initializer "register refinerycms_users plugin" do
         Refinery::Plugin.register do |plugin|
           plugin.name = "users"

@@ -1,10 +1,9 @@
 <div class="span12 jcarousel-wrapper">
   <div id="gallery2"  class="jcarousel">
     <ul>
-                <li><img src="/assets/banner1.jpg" height="400" width="900" alt=""/></li>
-                <li><img src="/assets/banner2.jpg" height="400" width="900" alt=""/></li>
-                <li><img src="/assets/banner3.jpg" height="400" width="900" alt=""/></li>
-                <li><img src="/assets/banner4.jpg" height="400" width="900" alt=""/></li>
+      <% Refinery::Events::Event.where( :publish_banner => 1 ).each do |e| %>
+        <li><%= link_to (image_tag e.banner.url(:original), :size => '900x400'), "/event/#{e.url}" %></li>
+      <% end %>              
     </ul>
   </div> <!-- .gallery -->
 
@@ -15,11 +14,11 @@
 </div>
 <hr>
 <div class="ifilter container" >
-  <a href="#" class="ifilterlink">All</a>
-  <a href="#" class="ifilterlink">Today</a>
-  <a href="#" class="ifilterlink">Tomorrow</a>
-  <a href="#" class="ifilterlink">This Week</a>
-  <a href="#" class="ifilterlink">This Month</a>
+  <a href="/event?filter=all" class="ifilterlink">All</a>
+  <a href="/event?filter=today" class="ifilterlink">Today</a>
+  <a href="/event?filter=tomorrow" class="ifilterlink">Tomorrow</a>
+  <a href="/event?filter=week" class="ifilterlink">This Week</a>
+  <a href="/event?filter=month" class="ifilterlink">This Month</a>
 </div>
 
 <% @events.each_slice(5).each do |events| %>

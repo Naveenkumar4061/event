@@ -31,13 +31,13 @@
 	  		<% end %>
 	  	</table>	    	
 		<div class="payment_info">
-			<%= radio_button_tag 'pay_by','cash', true , :style => 'float:left;' %><label for="pay_by_cash"  style = 'float:left;'>Pay By Cash  </label>
 			<%= radio_button_tag 'pay_by','card', false, :style => 'float:left;' %><label for="pay_by_card"  style = 'float:left;'>  Pay By Card</label>
 		</div>
 		<br>
 		<%= submit_tag 'Pay' %>
 	<% end %>
 <% else %>
+	<%#raise @registration.attendees.inspect%>
 	<% @registration.attendees.each do |a| %>
 	  <div>Ticket:<%= a.ticket.ticket_name %></div>
 	  Attendee Details

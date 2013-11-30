@@ -10,10 +10,18 @@ module Refinery
         before_filter :update_updated_by, :only => [:update]
 
         def index
-          if current_user.roles.map(&:title).include?('Superuser')
-            @events = Refinery::Events::Event.paginate(:page=>params[:page])
+          if params[:filter] == "past"
+            if current_user.roles.map(&:title).include?('Superuser')              
+              @events = Refinery::Events::Event.where('start_date < ?',Time.now.strftime('%Y-%m-%d %H:%M:%S')).paginate(:page => params[:page])
+            else
+              @events = Refinery::Events::Event.where('start_date < ? and created_by = ?',Time.now.strftime('%Y-%m-%d %H:%M:%S'), current_user.id).paginate(:page => params[:page])
+            end
           else
-            @events = Refinery::Events::Event.where(:created_by=>current_user.id).paginate(:page=>params[:page])
+            if current_user.roles.map(&:title).include?('Superuser')
+              @events = Refinery::Events::Event.where('start_date > ?',Time.now.strftime('%Y-%m-%d %H:%M:%S')).paginate(:page => params[:page])
+            else
+              @events = Refinery::Events::Event.where('start_date > ? and created_by = ?',Time.now.strftime('%Y-%m-%d %H:%M:%S'), current_user.id).paginate(:page => params[:page])
+            end
           end          
         end
 
@@ -53,13 +61,23 @@ module Refinery
 
         def publish
           @event = Refinery::Events::Event.find(params[:id])
-          @event.update_attributes(:published => true)
+          if !current_user.roles.map(&:title).include?('Superuser')
+            @event.update_attribute('published_by_eo',true)
+          else            
+            @event.update_attributes(:published => true)
+          end
+          #send Email
           redirect_to '/refinery/events'
         end
 
         def revoke
           @event = Refinery::Events::Event.find(params[:id])
-          @event.update_attributes(:published => false)
+          if !current_user.roles.map(&:title).include?('Superuser')
+            @event.update_attribute('published_by_eo',false)
+          else
+            @event.update_attributes(:published => false)
+          end
+          #send Email
           redirect_to '/refinery/events'
         end
 

@@ -1,3 +1,3 @@
 Refinery::Core.configure do |config|
-  config.site_name = "Refinery"
+  config.site_name = "Goevents"
 end

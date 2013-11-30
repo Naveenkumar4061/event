@@ -3,6 +3,8 @@ en:
     plugins:
       users:
         title: Users
+      bank_details:
+        title: Event Organizers
       events:
         title: Events
     events:

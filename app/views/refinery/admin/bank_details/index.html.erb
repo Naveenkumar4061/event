@@ -1,0 +1,17 @@
+<h3>Event Organizers</h3>
+<table>
+	<tr>
+		<td>Emailid</td>
+		<td></td>
+	</tr>
+	<% @event_organizers.each do |e| %>
+		<tr>
+			<td>
+				<%= e.email %>
+			</td>
+			<td>
+				<%= link_to 'Bank Details', '#' %>
+			</td>
+		</tr>
+	<% end %>
+</table>

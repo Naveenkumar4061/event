@@ -1,18 +1,35 @@
 <section id='records'>
-<table width = "100%">
-	<tr>
-		<td>Event Title</td>
-		<td>No of Tickets</td>
-		<td>Purchase Total</td>
-	</tr>
-<% @transctions.each do |registration| %>
-	<tr>
-		<td><%= registration.event.title %></td>
-		<td><%= registration.no_of_tickets %></td>
-		<td><%= registration.total %></td>
-	</tr>
-<% end %>
-</table>
+	<% if current_user.roles.map(&:title).include?('Superuser') %>
+		<div>
+			Events:
+			<%= select 'events','search',Refinery::Events::Event.all.collect{|e| [e.title,e.id]} %>
+		</div>
+		<%= link_to 'Download','#' %>
+	<% end %>
+	<table width = "100%">
+		<tr>
+			<td>Event Title</td>
+			<td>No of Tickets</td>
+			<td>Total</td>
+		</tr>
+		<% @transctions.each do |registration| %>
+			<tr>
+				<td><%= registration.event.title %></td>
+				<td><%= registration.no_of_tickets %></td>
+				<td><%= registration.total %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td></td>
+			<td colspan="2">
+				<div style="float:right;">
+				<% unless @transctions.blank?%>
+					Final Total: Rs.<%= @transctions.first.event.registrations.sum(:total) %>
+				<% end %>
+				</div>
+			</td>
+		</tr>
+	</table>
 </section>
 <aside id='actions'>
   <%= render 'actions' %>

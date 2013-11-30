@@ -1,0 +1,38 @@
+<div>
+	<h3>Registration Details</h3>
+	<%= link_to 'Print','#' %>
+</div>
+<% if @registration.event.master_details_only %>
+	<table>		
+		<tr>
+			<td>Ticket : <%= @registration.attendees.first.ticket.ticket_name %></td>
+		</tr>
+		<tr>
+			<td>Name: <%= @registration.attendees.first.attendee_details.where(:field_id=>@registration.event.form.form_fields.where(:field_name=>'Full Name').first.id).first.value %>
+			</td>
+		</tr>
+		<tr>
+			<td>Email: <%= @registration.attendees.first.attendee_details.where(:field_id=>@registration.event.form.form_fields.where(:field_name=>'Email Id').first.id).first.value %>
+			</td>			
+			<td>| Mobile: <%= @registration.attendees.first.attendee_details.where(:field_id=>@registration.event.form.form_fields.where(:field_name=>'Mobile Number').first.id).first.value %>	
+			</td>
+		</tr>
+		<tr>
+			<td>Address: <%= @registration.attendees.first.attendee_details.where(:field_id=>@registration.event.form.form_fields.where(:field_name=>'Address').first.id).first.value %>
+			</td>
+		</tr>
+	</table>
+<% else %>
+	<table>
+		<tr>
+			<td>Ticket Name</td>
+			<td>Person Name</td>
+		</tr>
+		<% @registration.attendees.each do |att| %>
+			<tr>
+				<td><%= att.ticket.ticket_name %></td>
+				<td><%= att.attendee_details.first.value %></td>
+			</tr>
+		<% end %>
+	</table>
+<% end %>
