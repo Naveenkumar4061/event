@@ -30,7 +30,7 @@
           <div class="span8 jcarousel-wrapper " style="height:260px !important;" >
             <div id="gallery" class="jcarousel">
               <ul>
-                <% Refinery::Events::Event.where( :publish_banner => 1 ).each do |e| %>
+                <% Refinery::Events::Event.where( :publish_banner => true ).each do |e| %>
                   <li><%= image_tag e.banner.url(:original), :size => '600x400' %></li>
                 <% end %>                
               </ul>
