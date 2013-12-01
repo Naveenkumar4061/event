@@ -1,34 +1,55 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('#events_search').change(function(){
+        window.location.href = window.location.pathname + "?event_id=" + $(this).val();
+      });
+  });
+</script>
 <section id='records'>
 	<% if current_user.roles.map(&:title).include?('Superuser') %>
 		<div>
-			Events:
-			<%= select 'events','search',Refinery::Events::Event.all.collect{|e| [e.title,e.id]} %>
+			Select Event:
+      <%= select 'events','search',Refinery::Events::Event.all.collect{|e| [e.title,e.id]}, {:selected=>params[:event_id]} %>
+      <div style="float:right;">
+        <%= link_to 'Download', "/Report_#{current_user.id}.csv" %>
+      </div>
 		</div>
-		<%= link_to 'Download','#' %>
+  <% else %>
+		<div>
+			Select Event:
+      <%= select 'events','search',Refinery::Events::Event.where(:created_by=>current_user.id).collect{|e| [e.title,e.id]} %>
+      <div style="float:right;">
+        <%= link_to 'Download', "/Report_#{current_user.id}.csv" %>
+      </div>
+		</div>
 	<% end %>
-	<table width = "100%">
+
+	<table width = "100%" border="1px">
 		<tr>
-			<td>Event Title</td>
-			<td>No of Tickets</td>
-			<td>Total</td>
-		</tr>
-		<% @transctions.each do |registration| %>
-			<tr>
-				<td><%= registration.event.title %></td>
-				<td><%= registration.no_of_tickets %></td>
-				<td><%= registration.total %></td>
-			</tr>
+			<td>S.No</td>
+			<td>Date</td>
+			<td>Ticket Types</td>
+			<td>Contact Details</td>
+			<td>Quantity</td>
+			<td>Amount</td>
+    </tr>
+    <% count = 1 %>
+    <% @transctions.each do |registration| %>
+        <tr>
+          <td><%= count %></td>
+          <td><%= registration.created_at.strftime('%d/%m/%Y %H:%M:%S') %></td>
+          <td><%= Refinery::Events::Ticket.find(registration.attendees.collect(&:ticket_id)).collect(&:ticket_name).join(',') %></td>
+          <td>
+            <% registration.attendees.first.contact.each do |hh| %>
+              <%= hh[1] %><br>
+            <% end %>
+          </td>
+          <td><%= registration.no_of_tickets %></td>
+          <td><%= registration.total %></td>
+          <% count = count + 1 %>
+        </tr>
 		<% end %>
-		<tr>
-			<td></td>
-			<td colspan="2">
-				<div style="float:right;">
-				<% unless @transctions.blank?%>
-					Final Total: Rs.<%= @transctions.first.event.registrations.sum(:total) %>
-				<% end %>
-				</div>
-			</td>
-		</tr>
+
 	</table>
 </section>
 <aside id='actions'>

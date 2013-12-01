@@ -8,6 +8,7 @@ module Refinery
 
         before_filter :update_created_by, :only => [:create]
         before_filter :update_updated_by, :only => [:update]
+        require 'csv'
 
         def index
           if params[:filter] == "past"
@@ -92,12 +93,30 @@ module Refinery
           params[:event][:updated_by] = current_user.id
         end
 
-        def transaction_history
+        def transaction_history          
           if current_user.roles.map(&:title).include?('Superuser')
-            @transctions = Refinery::Events::Registration.where(:state=>'complete')
+            if params[:event_id]
+              @transctions = Refinery::Events::Registration.where(:state=>'complete',:event_id=>params[:event_id])
+            else
+              @transctions = Refinery::Events::Registration.where(:state=>'complete')
+            end
           else
             created_events = Refinery::Events::Event.where(:created_by=>current_user.id).map(&:id)
-            @transctions = Refinery::Events::Registration.where('state= ? and event_id in (?)','complete',created_events)
+            if params[:event_id]
+              @transctions = Refinery::Events::Registration.where('state= ? and event_id = ?','complete',params[:event_id])
+            else
+              @transctions = Refinery::Events::Registration.where('state= ? and event_id in (?)','complete',created_events)
+            end
+          end
+
+          save_path = Rails.root.join('public',"Report_#{current_user.id}.csv")
+          CSV.open(save_path,"wb") do |csv|
+            csv << ["S.No", "Date", "Ticket Type", "Contact","Quantity","Amount"]
+            count=1
+            @transctions.each do |registration|              
+              csv << [count, registration.created_at.strftime('%d/%m/%Y %H:%M:%S'), Refinery::Events::Ticket.find(registration.attendees.collect(&:ticket_id)).collect(&:ticket_name).join(',') ,registration.attendees.first.contact.values.join(',') , registration.no_of_tickets, registration.total ]
+              count = count + 1
+            end
           end
         end
 

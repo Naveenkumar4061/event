@@ -21,7 +21,12 @@
     </div>
 
     <div id="main-body" class="row-fluid">
-      <div class="container">
+      <div class="container" style="margin-top:40px;">
+        <div class="flash_container">
+          <% flash.each do |name, msg| -%>
+            <%= content_tag :div, msg, class: name %>
+          <% end -%>
+        </div>
         <hr>
         <div class="row-fluid">
           <div class="span4">
@@ -61,6 +66,10 @@
 
     <script>
       $(document).ready(function() {
+        setTimeout(function()
+        {
+          $('.flash_container').text('');
+        }, 3000);
           /*var p = $("#gallery").portfolio({ 
             enableKeyboardNavigation: true,
             loop: true,

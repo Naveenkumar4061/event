@@ -7,11 +7,11 @@
 		<td>Actions</td>		
 	</tr>
 	<% count = 1 %>
-	<% @users.each do |user| %>		
+	<% @iusers.each do |user| %>		
 		<tr>
 			<td><%= count %></td>
 			<td><%= user.email %></td>
-			<td><%= link_to 'Edit', "/refinery/admin/users/#{user.id}/edit" %> | <%= link_to 'Inactivate', "/refinery/admin/users/#{user.id}/inactivate_user" %></td>
+			<td> <%= link_to 'Activate', "/refinery/admin/users/#{user.id}/activate_user" %></td>
 			<% count = count + 1 %>
 		</tr>
 	<% end %>

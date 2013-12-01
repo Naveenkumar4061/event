@@ -1,0 +1,46 @@
+<h3> Event Organizer: <%= @event_organizer.email %> </h3>
+<h4>Bank Details</h4>
+<table>
+  <tr>
+    <td>Account Name</td>
+    <td><%= @event_organizer.bank_detail.try(:account_name) %></td>
+  </tr>
+  <tr>
+    <td>Account Number</td>
+    <td><%= @event_organizer.bank_detail.try(:account_number) %></td>
+  </tr>
+  <tr>
+    <td>Bank Name</td>
+    <td><%= @event_organizer.bank_detail.try(:bank_name) %></td>
+  </tr>
+  <tr>
+    <td>Branch</td>
+    <td><%= @event_organizer.bank_detail.try(:branch) %></td>
+  </tr>
+  <tr>
+    <td>IFSC</td>
+    <td><%= @event_organizer.bank_detail.try(:ifsc) %></td>
+  </tr>
+  <tr>
+    <td>Account Type</td>
+    <td><%= @event_organizer.bank_detail.try(:account_type) %></td>
+  </tr>
+</table>
+<h4>Event Details</h4>
+<table border="1">
+  <tr>
+    <td>Event Title</td>
+    <td>Event Date</td>
+    <td>No of Tickets sold</td>
+    <td>Total Amount</td>
+  </tr>
+  <% @events.each do |e| %>
+    <tr>
+      <td><%= e.title %></td>
+      <td>
+        <%= e.start_date.strftime('%d/%m/%Y') %>
+      </td>
+      <td><%= e.registrations.where(:state=>'complete').sum(:no_of_tickets) %></td>
+      <td><%= e.registrations.where(:state=>'complete').sum(:total) %></td>
+    </tr>
+  <% end %>

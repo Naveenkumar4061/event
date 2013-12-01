@@ -1,5 +1,5 @@
 <section id="records">
-<%=link_to 'Registered Users','/refinery/admin/users'%> | <%=link_to 'Imported Users','/refinery/admin/users/imported_users'%>
+<%= render 'top_sub_menu' %>
 <%= form_tag '/refinery/admin/users/import_user', multipart: true do -%>
   <label for="email">Email</label> <%= text_field_tag "email" %>
   <%= submit_tag %>
@@ -15,7 +15,7 @@
 		<tr>
 			<td><%= count %></td>
 			<td><%= user.email %></td>
-			<td><%= link_to 'Edit', "/refinery/admin/users/#{user.id}/edit"%> | <%= link_to 'Inactivate', '#'%></td>
+      <td><%= link_to 'Delete', "/refinery/admin/users/destroy_imported_user?invite_id=#{user.id}"%></td>
 			<% count = count + 1 %>
 		</tr>
 	<% end %>

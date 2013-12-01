@@ -28,13 +28,24 @@ Goevent::Application.routes.draw do
   root :to => 'static#home'
   namespace :refinery do
     namespace :admin do
-      resources :bank_details
+      resources :bank_details do
+        member do
+          get 'details'
+        end
+      end
       resources :users do
         collection do
           get 'upload_new_users'
           post 'upload_users'
           get 'imported_users'
           post 'import_user'
+          get 'active_users'
+          get 'inactive_users'
+          get 'destroy_imported_user'
+        end
+        member do
+          get 'activate_user'
+          get 'inactivate_user'
         end
       end
     end

@@ -67,16 +67,16 @@ module Refinery
 
       def upload_users
         begin 
-        file_data = params[:file].read
-        message = "error"
-        csv_rows = CSV.parse(file_data)
-        csv_rows.each do |row|
-          if row[0] == "Email"
+          file_data = params[:file].read
+          message = "error"
+          csv_rows = CSV.parse(file_data)
+          csv_rows.each do |row|
+            if row[0]=='Email'
+              next
+            end
+            Invite.create(:email => row[0])
             message = "success"
-          else
-
           end
-        end
         rescue
           message = "error"
         end
@@ -85,10 +85,23 @@ module Refinery
         else
           flash[:error] ="Error Importing"          
         end
+        redirect_to '/refinery/admin/imported_users'
+      end
+      
+      def activate_user
+        @user = User.unscoped.find(params[:id])
+        @user.update_attribute('deleted_at',nil)
         redirect_to '/refinery/admin/users'
       end
 
-      def inactivate_users
+      def inactivate_user
+        @user = User.find(params[:id])
+        @user.update_attribute('deleted_at',Time.now)
+        redirect_to '/refinery/admin/users'
+      end
+
+      def inactive_users
+        @iusers = User.unscoped.where('deleted_at is not null') 
       end
 
       def imported_users
@@ -102,6 +115,12 @@ module Refinery
         else
           flash[:notice] = "User already added"
         end
+        redirect_to '/refinery/admin/users/imported_users'
+      end
+
+      def destroy_imported_user
+        @invite = Invite.find(params[:invite_id])
+        @invite.delete if @invite
         redirect_to '/refinery/admin/users/imported_users'
       end
 
