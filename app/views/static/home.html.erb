@@ -9,15 +9,13 @@
   <%#= link_to "Forgot password?", new_user_password_path, :style=>"color:orange;" %>
   <%# end %>-->
 
-<h2>Join Us</h2>
-
 <%= form_for @user, :url => invitation_path(@user), :html => {:method => :post} do |f| %>
   <%#= devise_error_messages! %>
 
 <% @user.class.invite_key_fields.each do |field| -%>
   <p><%= f.label field %><br />
-  <%= f.text_field field %></p>
+  <%= f.email_field field %></p>
 <% end -%>
 
-  <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
+  <p><%= f.submit 'Join Now' %></p>
 <% end %>

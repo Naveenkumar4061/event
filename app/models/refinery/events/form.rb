@@ -7,7 +7,7 @@ class Refinery::Events::Form < ActiveRecord::Base
 
   def create_default_form_fields
     if self.form_fields.blank?
-      fields = {:"Full Name" => 'textbox', :"Email Id" => 'textbox', :"Mobile Number" => 'textbox', :"Address" => 'textarea', :"State" => 'dropdown', :"City" => 'dropdown', :"Pincode" => 'textbox', :"Company" => 'textbox', :"Designation" => 'dropdown'}
+      fields = {:"Full Name" => 'textbox', :"Email Id" => 'textbox', :"Mobile Number" => 'textbox'}
       fields.each do |field|
         if field[1].to_s == 'textbox' || field[1].to_s == 'textarea'
           Refinery::Events::FormField.create(:field_name => field[0].to_s, :field_type => field[1].to_s, :is_mandatory => 1,:form_id => self.id)

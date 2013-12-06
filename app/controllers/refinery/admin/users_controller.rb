@@ -66,16 +66,23 @@ module Refinery
       end
 
       def upload_users
-        begin 
-          file_data = params[:file].read
-          message = "error"
-          csv_rows = CSV.parse(file_data)
-          csv_rows.each do |row|
-            if row[0]=='Email'
-              next
+        begin
+          if params[:partner][:id].blank?
+            p "@"*32
+            raise
+          else 
+            p "!"*32
+            file_data = params[:file].read
+            message = "error"
+            csv_rows = CSV.parse(file_data)
+            csv_rows.each do |row|
+              if row[0]=='SI No'
+                p "%"*32
+                next
+              end
+              Invite.create(:full_name => row[1],:gender=>row[3],:email=>row[4],:designation=>row[6],:company=>row[7])
+              message = "success"
             end
-            Invite.create(:email => row[0])
-            message = "success"
           end
         rescue
           message = "error"
@@ -85,7 +92,7 @@ module Refinery
         else
           flash[:error] ="Error Importing"          
         end
-        redirect_to '/refinery/admin/imported_users'
+        redirect_to '/refinery/admin/users/imported_users'
       end
       
       def activate_user
@@ -122,6 +129,37 @@ module Refinery
         @invite = Invite.find(params[:invite_id])
         @invite.delete if @invite
         redirect_to '/refinery/admin/users/imported_users'
+      end
+
+      def partners
+        @partners = Refinery::Partner.all
+      end
+
+      def new_partner
+        @partner = Refinery::Partner.new
+      end
+
+      def create_partner
+        @partner = Refinery::Partner.new(params[:partner])
+        if @partner.save          
+          redirect_to '/refinery/admin/users/partners'
+        else
+          render :new_partner
+        end
+      end
+
+      def edit_partner
+        @partner = Refinery::Partner.where(params[:cid]).try(:first)
+      end
+
+      def update_partner
+        @partner = Refinery::Partner.find(params[:partner][:id])
+
+        if @partner && @partner.update_attributes(:company_name=>params[:partner][:company_name],:address=>params[:partner][:address],:employee_strength=>params[:partner][:employee_strength])
+          redirect_to '/refinery/admin/users/partners'
+        else
+          render :edit_partner
+        end
       end
 
       protected

@@ -14,6 +14,7 @@
 
         <div class="login_status" style="float:right;margin-top:20px;">
           
+          
           <% if is_admin? %>
             <%= link_to 'Admin', '/refinery' %> |
           <% end %>
@@ -37,6 +38,13 @@
   <hr>
   
   <div class="container" id="bodyc">
+    
+    <div class="flash_container">
+      <% flash.each do |name, msg| -%>
+        <%= content_tag :div, msg, class: name %>
+      <% end -%>
+    </div>
+
     <div>
       <!--<div style="float:left;"><%= text_field 'search','field', :style=>'width:400px;' %><%= submit_tag 'Search'%></div>-->
       <div style="float:right;">
@@ -45,7 +53,7 @@
         <%= link_to 'Support', '/event/support' %>
       </div>
     </div>
-
+    
     <%= yield %>
   </div>
   <div id="footer-div">
@@ -58,6 +66,10 @@
   </div>
   <script>
     $(document).ready(function() {
+      setTimeout(function()
+        {
+          $('.flash_container').text('');
+        }, 3000);
       $('.jcarousel').jcarousel({
             animation: 'slow',
             transitions: true,

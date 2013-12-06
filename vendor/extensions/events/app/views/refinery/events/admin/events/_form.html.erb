@@ -56,14 +56,8 @@
                 :object => "events/event" -%>
   </div>
 
-
   <div class='field'>
-    <%= f.label :position -%>
-    <%= f.number_field :position -%>
-  </div>
-
-  <div class='field'>
-    <%= f.label :photo -%>
+    <%= f.label "Thumbnail Image(145x200)" -%>
     <%= render '/refinery/admin/image_picker',
                :f => f,
                :field => :photo_id,

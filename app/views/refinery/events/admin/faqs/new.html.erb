@@ -4,11 +4,11 @@
 
     <div class="field">
       <label for="faq_question">Question</label>
-      <%= text_field 'faq', 'question', :value => @faq.question %>
+      <%= text_area 'faq', 'question', :value => @faq.question, :size=>'40' %>
     </div>
     <div class="field">
       <label for="faq_answer">Answer</label>
-      <%= text_area 'faq', 'answer', :value => @faq.answer %>
+      <%= text_area 'faq', 'answer', :value => @faq.answer, :size=>'40x5' %>
     </div>
     
     <div class="form-actions" style="border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">

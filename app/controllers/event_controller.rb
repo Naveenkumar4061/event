@@ -110,6 +110,8 @@ class EventController < ApplicationController
 
   def support_feedback
     #send mail to admin
+    EventMailer.support_email(params[:from_email],params[:subject],params[:message]).deliver
+    flash[:notice] = "Will be in touch with you soon!"
     redirect_to '/event/support'
 
   end

@@ -1,0 +1,24 @@
+<%= form_for  @partner, :url=> "/refinery/admin/users/update_partner" do |f| %>
+
+  <%= render '/refinery/admin/error_messages',
+             :object => @partner,
+             :include_object_name => true %>
+  <%= f.hidden_field :id %>
+  <div class='field'>
+    <%= f.label :company_name %>
+    <%= f.text_field :company_name %>
+  </div>
+  
+  <div class='field'>
+    <%= f.label :address %>
+    <%= f.text_area :address %>
+  </div>
+  
+  <div class='field'>
+    <%= f.label :employee_strength %>
+    <%= f.text_field :employee_strength %>
+  </div>
+
+  <%= submit_tag 'Save' %>
+
+<% end %>

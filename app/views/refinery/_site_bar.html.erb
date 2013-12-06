@@ -12,8 +12,9 @@
                   'http://refinerycms.com',
                   :target => '_blank',
                   :id => 'site_bar_refinery_cms_logo' %>
-
       <div id='site_bar_branding'>
+        <%#= link_to 'Password Change', "/users/password/edit/#{current_user.id}" %>
+
         <span id='site_bar_company_name'>
           <%= Refinery::Core.site_name %>
         </span>

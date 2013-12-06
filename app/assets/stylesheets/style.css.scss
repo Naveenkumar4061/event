@@ -54,3 +54,13 @@ have a fixed width and height (but it's not required).
     float: left;
 }
 
+.flash_container{
+    
+    .notice{
+        border: 1px solid green;
+        background-color: green;
+        color: white;
+        font-weight: bold;
+        padding: 10px;
+    }
+}

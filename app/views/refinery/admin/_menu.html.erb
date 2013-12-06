@@ -1,33 +1,65 @@
 <nav id="menu">
 <%#raise ::Refinery::Plugins.active.in_menu.map(&:title).inspect%>
-  <% ::Refinery::Plugins.active.in_menu.each do |plugin| -%>
-    
+<% evnt = current_user.plugins.where(:name => 'events') 
+    if evnt && evnt.first && evnt.first.position != 1      
+      evnt.first.update_attribute('position',1)
+    end
+    img = current_user.plugins.where(:name => "refinery_images")
+    if img && img.first && img.first.position != 2
+      img.first.update_attribute('position',2)
+    end
+    pge = current_user.plugins.where(:name => "refinery_pages")
+    if pge && pge.first && pge.first.position != 3
+      pge.first.update_attribute('position',3)
+    end
+    usr = current_user.plugins.where(:name => "users")
+    if usr && usr.first && usr.first.position != 4
+      usr.first.update_attribute('position',4)
+    end
+    acl = current_user.plugins.where(:name => "refinery_dashboard")
+    if acl && acl.first && acl.first.position != 5
+      acl.first.update_attribute('position',5)
+    end
+%>
+
+  <% ::Refinery::Plugins.active.in_menu.each do |plugin| -%>    
+
     <% unless plugin.title == "Users" %>
-      <%= link_to plugin.title, refinery.url_for(plugin.url),
+      <% if plugin.title != "Files" %>
+        <% if plugin.title == "Dashboard" %>
+          
+          <% if !(current_user.roles.map(&:title).include?('Superuser')) %>
+            <% if params[:action] == "bank_details" %>
+              <%= link_to 'Bank Detail', '/refinery/bank_details',
+                    :class => ("active"),
+                    :id => "plugin_bank_detail" %>
+            <% else %>
+              <%= link_to 'Bank Detail', '/refinery/bank_details',
+                    :class => (""),
+                    :id => "plugin_bank_detail" %>
+              <%= link_to 'Reports', '/refinery/events/transaction_history', :class=>'',:id=>"reports" %>
+            <% end %>
+          <% else %>
+            <%= link_to 'Event Organizers', '/refinery/admin/bank_details', :class=>'',:id=>"reports" %>
+            <%= link_to 'Reports', '/refinery/events/transaction_history', :class=>'',:id=>"reports" %>            
+          <% end %>
+
+          <%= link_to "Activity Log", refinery.url_for(plugin.url),
               :class => ("active" if plugin.highlighted?(params)),
               :id => "plugin_#{plugin.name}" %>
-    <% else %>
-      <%= link_to plugin.title, '/refinery/admin/users',
+        <% else %>
+          <%= link_to plugin.title, refinery.url_for(plugin.url),
+              :class => ("active" if plugin.highlighted?(params)),
+              :id => "plugin_#{plugin.name}" %>
+        <% end %>
+      <% end %>
+    <% else %>      
+      <%= link_to plugin.title == "Users" ? "Partners" : plugin.title , '/refinery/admin/users',
                 :class => ("active" if plugin.highlighted?(params) && params[:action]=="bank_details"),
                 :id => "plugin_#{plugin.name}" %>      
     <% end %>    
   <% end -%>
 
-  <% if !(current_user.roles.map(&:title).include?('Superuser')) %>
-    <% if params[:action] == "bank_details" %>
-      <%= link_to 'Bank Detail', '/refinery/bank_details',
-            :class => ("active"),
-            :id => "plugin_bank_detail" %>
-    <% else %>
-      <%= link_to 'Bank Detail', '/refinery/bank_details',
-            :class => (""),
-            :id => "plugin_bank_detail" %>
-      <%= link_to 'Reports', '/refinery/events/transaction_history', :class=>'',:id=>"reports" %>
-    <% end %>
-  <% else %>
-    <%= link_to 'Event Organizers', '/refinery/admin/bank_details', :class=>'',:id=>"reports" %>
-    <%= link_to 'Reports', '/refinery/events/transaction_history', :class=>'',:id=>"reports" %>
-  <% end %>
 
   <!-- disabled the reorder button -->
   <% if false && ::Refinery::Plugins.active.in_menu.many? -%>

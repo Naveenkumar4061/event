@@ -27,8 +27,9 @@
       <%= text_field 'ticket', 'discounted_price', :value => @ticket.discounted_price %>
     </div>
     <div class="field">
-      <label for="ticket_commission">Commission</label>
-      <%= text_field 'ticket', 'commission' %>
+      <label for="ticket_commission">Payment Gateway Charges</label>
+      <%= hidden_field 'ticket', 'commission' %>
+      <span id="commission_txt">2.5% </span>
     </div>
     <div class="field">
       <label for="ticket_is_service_tax">Add Service Tax</label>

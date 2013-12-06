@@ -3,12 +3,12 @@
 <%= form_for @artist, :url => "/refinery/events/#{params[:event_id]}/artists", :multipart=> true, :method => :post do |f| -%>
 
     <div class="field">
-      <label for="artist_question">Question</label>
+      <label for="artist_question">Artist</label>
       <%= image_tag @artist.artist.url(:thumb) %>
       <%= f.file_field :artist %>
     </div>
     <div class="field">
-      <label for="faq_description">Answer</label>
+      <label for="faq_description">About Artist</label>
       <%= text_area 'artist', 'description', :value => @artist.description %>
     </div>
     

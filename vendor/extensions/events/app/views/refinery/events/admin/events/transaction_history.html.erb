@@ -5,6 +5,21 @@
       });
   });
 </script>
+<table>
+  <tr>
+    <td>Start Date</td>
+    <td> <%= text_field 'start','date' %></td>
+    <td>End Date</td>
+    <td><%= text_field 'end','date' %></td>
+  </tr>
+  <tr>
+    <td>Event Organizer</td>
+    <td><%=  %></td>
+    <td>Event Title</td>
+    <td><%=  %></td>    
+  </tr>
+</table>
+
 <section id='records'>
 	<% if current_user.roles.map(&:title).include?('Superuser') %>
 		<div>

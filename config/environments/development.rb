@@ -13,10 +13,24 @@ Goevent::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  ActionMailer::Base.smtp_settings = {
+    :address => 'smtp.gmail.com',
+    :port => 587,
+    :domain => "gmail.com",
+    :user_name => 'stage.goevents@gmail.com',
+    :password => 'goevents123',
+    :authentication => "plain",
+    :openssl_verify_mode  => OpenSSL::SSL::VERIFY_NONE,
+    :enable_starttls_auto => true
+  }
+  
   # Don't care if the mailer can't send
   if config.respond_to?(:action_mailer)
-    config.action_mailer.raise_delivery_errors = false
+    config.action_mailer.delivery_method = :smtp    
   end
+  config.action_mailer.default_url_options = {:host=>'localhost:3000'}
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp    
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

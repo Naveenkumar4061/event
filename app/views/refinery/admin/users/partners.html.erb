@@ -1,0 +1,28 @@
+<div>
+  <%= link_to 'New Partner' , "/refinery/admin/users/new_partner", :style=>"border:1px solid;padding:3px;" %>
+  
+</div>
+<section id="records">
+<table border="1">
+	<tr>
+		<td>#</td>
+		<td>Company</td>
+		<td>Address</td>
+		<td>Employee Strength</td>
+		<td></td>
+	</tr>
+	<tr>
+		<% count = 1 %>
+		<% @partners.each do |p| %>
+			<td><%= count %></td>
+			<td><%= p.company_name %></td>
+			<td><%= p.address %></td>
+			<td><%= p.employee_strength %></td>
+			<td><%= link_to 'Edit', "/refinery/admin/users/edit_partner?cid=#{p.employee_strength}" %></td>
+
+			<% count = count + 1 %>			
+		<% end %>
+	</tr>
+</table>
+</section>
+<%= render 'actions' %>

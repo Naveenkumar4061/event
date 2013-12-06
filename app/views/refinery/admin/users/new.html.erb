@@ -16,6 +16,12 @@
     <%= f.label :email %>
     <%= f.text_field :email %>
   </div>
+
+  <div class='field'>
+    <%= f.label :partner_id %>
+    <%= f.select :partner_id, Refinery::Partner.all.collect{|e| [e.company_name,e.id] } %>
+  </div>
+
   <div class='field'>
     <%= f.label :password %>
     <%= f.password_field :password, :autocomplete => 'off' %>

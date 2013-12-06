@@ -30,6 +30,19 @@
       <label for="event_pincode">Pincode</label>
       <%= text_field 'venue', 'pincode', :value => @venue.pincode %>
     </div>
+    <h3>Co-ordinates</h3>
+    <div class="field">
+      <label for="event_latitude">Latitude</label>
+      <%= text_field 'venue', 'latitude', :value => @venue.latitude %>
+    </div>
+    <div class="field">
+      <label for="event_longitude">Longitude</label>
+      <%= text_field 'venue', 'longitude', :value => @venue.longitude %>
+    </div>
+    <div class="field">
+      <label for="event_title">Marker Name</label>
+      <%= text_field 'venue', 'title', :value => @venue.title %>
+    </div>
 
 
     <div class="form-actions" style="border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">

@@ -8,6 +8,8 @@ Goevent::Application.routes.draw do
 
   devise_for :users
   
+
+  get '/refinery', :to => 'refinery/events/admin/events#index'
   get 'event', :to=>'event#index'
   #get 'event/:id/show', :to => 'event#show'
   get '/refinery/events/transaction_history', :to => 'refinery/events/admin/events#transaction_history'
@@ -42,8 +44,13 @@ Goevent::Application.routes.draw do
           get 'active_users'
           get 'inactive_users'
           get 'destroy_imported_user'
+          get 'partners'
+          get 'new_partner'
+          post 'create_partner'
+          get 'edit_partner'
+          put 'update_partner'
         end
-        member do
+        member do                        
           get 'activate_user'
           get 'inactivate_user'
         end

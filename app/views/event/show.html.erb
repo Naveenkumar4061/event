@@ -1,6 +1,10 @@
 <%= stylesheet_link_tag 'jquery-ui.css' %>
 <%= javascript_include_tag 'jquery-ui.js' %>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <style>
+  #map_canvas {
+    background-color: #CCC;
+  }
   .ui-tabs-vertical { width: 55em; }
   .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
   .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
@@ -8,47 +12,11 @@
   .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; border-right-width: 1px; }
   .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 40em;}
   </style>
-<script type = "text/javascript">
-  $(function() {
-/*      var g = $("#event_gallery").portfolio({ 
-        enableKeyboardNavigation: true,
-        loop: true,
-        easingMethod: 'easeOutQuint',
-        height: '150px',
-        width: '80%',
-        lightbox: true,
-        showArrows: true          
-      });
-      g.init();*/
-    //$( "#accordian" ).accordion();
-    $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
-    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
-  });
-  var calculate_total = function(tis){
-    var total_no_of_tickets = 0;
-    var final_total = 0;
-    var tax_total = 0;
-    jQuery('.ticket-row').each(function(index){
-      p=jQuery(this).find('#dprice').text();
-      q=jQuery(this).find('#no_of_tickets').val();
-      if(q == 0)
-      {
-        jQuery(this).find('#total').text('0');
-      }else{
-        tot = (parseFloat(p) * parseFloat(q));
-        tt = parseFloat(jQuery(this).find('#tax_percent').val());
-        tax_total += ( tot * tt )/parseFloat('100.0');
-        final_total += (tot + ( tot * tt )/parseFloat('100.0'));
-        jQuery(this).find('#total').text(tot + ( tot * tt )/parseFloat('100.0'));
-        total_no_of_tickets += parseFloat(q);
-      }
-      
-    });
+  <script>
     
-    jQuery('#tax_display').text(tax_total);
-    jQuery('#total_display').text(final_total);
-  }
-</script>
+
+  </script>
+
 
 <div class="span12">
   <span style="font-weight:bold;"><%= @event.title.capitalize %></span>
@@ -65,7 +33,7 @@
     <ul>
       <li><a href="#tabs-1">Buy Tickets</a></li>    
       <% unless @event.venue.blank? %>
-        <li><a href="#tabs-2">Venue</a></li>    
+        <li><a href="#tabs-2" onclick="myMap(event)">Venue</a></li>    
       <% end %>
             <% unless @event.artists.blank? %>
         <li><a href="#tabs-3">Artists</a></li>    
@@ -95,7 +63,7 @@
               <td>Ticket Type</td>
               <td>Price</td>
               <td>Quantity</td>
-              <td>Total</td>
+              <td>Cost</td>
             </tr>
             <%@event.tickets.each do |t|%>
               <tr class="ticket-row">
@@ -118,7 +86,7 @@
           
           <div style="float:right;clear:both;">Tax <span id='tax_display'> 0.0</span> </div>
           <div style="float:right;clear:both;">Purchase Total(INR): <span id='total_display'> 0.0</span> </div>
-          <div style="float:right;clear:both;"><%= submit_tag 'Book'%></div>      
+          <div style="float:right;clear:both;"><%= submit_tag 'Buy'%></div>      
         <%end%>
       </p>
     </div>
@@ -134,8 +102,12 @@
             <%= @event.venue.state %> <br>
             <%= @event.venue.country %> <br>
             <%= @event.venue.pincode %>
+            <%= hidden_field_tag 'latitude', @event.venue.latitude , :id => 'latitude' %>
+            <%= hidden_field_tag 'longitude', @event.venue.longitude, :id => 'longitude' %>
+            <%= hidden_field_tag 'markertitle', @event.venue.title, :id => 'markertitle' %>
           </p>
         </div>
+        <div id="map_canvas" style="widht:500px;height:500px;"></div>
       </div>
     <% end %>
 

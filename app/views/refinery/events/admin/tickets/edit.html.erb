@@ -27,8 +27,9 @@
       <%= text_field 'ticket', 'discounted_price', :value => @ticket.discounted_price %>
     </div>
     <div class="field">
-      <label for="ticket_commission">Commission</label>
-      <%= text_field 'ticket', 'commission' %>
+      <label for="ticket_commission">Payment Gateway Charges</label>
+      <%= hidden_field 'ticket', 'commission' %>
+      <span id="commission_txt">2.5% = Rs.<%= @ticket.commission %></span>
     </div>
     <div class="field">
       <label for="ticket_is_service_tax">Add Service Tax</label>
@@ -46,10 +47,6 @@
     <div class="field">
       <label for="ticket_max_quantity_on_sale">Maximum Quantity On Sale</label>
       <%= text_field 'ticket', 'max_quantity_on_sale', :value => @ticket.max_quantity_on_sale %>
-    </div>
-    <div class="field">
-      <label for="ticket_display_order">Display Order</label>
-      <%= text_field 'ticket', 'display_order' %>
     </div>
     
     <div class="form-actions" style="border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">

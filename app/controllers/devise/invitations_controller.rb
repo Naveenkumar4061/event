@@ -28,9 +28,9 @@ class Devise::InvitationsController < DeviseController
       end
     else
       if Invite.where(:email=>params[:user][:email]).blank? && User.where(:email=>params[:user][:email]).blank?
-        flash[:error] = "Will respond to you soon"
+        flash[:notice] = "Will respond to you soon"
       else
-        flash[:error] = "User already registered"
+        flash[:notice] = "User already registered"
       end
       self.resource = resource_class.new
       respond_with_navigational(resource) { render :new }

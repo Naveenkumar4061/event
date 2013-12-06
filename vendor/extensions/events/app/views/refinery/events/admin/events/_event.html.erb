@@ -3,7 +3,7 @@
     <%= event.title %>
 
   </span>
-  <span class='actions'>
+  <span class='actions' style="width:125px;">
     
     <%= link_to refinery_icon_tag("application_go.png"), refinery.events_event_path(event),
         :title => t('.view_live_html'),
@@ -16,8 +16,8 @@
         :title => t('.delete'),
         :confirm => t('message', :scope => 'refinery.admin.delete', :title => event.title),
         :method => :delete %>
-    <% if event.published %>
-      <%= link_to 'Block', "/refinery/events/#{event.id}/revoke" %>  
+    <% if event.published %>    
+      <%= link_to 'UnPublish', "/refinery/events/#{event.id}/revoke" %>  
     <% else %>
       <%= link_to 'Publish', "/refinery/events/#{event.id}/publish" %>
     <% end %>

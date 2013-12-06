@@ -4,10 +4,14 @@ Refinery::Core::Engine.routes.draw do
   namespace :events do
     resources :events, :path => '', :only => [:index, :show]
   end
-
-  # Admin routes
   namespace :events, :path => '' do
     namespace :admin, :path => Refinery::Core.backend_route do
+      root :to => 'events#index'
+    end
+  end
+  # Admin routes
+  namespace :events, :path => '' do
+    namespace :admin, :path => Refinery::Core.backend_route do      
       resources :events, :except => :show do
         member do
           get 'venue'

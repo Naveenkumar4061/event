@@ -24,7 +24,7 @@ module Refinery
               @events = Refinery::Events::Event.where('start_date > ? and created_by = ?',Time.now.strftime('%Y-%m-%d %H:%M:%S'), current_user.id).paginate(:page => params[:page])
             end
           end          
-        end
+        end      
 
         def venue
           @event = Refinery::Events::Event.find(params[:id])
