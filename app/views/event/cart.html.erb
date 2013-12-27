@@ -1,0 +1,25 @@
+<h3>Cart</h3>
+<%= form_tag '/event/checkout',:method=>'post' do |f|%>
+  <table width="100%" border="1">
+    <tr>
+      <th>Event</th>
+      <th>No of Tickets</th>
+      <th>Total</th>
+    </tr>
+    <%tot=0%>
+    <% @registrations.each do |registration|%>
+      <tr>
+        <td><%= link_to registration.event.title, "/event/#{registration.event.url}" %><%= hidden_field 'registration',registration.id,:name=>'registration[]',:value=>registration.id %></td>
+        <td><%= registration.no_of_tickets %></td>
+        <td><%= registration.total %></td>
+        <% tot = tot + registration.total %>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="3" style="text-align:right;">Total:<%= tot %></td>
+    </tr>
+    <tr>
+      <td colspan="3" style="text-align:center;">
+        <%= submit_tag 'Pay'%></td></tr>
+  </table>
+<% end %>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  email: MyString
+  telephone: MyString
+  type_of_enq: MyString
+  category: MyString
+  sub_category: MyString
+  message: MyString
+
+two:
+  name: MyString
+  email: MyString
+  telephone: MyString
+  type_of_enq: MyString
+  category: MyString
+  sub_category: MyString
+  message: MyString

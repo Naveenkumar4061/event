@@ -1,0 +1,75 @@
+<section id="records">
+<%= form_for @workspace,:url=>'/refinery/admin/workspace',:method=>'post' do |f| -%>
+
+
+  <div class='field'>
+    <%= f.label :title -%>
+    <%= f.text_field :title, :class => 'larger widest' -%>
+  </div>
+
+  <div class='field'>
+    <%= f.label :start_date -%>
+    <%= f.date_select :start_date -%>
+    Time:<%= f.time_select :start_date, :ignore_date=>true %>  
+  </div>
+
+  <div class='field'>
+    <%= f.label :end_date -%>
+    <%= f.date_select :end_date -%>
+    Time:<%= f.time_select :end_date, :ignore_date=>true %>
+  </div>
+
+  <div class='field'>
+    <%= f.label :category -%>
+    <%#= f.text_field :category -%>
+    <%= f.select :category, Refinery::Events::Event::CATEGORIES.keys, :include_blank => true  %>
+  </div>
+
+  <div class='field'>
+    <%= f.label :sub_category -%>
+    <%#= f.text_field :sub_category -%>
+    <%= f.select :category, Refinery::Events::Event::CATEGORIES.values.flatten, :include_blank => true  %>
+  </div>
+
+  <!--<div class='field'>
+    <%= f.label :url -%>
+    http://goevents.com/event/<%= f.text_field :url -%>
+  </div>-->
+
+  <div class='field'>
+    <%= render '/refinery/admin/wysiwyg',
+                :f => f,
+                :fields => [:description],
+                :object => "events/event" -%>
+  </div>
+
+  <div class='field'>
+    <label>Image</label>
+    
+    <% if @workspace.banner.url == "/banners/original/missing.png" %>
+      <%= f.file_field :banner %>
+    <% else %>      
+      <%= image_tag @workspace.banner.url(:medium) %>
+      <%= f.file_field :banner %>
+    <% end %>
+  </div>
+
+  <div class='field'>
+    <label>Banner</label>
+    
+    <% if @workspace.banner.url == "/banners/original/missing.png" %>
+      <%= f.file_field :banner %>
+    <% else %>      
+      <%= image_tag @workspace.banner.url(:medium) %>
+      <%= f.file_field :banner %>
+    <% end %>
+  </div>
+  <%=submit_tag 'Save'%>
+
+<% end -%>
+
+</section>
+<% unless params[:id].blank? %>
+  <%#= render 'sidebar' %>
+<% end %>
+

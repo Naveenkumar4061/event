@@ -1,3 +1,4 @@
+<h3>User</h3>
 <%= form_for  @user, :url=> "/refinery/admin/users" do |f| %>
 
   <%= render '/refinery/admin/error_messages',
@@ -18,6 +19,26 @@
   </div>
 
   <div class='field'>
+    <%= f.label "Date of Birth" %>
+    <%= f.text_field :dob %>
+  </div>
+
+  <div class='field'>
+    <%= f.label :gender %>
+    <%= f.select :gender, ['Male','Female'] %>
+  </div>
+
+  <div class='field'>
+    <%= f.label :designation %>
+    <%= f.text_field :designation %>
+  </div>
+
+  <div class='field'>
+    <%= f.label :mobile %>
+    <%= f.text_field :mobile %>
+  </div>
+
+  <div class='field'>
     <%= f.label :partner_id %>
     <%= f.select :partner_id, Refinery::Partner.all.collect{|e| [e.company_name,e.id] } %>
   </div>
@@ -34,7 +55,7 @@
     <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation, :autocomplete => 'off' %>
   </div>
-  <div class='field plugin_access'>
+  <div class='field plugin_access' style="display:none;">
     <span class='label_with_help'>
       <%= f.label :plugin_access, t('.plugin_access'), :class => "title_label" %>
       <%= link_to "(#{t('.enable_all')})", "", :id => "user_plugins_enable_all" %>
@@ -61,7 +82,7 @@
   </div>
 
   <% if current_refinery_user.has_role?(:superuser) && true %>
-    <div class='field role_access'>
+    <div class='field role_access' style="display:none;">
       <span class='label_with_help'>
         <%= f.label :role_access, t('.role_access'), :class => "title_label" %>
       </span>

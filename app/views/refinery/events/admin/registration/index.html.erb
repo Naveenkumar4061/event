@@ -18,7 +18,7 @@
         <td align="center"><%= f.field_type.capitalize %></td>
         <td align="center"><%= check_box_tag 'field','is_mandatory', f.is_mandatory %></td>
         <td align="center"><%= text_field 'field','seq_no',:value=>'',:size=>'1' %></td>
-        <td align="center"><%= link_to 'Edit',"/refinery/events/#{@event.id}/registration/#{f.id}/edit"%>/<%= link_to 'Delete',"/refinery/events/#{@event.id}/registration/#{f.id}/destroy" %></td>
+        <td align="center"><%= link_to 'Edit',"/refinery/events/#{@event.id}/registration/#{f.id}/edit"%>/<%= link_to 'Delete',"/refinery/events/#{@event.id}/registration/#{f.id}", :method => :delete %></td>
       </tr>
       <%end%>
     </tbody>

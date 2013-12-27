@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   
   default_scope where('deleted_at is null')
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :full_name, :age, :gender, :company, :designation, :plugins, :partner_id
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :full_name, :age, :gender, :company, :designation, :plugins, :partner_id, :mobile, :dob, :c_company_name, :c_address, :c_city, :c_state
   
   has_and_belongs_to_many :roles, :join_table => ::RolesUsers.table_name
   has_many :plugins, :class_name => "UserPlugin", :order => "position ASC", :dependent => :destroy

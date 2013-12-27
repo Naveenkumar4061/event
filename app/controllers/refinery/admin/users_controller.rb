@@ -117,7 +117,7 @@ module Refinery
 
       def import_user
         if User.where('email=?',params[:email]).blank? && Invite.where('email=?',params[:email]).blank?
-          @iuser = Invite.create(:email=>params[:email])
+          @iuser = Invite.create(:email=>params[:email],:partner_id => params[:partner][:id])
           flash[:notice] = "User added Successfully"
         else
           flash[:notice] = "User already added"
@@ -149,17 +149,70 @@ module Refinery
       end
 
       def edit_partner
-        @partner = Refinery::Partner.where(params[:cid]).try(:first)
+        @partner = Refinery::Partner.find(params[:cid])
       end
 
       def update_partner
         @partner = Refinery::Partner.find(params[:partner][:id])
 
-        if @partner && @partner.update_attributes(:company_name=>params[:partner][:company_name],:address=>params[:partner][:address],:employee_strength=>params[:partner][:employee_strength])
+        if @partner && @partner.update_attributes(params[:partner])#@partner.update_attributes(:company_name=>params[:partner][:company_name],:address=>params[:partner][:address],:employee_strength=>params[:partner][:employee_strength])
           redirect_to '/refinery/admin/users/partners'
         else
           render :edit_partner
         end
+      end
+
+      def deactivate_partner
+        @partner = Refinery::Partner.find(params[:id])
+        @partner.delete
+        redirect_to '/refinery/admin/users/partners'
+      end
+
+      def deactive_partners
+        @partners = Refinery::Partner.unscoped.where('deleted_at is not null')
+        render :partners
+      end
+
+      def activate_partner
+        @partner = Refinery::Partner.unscoped.find(params[:id])
+        @partner.update_attribute('deleted_at',"")
+        redirect_to '/refinery/admin/users/partners'
+      end
+
+      def upload_partners
+        begin
+          if params[:partner][:id].blank?
+            p "@"*32
+            raise
+          else 
+            p "!"*32
+            file_data = params[:file].read
+            message = "error"
+            csv_rows = CSV.parse(file_data)
+            csv_rows.each do |row|
+              if row[0]=='SI No'
+                p "%"*32
+                next
+              end
+              Refinery::Partner.create(:company_name => row[1],:employee_strength=>row[2])
+              message = "success"
+            end
+          end
+        rescue
+          message = "error"
+        end
+        if message == "success"
+          flash[:success] = "Imported Successfully"
+        else
+          flash[:error] ="Error Importing"          
+        end
+        redirect_to '/refinery/admin/users/partners'
+      end
+
+
+      def partner_users
+        @partner = Refinery::Partner.find(params[:id])
+        @users = User.unscoped.where(:partner_id=>params[:id])
       end
 
       protected

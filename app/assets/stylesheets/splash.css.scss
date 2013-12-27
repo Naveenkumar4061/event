@@ -7,7 +7,7 @@
 	background-color: #222;
 	filter: none;
 	box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
-	height: 65px;
+	height: 85px;
 	border: none;
 }
 .navbar .brand{
@@ -17,8 +17,18 @@
 #logo{
   font-size: 3em;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 20px;
 }
+
+.login_form{
+	margin-top: 0px;
+}
+
+.bx-wrapper{
+	margin-bottom: 40px !important;
+	margin-top: 20px !important;
+}
+
 /* End Bootstrap Overrides */
 
 #main-body{
@@ -40,3 +50,5 @@ body, input, button, select, textarea{
 		padding: 10px;
 	}
 }
+
+.login_center{}

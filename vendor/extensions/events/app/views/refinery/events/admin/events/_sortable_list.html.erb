@@ -1,4 +1,13 @@
 <ul id='sortable_list'>
+  <li class="clearfix record no-nest off">
+  <span class="title">
+    <% if is_admin? %>
+      Event Date | Event Organizer | Event Position | Banner Position | Title
+    <% else %>
+      Event Date | Event Organizer | Title
+    <% end %>
+  	</span>
+  </li>
   <%= render :partial => 'event', :collection => @events %>
 </ul>
 <%= render '/refinery/admin/sortable_list',

@@ -10,7 +10,13 @@
 	  				</td>
 	  				<td>
 	  					<% if t.field_type == "textbox" %>
-	  						<%= text_field_tag "attendee_detail[#{t.id}]" %>
+	  						<% if t.field_name == "Full Name" %>
+	  							<%= text_field_tag "attendee_detail[#{t.id}]", current_user.full_name %>
+	  						<% elsif t.field_name == "Email Id" %>
+	  							<%= text_field_tag "attendee_detail[#{t.id}]", current_user.email %>
+	  						<% else %>
+	  							<%= text_field_tag "attendee_detail[#{t.id}]" %>
+	  						<% end %>
 	  					<% elsif t.field_type == "textarea" %>
 	  						<%= text_area_tag "attendee_detail[#{t.id}]" %>
 	  					<% elsif t.field_type == "dropdown"  %>
@@ -34,7 +40,7 @@
 			<%= radio_button_tag 'pay_by','card', false, :style => 'float:left;' %><label for="pay_by_card"  style = 'float:left;'>  Pay By Card</label>
 		</div>
 		<br>
-		<%= submit_tag 'Checkout' %>
+		<%= submit_tag 'Add to Cart' %>
 	<% end %>
 <% else %>
 	<%#raise @registration.attendees.inspect%>

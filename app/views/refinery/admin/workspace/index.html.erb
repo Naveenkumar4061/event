@@ -1,0 +1,48 @@
+<script type="text/javascript" src="/assets/refinery/jquery.tokeninput.js"></script>
+<script type="text/javascript" src="/assets/refinery/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input.css" />
+<link rel="stylesheet" type="text/css" href="/assets/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input-facebook.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/jquery.dataTables.css">
+<script type="text/javascript">
+  jQuery(document).ready(function(){
+    $('#start_at').datepicker({ dateFormat: 'dd-mm-yy' });
+    $('#end_at').datepicker({ dateFormat: 'dd-mm-yy' });
+    $('#dtbles').dataTable();
+  });
+</script>
+<%= link_to 'New Workspace','/refinery/admin/workspace/new', :class=>'button_box'%>
+<div style="margin-top:20px;">
+  <%= form_tag("/refinery/admin/workspace", method: "get") do %>
+          <div class="date-range-fields">
+            <b>From:</b><%= text_field_tag :start_at,@start_at, :class => 'datepicker', :placeholder=>'Start Date' %>
+            <b>To:</b><%= text_field_tag :end_at,@end_at, :class => 'datepicker', :placeholder=>'End Date' %>
+            <%= button_to "Submit", 'icon-search' %>
+          </div>
+    <% end %>
+</div>
+
+<table id="dtbles">
+  <thead>
+    <tr>
+      <th>Workspace</td>
+      <th>Partner Name</th>
+      <th>Starts At</th>
+      <th>Ends At</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @workspace.each do |w| %>
+      <tr>
+        <td><%= link_to w.title, '#' %></td>
+        <td><%= w.partner_id %></td>
+        <td><%= w.start_date.strftime('%d/%m/%Y %H:%M %p') %></td>
+        <td><%= w.end_date.strftime('%d/%m/%Y %H:%M %p') %></td>
+        <td><%= w.published ? 'Publish' : 'Unpublish' %></td>
+        <td><%= link_to 'Edit','#' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

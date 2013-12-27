@@ -1,7 +1,36 @@
+<script type="text/javascript">
+  function update_banner_position(event_banner_id){
+    $.ajax({      
+      type: 'PUT',
+      url: '/refinery/events/'+event_banner_id+'/update_banner_position',
+      data: "event_banner_position="+$('#event_banner_position_'+event_banner_id).val(),
+      success: function(data){}
+    });
+  }
+
+  function update_position(event_id){
+    $.ajax({
+      type: 'PUT',
+      url: '/refinery/events/'+event_id+'/update_position',
+      data: "event_position="+$('#event_position_'+event_id).val(),
+      success: function(data){}
+    });
+  }
+</script>
 <li class='clearfix record <%= cycle("on", "on-hover") %>' id="<%= dom_id(event) -%>">
   <span class='title'>
+    <% unless event.photo.blank? %>
+      <%= image_tag event.photo.url, :style=>'height:60px;' %>
+    <% end %>
+    <%= event.start_date.strftime('%d/%m/%Y %H:%M:%S') %> |
+    <%= User.find(event.created_by).try(:c_company_name) %> 
+      <% if is_admin? %>
+        | <%= text_field 'event', "position_#{event.id}", :value=>event.position , :size=>'1', :onchange => "update_position(#{event.id});" %> | <%= text_field 'event', "banner_position_#{event.id}",:value=>event.banner_position , :size=>'1', :onchange => "update_banner_position(#{event.id});" %> 
+      <% else %>
+      <% end %>
+  </span>
+  <span class="startdate">
     <%= event.title %>
-
   </span>
   <span class='actions' style="width:125px;">
     
@@ -16,10 +45,18 @@
         :title => t('.delete'),
         :confirm => t('message', :scope => 'refinery.admin.delete', :title => event.title),
         :method => :delete %>
-    <% if event.published %>    
-      <%= link_to 'UnPublish', "/refinery/events/#{event.id}/revoke" %>  
+    <% if is_admin? %>    
+      <% if event.published %>    
+        <%= link_to 'unpublish', "/refinery/events/#{event.id}/revoke" %>  
+      <% else %>
+        <%= link_to 'publish', "/refinery/events/#{event.id}/publish" %>
+      <% end %>
     <% else %>
-      <%= link_to 'Publish', "/refinery/events/#{event.id}/publish" %>
+      <% if event.published_by_eo %>    
+        <%= link_to 'unpublish', "/refinery/events/#{event.id}/revoke" %>  
+      <% else %>
+        <%= link_to 'publish', "/refinery/events/#{event.id}/publish" %>
+      <% end %>
     <% end %>
   </span>
 </li>

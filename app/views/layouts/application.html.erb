@@ -3,7 +3,9 @@
 <head>
   <title>Goevent</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "jquery.bxslider", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "jquery.bxslider.min" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -12,7 +14,7 @@
       <div class="container">
         <a class="brand" id="logo" href="/"><b>Goevents</b></a>
 
-        <div class="login_status" style="float:right;margin-top:20px;">
+        <div class="login_status" style="float:right;margin-top:30px;">
           
           
           <% if is_admin? %>
@@ -22,9 +24,9 @@
           <% if is_event_admin? %>
             <%= link_to 'Admin', '/refinery' %> |
           <% end %>
-
+          <%= link_to "Cart("+current_user.registrations.where(:state=>'cart').count.to_s+")", "/event/cart" %> |
           <% if user_signed_in? %>
-            <%= current_user.email %> | 
+            <%= link_to current_user.email, '/profile' %> | 
             <%= link_to 'Logout', '/users/sign_out', :method => :delete %>
           <% else %>
             <%= link_to 'SignIn', '/users/sign_in' %> | <%#= link_to 'SignUp', new_user_registration_path %>
@@ -58,10 +60,11 @@
   </div>
   <div id="footer-div">
     <div class="container">
-      <a href="/about-us"> About Us </a>
-      <a href="/terms-conditions"> Terms & conditions | </a>
-      <a href="/disclaimers"> Disclaimers |</a>
-      <a href="/contact-us"> Contact Us |</a>
+        <a href="/about-us"> About Us </a>
+        <a href="/faqs"> FAQs |</a>
+        <a href="/purchase-policy"> Purchase Policy |</a>
+        <a href="/privacy-policy"> Privacy Policy |</a>
+        <a href="/contact-us"> Contact Us |</a>
     </div>
   </div>
   <script>
@@ -70,7 +73,13 @@
         {
           $('.flash_container').text('');
         }, 3000);
-      $('.jcarousel').jcarousel({
+
+        $('.slider2').bxSlider({
+          slideWidth: 930,
+          minSlides: 1,
+          maxSlides: 1
+        });
+      /*$('.jcarousel').jcarousel({
             animation: 'slow',
             transitions: true,
             wrap: 'circular',
@@ -79,7 +88,7 @@
         interval: 3000,
         target: '+=1',
         autostart: true
-      });
+      });*/
     }); // end of ready();
   </script>
 </body>

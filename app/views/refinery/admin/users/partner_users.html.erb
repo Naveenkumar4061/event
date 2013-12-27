@@ -1,0 +1,26 @@
+<section id="records">
+<h3><%= @partner.company_name %></h3>
+<table border="1">
+  <tr>
+    <th>#</th>
+    <th>FullName</th>
+    <th>Email</th>
+    <th>Mobile</th>
+    <th>Status</th>
+    <th>Joined</th>
+  </tr>
+  <% count = 0 %>
+  <%@users.each do |user|%>
+    <% count = count + 1 %>
+    <tr>
+      <td><%= count %></td>
+      <td><%= user.full_name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.mobile %></td>
+      <td><%= user.deleted_at.nil? ? 'Active' : 'Deactivated' %></td>
+      <td><%= 'Yes' %></td>
+    </tr>
+  <% end %>
+</table>
+</section>
+<%= render 'actions' %>

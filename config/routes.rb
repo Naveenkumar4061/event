@@ -7,15 +7,33 @@ Goevent::Application.routes.draw do
   # We ask that you don't use the :as option here, as Refinery relies on it being the default of "refinery"
 
   devise_for :users
-  
 
+  devise_scope :user do
+    get "/profile" => "users#profile"
+    put "/profile" => "users#profile_update"
+    get "/deactivate" => "users#deactivate"
+  end
+
+  get '/contact-us', :to => 'static#contact_us'
+  get '/faqs', :to => 'static#faqs'
+  get '/privacy-policy', :to => 'static#privacy_policy'
+  get '/purchase-policy', :to => 'static#purchase_policy'
+  
+  post '/contactus', :to => 'static#contactus'
+  #get '/users/profile', :to => 'devise/passwords#profile'
   get '/refinery', :to => 'refinery/events/admin/events#index'
   get 'event', :to=>'event#index'
   #get 'event/:id/show', :to => 'event#show'
   get '/refinery/events/transaction_history', :to => 'refinery/events/admin/events#transaction_history'
+  get '/refinery/events/users_report', :to => 'refinery/events/admin/events#users_report'
+  get '/refinery/events/event_organizers', :to => 'refinery/events/admin/events#event_organizers'
+  get '/refinery/events/events_list', :to => 'refinery/events/admin/events#events_list'
   get '/refinery/bank_details', :to => 'refinery/events/admin/events#bank_detail'
   post '/refinery/update_bank_details', :to => 'refinery/events/admin/events#update_bank_detail'
+  get '/refinery/admin/:id/partner/users', :to => 'refinery/admin/users#partner_users'
   
+  get '/event/cart', :to => 'event#cart'
+  post '/event/checkout', :to => 'event#checkout'
   get 'event/booking_history', :to => 'event#booking_history'
   get 'event/:id/view_registration', :to => 'event#view_registration'
   get 'event/support', :to => 'event#support'
@@ -30,13 +48,23 @@ Goevent::Application.routes.draw do
   root :to => 'static#home'
   namespace :refinery do
     namespace :admin do
+      resources :workspace
       resources :bank_details do
+        collection do 
+          get 'add_client'
+          get 'deactive_clients'
+          post 'save_client'
+        end
         member do
           get 'details'
+          get 'edit_client'
+          put 'update_client'
+          get 'deactivate_client'
+          get 'activate_client'
         end
       end
       resources :users do
-        collection do
+        collection do          
           get 'upload_new_users'
           post 'upload_users'
           get 'imported_users'
@@ -49,6 +77,11 @@ Goevent::Application.routes.draw do
           post 'create_partner'
           get 'edit_partner'
           put 'update_partner'
+          get 'deactivate_partner'
+          get 'deactive_partners'
+          get 'activate_partner'
+          get 'upload_new_partners'
+          post 'upload_partners'
         end
         member do                        
           get 'activate_user'

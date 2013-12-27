@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Goevent</title>
+    <%= stylesheet_link_tag    "application" %> 
+    <%= stylesheet_link_tag    "jquery.bxslider" %>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "jquery.js" %>    
+    <%= javascript_include_tag "jquery.jcarousel.min" %>
+    <%= javascript_include_tag "jcarousel.basic" %>
+    <%= javascript_include_tag "jquery.bxslider.min" %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top main-menu">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" id="logo" href="/"><b>Goevents</b></a>
+          <a href="/users/sign_in" style="float:right;margin-top:25px"><%= image_tag 'sign-button-hover.gif'%></a>
+          <div class="nav-collapse collapse"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="main-body" class="row-fluid">
+      <div class="container" style="margin-top:80px;">
+        <div class="flash_container">
+          <% flash.each do |name, msg| -%>
+            <%= content_tag :div, msg, class: name %>
+          <% end -%>
+        </div>
+        <div>
+            <%= yield %>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <div id="footer-div">
+      <div class="container">
+        <a href="/about-us"> About Us </a>
+        <a href="/faqs"> FAQs |</a>
+        <a href="/purchase-policy"> Purchase Policy |</a>
+        <a href="/privacy-policy"> Privacy Policy |</a>
+        <a href="/contact-us"> Contact Us |</a>
+      </div>
+    </div>
+
+
+    <script>
+      $(document).ready(function() {
+        setTimeout(function()
+        {
+          $('.flash_container').text('');
+        }, 8000);        
+        
+      }); // end of ready();
+    </script>
+  </body>
+</html>

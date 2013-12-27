@@ -1,57 +1,96 @@
+<script type="text/javascript" src="/assets/refinery/jquery.tokeninput.js"></script>
+<script type="text/javascript" src="/assets/refinery/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input.css" />
+<link rel="stylesheet" type="text/css" href="/assets/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input-facebook.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/jquery.dataTables.css">
 <script type="text/javascript">
   $(document).ready(function(){
+      $('#start_date').datepicker({dateFormat:'dd/mm/yy'});
+      $('#end_date').datepicker({dateFormat:'dd/mm/yy'});
+      $('#event_organizer').tokenInput("/refinery/events/event_organizers.json");
+      $('#event_title').tokenInput("/refinery/events/events_list.json");
       $('#events_search').change(function(){
-        window.location.href = window.location.pathname + "?event_id=" + $(this).val();
+      //  window.location.href = window.location.pathname + "?event_id=" + $(this).val();
       });
+      $(".transactions").dataTable();
   });
 </script>
-<table>
-  <tr>
-    <td>Start Date</td>
-    <td> <%= text_field 'start','date' %></td>
-    <td>End Date</td>
-    <td><%= text_field 'end','date' %></td>
-  </tr>
-  <tr>
-    <td>Event Organizer</td>
-    <td><%=  %></td>
-    <td>Event Title</td>
-    <td><%=  %></td>    
-  </tr>
-</table>
-
-<section id='records'>
+<style type="text/css">
+  ul.token-input-list {
+    width: 250px !important;
+  }
+</style>
+<!--<aside id="actions">
+  <ul>
+    <li> <a href="/refinery/events/transaction_history" class="add_icon">Transactions</a> </li>
+  </ul>
+  </aside>-->
+<section id='record'>
+  <form method="get" action="/refinery/events/transaction_history">
+    <table>
+      <tr>
+        <td>Start Date</td>
+        <td> <%= text_field 'start','date',:value=>@startdate,:size=>'10' %></td>
+        <td>End Date</td>
+        <td><%= text_field 'end','date',:value=>@enddate,:size=>'10' %></td>
+      </tr>
+      <tr>
+        <% if is_admin? %>
+        <td>Event Organizer</td>
+        <td><%= text_field 'event','organizer',:size=>'10' %></td>
+        <% end %>
+        <td>Event Title</td>
+        <td><%= text_field 'event','title',:size=>'10' %></td>
+      </tr>
+      <tr>
+        <td>State</td>
+        <td><%= select 'event', 'state', ["complete","canceled","refunded"], :selected=>@state %></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td colspan="4"><%= submit_tag 'Submit' %></td>    
+      </tr>
+    </table>
+  </form>
 	<% if current_user.roles.map(&:title).include?('Superuser') %>
 		<div>
-			Select Event:
-      <%= select 'events','search',Refinery::Events::Event.all.collect{|e| [e.title,e.id]}, {:selected=>params[:event_id]} %>
+			<!--Select Event:-->
+      <%#= select 'events','search',Refinery::Events::Event.all.collect{|e| [e.title,e.id]}, {:selected=>params[:event_id]} %>
       <div style="float:right;">
         <%= link_to 'Download', "/Report_#{current_user.id}.csv" %>
       </div>
 		</div>
   <% else %>
 		<div>
-			Select Event:
-      <%= select 'events','search',Refinery::Events::Event.where(:created_by=>current_user.id).collect{|e| [e.title,e.id]} %>
+			<!--Select Event:-->
+      <%#= select 'events','search',Refinery::Events::Event.where(:created_by=>current_user.id).collect{|e| [e.title,e.id]} %>
       <div style="float:right;">
         <%= link_to 'Download', "/Report_#{current_user.id}.csv" %>
       </div>
 		</div>
 	<% end %>
-
-	<table width = "100%" border="1px">
-		<tr>
-			<td>S.No</td>
-			<td>Date</td>
-			<td>Ticket Types</td>
-			<td>Contact Details</td>
-			<td>Quantity</td>
-			<td>Amount</td>
-    </tr>
-    <% count = 1 %>
-    <% @transctions.each do |registration| %>
+  <span style="font-weight:bold;">RESULTS</span>
+  <table class="transactions" width = "100%" border="1px">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Registration Id</th>
+        <th>Date</th>
+        <th>Ticket Types</th>
+        <th>Contact Details</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% count = 1 %>
+      <% @transctions.each do |registration| %>
         <tr>
           <td><%= count %></td>
+          <td><%= registration.id %></td>
           <td><%= registration.created_at.strftime('%d/%m/%Y %H:%M:%S') %></td>
           <td><%= Refinery::Events::Ticket.find(registration.attendees.collect(&:ticket_id)).collect(&:ticket_name).join(',') %></td>
           <td>
@@ -60,13 +99,83 @@
             <% end %>
           </td>
           <td><%= registration.no_of_tickets %></td>
+          <td><%= registration.state %></td>
           <td><%= registration.total %></td>
           <% count = count + 1 %>
         </tr>
-		<% end %>
+      <% end %>
+    </tbody>
 
-	</table>
+  </table>
+  <br>
+  <span style="font-weight:bold;">WEEKLY REPORT</span>
+  <table class="transactions" width = "100%" border="1px">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Registration Id</th>
+        <th>Date</th>
+        <th>Ticket Types</th>
+        <th>Contact Details</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% coun = 1 %>
+      <% @weekly.each do |registration| %>
+        <tr>
+          <td><%= coun %></td>
+          <td><%= registration.id %></td> 
+          <td><%= registration.created_at.strftime('%d/%m/%Y %H:%M:%S') %></td>
+          <td><%= Refinery::Events::Ticket.find(registration.attendees.collect(&:ticket_id)).collect(&:ticket_name).join(',') %></td>
+          <td>
+            <% registration.attendees.first.contact.each do |hh| %>
+              <%= hh[1] %><br>
+            <% end %>
+          </td>
+          <td><%= registration.no_of_tickets %></td>
+          <td><%= registration.state %></td>
+          <td><%= registration.total %></td>
+          <% coun = coun + 1 %>
+        </tr>
+      <% end %>
+    </tbody>
+
+  </table>
+
+  <br>
+
+  <span style="font-weight:bold;">Event Details</span>
+  <table class="transactions" width = "100%" border="1px">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Event Date</th>
+        <th>Event Title</th>
+        <th>Completed Transactions</th>
+        <th>Failed Transactions </th>
+        <th>No of views</th>
+        <th>Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% c = 1 %>
+      <% @revents.each do |event| %>
+        <tr>
+          <td><%= c %></td>
+          <td><%= event.start_date.strftime('%d/%m/%Y %H:%M:%S') %></td>
+          <td><%= event.title %></td>
+          <td><%= event.registrations.where(:state=>'complete').count %></td>
+          <td><%= event.registrations.where(:state=>'failed').count %></td>
+          <td><%= Activity.where(:event_id=>event.id).count %></td>
+          <td><%= event.registrations.where(:state=>'complete').sum(&:total) %></td>
+
+          <% c = c + 1 %>
+        </tr>
+      <% end %>
+    </tbody>
+
+  </table>
 </section>
-<aside id='actions'>
-  <%= render 'actions' %>
-</aside>

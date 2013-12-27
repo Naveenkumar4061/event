@@ -2,12 +2,16 @@
 <%= render 'top_sub_menu' %>
 <%= form_tag '/refinery/admin/users/import_user', multipart: true do -%>
   <label for="email">Email</label> <%= text_field_tag "email" %>
+  <label for="partner_id">Partner</label> <%= select "partner","id",Refinery::Partner.all.collect {|p| [p.company_name,p.id]} %>
+  <br>
   <%= submit_tag %>
 <% end -%>
-<table>
+<br>
+<table border="1">
 	<tr>
 		<td>#</td>
-		<td>Email</td>
+    <td>Email</td>
+    <td>Partner</td>
 		<td>Actions</td>		
 	</tr>
 	<% count = 1 %>
@@ -15,6 +19,7 @@
 		<tr>
 			<td><%= count %></td>
 			<td><%= user.email %></td>
+			<td><%= user.partner.try(:company_name) %></td>
       <td><%= link_to 'Delete', "/refinery/admin/users/destroy_imported_user?invite_id=#{user.id}"%></td>
 			<% count = count + 1 %>
 		</tr>

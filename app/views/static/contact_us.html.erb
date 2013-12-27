@@ -1,0 +1,39 @@
+<h3>Contact Us</h3>
+<span> Take a look at out <a href="/faqs">Frequently Answered Questions</a></span>
+<form action="/contactus" method="post">
+  <table>
+    <tr>
+      <td>Name:</td>
+      <td><%= text_field "contact", "name" %></td>
+    </tr>
+    <tr>
+      <td>Email Id:</td>
+      <td>
+        <%= text_field "contact", "email" %><br>
+        We do not sell or share your personal information<br>
+        with others.See our <a href="/privacy-policy">privacy policy for details</a>
+      </td>
+    </tr>
+    <tr>
+      <td>Telephone No:</td>
+      <td><%= text_field "contact", "telephone" %></td>
+    </tr>
+    <tr>
+      <td>Type of Enquiry:</td>
+      <td><%= select "contact", "type_of_enq", [      
+  "Want us to promote & sell tickets for your event!",
+  "Want to be one of our preferred corporate office partners!",
+  "Other Business enquiries!",
+  "For Media/Press enquiries!",
+  "Customer Support"    
+      ] %></td>
+    </tr>
+    <tr>
+      <td>Message:</td>
+      <td><%= text_area "contact", "message", :size => '100' %></td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align:center;" ><%= submit_tag 'Submit' %></td>
+    </tr>
+  </table>
+</form>

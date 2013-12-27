@@ -11,27 +11,31 @@
 
   <div class='field'>
     <%= f.label :start_date -%>
-    <%= f.datetime_select :start_date -%>
+    <%= f.date_select :start_date -%>
+    Time:<%= f.time_select :start_date, :ignore_date=>true %>  
   </div>
 
   <div class='field'>
     <%= f.label :end_date -%>
-    <%= f.datetime_select :end_date -%>
+    <%= f.date_select :end_date -%>
+    Time:<%= f.time_select :end_date, :ignore_date=>true %>
   </div>
 
   <div class='field'>
     <%= f.label :category -%>
-    <%= f.text_field :category -%>
+    <%#= f.text_field :category -%>
+    <%= f.select :category, Refinery::Events::Event::CATEGORIES.keys, :include_blank => true  %>
   </div>
 
   <div class='field'>
     <%= f.label :sub_category -%>
-    <%= f.text_field :sub_category -%>
+    <%#= f.text_field :sub_category -%>
+    <%= f.select :category, Refinery::Events::Event::CATEGORIES.values.flatten, :include_blank => true  %>
   </div>
 
   <div class='field'>
     <%= f.label :url -%>
-    <%= f.text_field :url -%>
+    http://goevents.com/event/<%= f.text_field :url -%>
   </div>
 
   <div class='field'>
@@ -41,20 +45,25 @@
                 :object => "events/event" -%>
   </div>
 
-  <div class='field'>
+  <!--<div class='field'>
     <%= render '/refinery/admin/wysiwyg',
                 :f => f,
                 :fields => [:schedule],
                 :object => "events/event" -%>
+            </div>-->
+
+  <div class="field">
+    <%= f.label :print_tickets %>
+    <%= f.check_box :print_tickets %>
   </div>
 
 
-  <div class='field'>
+  <!--<div class='field'>
     <%= render '/refinery/admin/wysiwyg',
                 :f => f,
                 :fields => [:terms_conditions],
                 :object => "events/event" -%>
-  </div>
+  </div>-->
 
   <div class='field'>
     <%= f.label "Thumbnail Image(145x200)" -%>

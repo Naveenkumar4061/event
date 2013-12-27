@@ -1,28 +1,35 @@
 <div>
-  <%= link_to 'New Partner' , "/refinery/admin/users/new_partner", :style=>"border:1px solid;padding:3px;" %>
-  
+  <%= link_to 'New Partner' , "/refinery/admin/users/new_partner", :class => 'button_box' %>
+  <%#= link_to 'Deactive Partners' , "/refinery/admin/users/deactive_partners", :class => "button_box" %>
 </div>
+<br>
 <section id="records">
 <table border="1">
 	<tr>
-		<td>#</td>
-		<td>Company</td>
-		<td>Address</td>
-		<td>Employee Strength</td>
-		<td></td>
+		<th>#</th>
+		<th>Company</th>
+		<th>Address</th>
+		<th>Area</th>
+		<th>City</th>
+		<th>State</th>
+		<th>Employee Strength</th>
+		<th>Actions</th>
 	</tr>
-	<tr>
-		<% count = 1 %>
-		<% @partners.each do |p| %>
+	<% count = 1 %>
+	<% @partners.each do |p| %>
+		<tr>
 			<td><%= count %></td>
-			<td><%= p.company_name %></td>
+      <td><%= link_to p.company_name, "/refinery/admin/#{p.id}/partner/users" %></td>
 			<td><%= p.address %></td>
+			<td><%= p.area %></td>
+			<td><%= p.city %></td>
+			<td><%= p.state %></td>
 			<td><%= p.employee_strength %></td>
-			<td><%= link_to 'Edit', "/refinery/admin/users/edit_partner?cid=#{p.employee_strength}" %></td>
+			<td><%= link_to 'Edit', "/refinery/admin/users/edit_partner?cid=#{p.id}" %> | <%= link_to p.deleted_at != nil ? 'Activate' : 'Deactivate', p.deleted_at != nil ? "/refinery/admin/users/activate_partner?id=#{p.id}" : "/refinery/admin/users/deactivate_partner?id=#{p.id}" %></td>
 
 			<% count = count + 1 %>			
-		<% end %>
-	</tr>
+		</tr>
+	<% end %>
 </table>
 </section>
 <%= render 'actions' %>

@@ -1,0 +1,29 @@
+<section id="records">
+<%= form_for [refinery, :events_admin, @event],:url=>'save_parking_info' do |f| -%>
+  <%= render '/refinery/admin/error_messages',
+              :object => @event,
+              :include_object_name => true %>
+
+
+  <div class='field'>
+    <%= f.label :parking_info %>
+    <%= f.text_area :parking_info, :size=>'70' %>
+  </div>
+
+
+  <%= submit_tag 'Save' %>
+  <%= link_to 'Cancel',"/refinery/events/#{@event.id}/edit", :class=>'button' %>
+
+<% end -%>
+
+<% content_for :javascripts do -%>
+  <script>
+    $(document).ready(function(){
+      page_options.init(false, '', '');
+    });
+  </script>
+<% end -%>
+</section>
+<% unless params[:id].blank? %>
+  <%= render 'sidebar' %>
+<% end %>

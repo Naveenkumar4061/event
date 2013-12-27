@@ -1,19 +1,35 @@
+<div>
+  <%= render 'top_sub_menu' %>
+</div>
+<br>
 <section id="records">
-<%= render 'top_sub_menu' %>
-<table>
+<table border="1">
 	<tr>
 		<td>#</td>
+    <th>FullName</th>
 		<td>Email</td>
+    <th>Mobile</th>
+		<td>Company</td>
+    <th>Status</th>
+    <th>Joined</th>
 		<td>Actions</td>		
 	</tr>
 	<% count = 1 %>
-	<% @users.each do |user| %>		
-		<tr>
-			<td><%= count %></td>
-			<td><%= user.email %></td>
-			<td><%= link_to 'Edit', "/refinery/admin/users/#{user.id}/edit" %> | <%= link_to 'Inactivate', "/refinery/admin/users/#{user.id}/inactivate_user" %></td>
-			<% count = count + 1 %>
-		</tr>
+  <% @users.each do |user| %>
+    <% if user.roles.collect(&:title).include?("Superuser") || user.roles.collect(&:title).include?("Refinery") %>
+    <% else %>
+      <tr>
+        <td><%= count %></td>
+        <td><%= user.full_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.mobile %></td>
+        <td><%= user.partner.try(:company_name) %></td>
+        <td><%= user.deleted_at.nil? ? 'Active' : 'Deactivated' %></td>
+        <td><%= 'Yes' %></td>
+        <td><%= link_to 'Edit', "/refinery/admin/users/#{user.id}/edit" %> | <%= link_to 'Deactivate', "/refinery/admin/users/#{user.id}/inactivate_user" %></td>
+        <% count = count + 1 %>
+      </tr>
+    <% end %>
 	<% end %>
 </table>
 </section>

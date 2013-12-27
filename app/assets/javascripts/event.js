@@ -16,7 +16,7 @@ $(document).ready(function() {
   
 });
   
-var calculate_total = function(tis){
+var calculate_total_new = function(tis){
   var total_no_of_tickets = 0;
   var final_total = 0;
   var tax_total = 0;
@@ -28,10 +28,10 @@ var calculate_total = function(tis){
       jQuery(this).find('#total').text('0');
     }else{
       tot = (parseFloat(p) * parseFloat(q));
+      jQuery(this).find('#total').text(tot);
       tt = parseFloat(jQuery(this).find('#tax_percent').val());
       tax_total += ( tot * tt )/parseFloat('100.0');
       final_total += (tot + ( tot * tt )/parseFloat('100.0'));
-      jQuery(this).find('#total').text(tot + ( tot * tt )/parseFloat('100.0'));
       total_no_of_tickets += parseFloat(q);
     }
     

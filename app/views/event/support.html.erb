@@ -2,7 +2,11 @@
 	<label for="emailid">Your Email Address *</label>
 	<input type="textbox" name="from_email" id="emailid" value=<%= current_user.email %>></input>
 	<label for="subject">Subject *</label>
-	<input type="textbox" name="subject" id="subject"></input>
+  <input type="textbox" name="subject" id="subject"></input>
+	<label for="cat">Category</label>
+  <%= select 'category', 'name', Refinery::Events::Event::SUP_CATEGORY.keys %>
+	<label for="cat">Sub Category</label>
+  <%= select 'subcategory', 'name', Refinery::Events::Event::SUP_CATEGORY.values.flatten %>
 	<label for="desc">Description *</label>
 	<textarea id="desc" name="message"></textarea>	
 	<br>

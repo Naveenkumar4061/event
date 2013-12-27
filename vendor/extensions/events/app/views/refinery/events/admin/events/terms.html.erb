@@ -1,0 +1,38 @@
+<section id="records">
+<%= form_for [refinery, :events_admin, @event],:url=>'save_terms' do |f| -%>
+  <%= render '/refinery/admin/error_messages',
+              :object => @event,
+              :include_object_name => true %>
+
+    
+  <div class='field'>
+    <%= f.label :censor_warning %>
+    <%= f.text_area :censor_warning, :size=>'55' %>
+  </div>
+
+  <div class='field'>
+    <%= render '/refinery/admin/wysiwyg',
+      :f => f,
+      :fields => [:terms_conditions],
+      :object => "events/event" -%>
+  </div>
+
+
+
+
+  <%= submit_tag 'Save' %>
+  <%= link_to 'Cancel',"/refinery/events/#{@event.id}/edit", :class=>'button' %>
+
+<% end -%>
+
+<% content_for :javascripts do -%>
+  <script>
+    $(document).ready(function(){
+      page_options.init(false, '', '');
+    });
+  </script>
+<% end -%>
+</section>
+<% unless params[:id].blank? %>
+  <%= render 'sidebar' %>
+<% end %>

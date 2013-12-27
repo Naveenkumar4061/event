@@ -20,6 +20,12 @@ class EventController < ApplicationController
 
   def show
     @event = Refinery::Events::Event.where(:url => params[:url]).first
+    act = Activity.where('event_id = ? and user_id = ?', @event.id, current_user.id)
+    if act.blank?
+      Activity.create(:event_id=>@event.id,:user_id=>current_user.id,:event_name=>@event.title,:viewed_at=>Time.now)
+    else
+      act.first.update_attributes(:viewed_at=>Time.now)
+    end
   end
 
   def registration_step1    
@@ -92,12 +98,30 @@ class EventController < ApplicationController
       end
     end
 
-    if @registration.update_attributes(:state=>'complete')  
+    if @registration.update_attributes(:state=>'cart')  
       @registration.update_tickets_sold
-      redirect_to '/event/booking_history'
+      redirect_to '/event/cart'
     else
       render 'registration_step2'
     end
+  end
+
+  def cart
+    @registrations = current_user.registrations.where(:state=>'cart')
+  end
+
+  def checkout
+    
+    tot=Refinery::Events::Registration.find(params[:registration]).sum(&:total)
+    #payment
+    transaction = Transaction.create(:total=>tot,:user_id=>current_user.id,:state=>'complete')
+    params[:registration].each do |rid|
+      r=Refinery::Events::Registration.find(rid.to_i)
+      r.update_attributes(:state=>'complete',:transaction_id=>transaction.id)
+    end
+
+    redirect_to '/event/booking_history'
+
   end
 
   def booking_history
@@ -110,6 +134,7 @@ class EventController < ApplicationController
 
   def support_feedback
     #send mail to admin
+    UserEnquirey.create(:email=>params[:from_email],:subject=>params[:subject],:category=>params[:category][:name],:subcategory=>params[:subcategory][:name],:description=>params[:message],:user_id=>current_user.id)
     EventMailer.support_email(params[:from_email],params[:subject],params[:message]).deliver
     flash[:notice] = "Will be in touch with you soon!"
     redirect_to '/event/support'

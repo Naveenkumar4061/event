@@ -5,8 +5,8 @@
       evnt.first.update_attribute('position',1)
     end
     img = current_user.plugins.where(:name => "refinery_images")
-    if img && img.first && img.first.position != 2
-      img.first.update_attribute('position',2)
+    if img && img.first && img.first.position != 6
+      img.first.update_attribute('position',6)
     end
     pge = current_user.plugins.where(:name => "refinery_pages")
     if pge && pge.first && pge.first.position != 3
@@ -25,7 +25,7 @@
   <% ::Refinery::Plugins.active.in_menu.each do |plugin| -%>    
 
     <% unless plugin.title == "Users" %>
-      <% if plugin.title != "Files" %>
+      <% if plugin.title != "Files" && plugin.title != "Pages" %>
         <% if plugin.title == "Dashboard" %>
           
           <% if !(current_user.roles.map(&:title).include?('Superuser')) %>
@@ -40,7 +40,8 @@
               <%= link_to 'Reports', '/refinery/events/transaction_history', :class=>'',:id=>"reports" %>
             <% end %>
           <% else %>
-            <%= link_to 'Event Organizers', '/refinery/admin/bank_details', :class=>'',:id=>"reports" %>
+            <%= link_to 'Clients', '/refinery/admin/bank_details', :class=>'',:id=>"reports" %>
+            <%= link_to 'Workspace', '/refinery/admin/workspace'%>            
             <%= link_to 'Reports', '/refinery/events/transaction_history', :class=>'',:id=>"reports" %>            
           <% end %>
 
@@ -54,7 +55,7 @@
         <% end %>
       <% end %>
     <% else %>      
-      <%= link_to plugin.title == "Users" ? "Partners" : plugin.title , '/refinery/admin/users',
+      <%= link_to plugin.title == "Users" ? "Partners" : plugin.title , '/refinery/admin/users/partners',
                 :class => ("active" if plugin.highlighted?(params) && params[:action]=="bank_details"),
                 :id => "plugin_#{plugin.name}" %>      
     <% end %>    

@@ -14,12 +14,20 @@ Refinery::Core::Engine.routes.draw do
     namespace :admin, :path => Refinery::Core.backend_route do      
       resources :events, :except => :show do
         member do
+          put 'update_position'
+          put 'update_banner_position'
           get 'venue'
           post 'venue_info'
           get 'contact'
           post 'contact_info'
           get 'publish'
           get 'revoke'
+          get 'schedule'
+          put 'save_schedule'
+          get 'terms'
+          put 'save_terms'
+          get 'parking_info'
+          put 'save_parking_info'
         end
         resources :tickets do
           get 'update_ticket_status'

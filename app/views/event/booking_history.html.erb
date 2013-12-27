@@ -1,16 +1,16 @@
 <table width = "100%">
 	<tr>
+		<td>Event Date</td>		
 		<td>Event Title</td>
 		<td>No of Tickets</td>
 		<td>Purchase Total</td>
-		<td>Event Date</td>		
 	</tr>
 <% @registrations.each do |registration| %>
 	<tr>
+		<td><%= registration.event.start_date.strftime('%d/%m/%Y %H:%M %P') %></td>
 		<td><%= link_to registration.event.title, "/event/#{registration.id}/view_registration" %></td>
 		<td><%= registration.no_of_tickets %></td>
 		<td><%= registration.total %></td>
-		<td><%= registration.event.start_date.strftime('%d/%m/%Y %H:%M %P') %></td>
 	</tr>
 <% end %>
 </table>

@@ -1,0 +1,99 @@
+<script type="text/javascript" src="/assets/refinery/jquery.tokeninput.js"></script>
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input-facebook.css" />
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('#start_date').datepicker();
+      $('#end_date').datepicker();
+//      $('#event_organizer').tokenInput("/refinery/events/event_organizers.json");
+//     $('#event_title').tokenInput("/refinery/events/events_list.json");
+      $('#events_search').change(function(){
+      //  window.location.href = window.location.pathname + "?event_id=" + $(this).val();
+      });
+  });
+</script>
+<style type="text/css">
+  ul.token-input-list {
+    width: 250px !important;
+  }
+</style>
+<aside id="actions">
+  <ul>
+    <li> <a href="/refinery/events/users_report" class="add_icon">Users</a> </li>
+    <li> <a href="/refinery/events/transaction_history" class="add_icon">Transactions</a> </li>
+  </ul>
+</aside>
+<section id='records'>
+  <form method="get" action="/refinery/events/transaction_history">
+    <table>
+      <tr>
+        <td>Start Date</td>
+        <td> <%= text_field 'start','date',:size=>'10' %></td>
+        <td>End Date</td>
+        <td><%= text_field 'end','date',:size=>'10' %></td>
+      </tr>
+      <tr>
+        <td>Company</td>
+        <td><%= text_field 'event', 'partners' %></td>
+        <td>Status</td>
+        <td><%= select 'event', 'user_status', ['Active','Inactive'] %></td>
+      </tr>
+      <!--<tr>
+        <td>Event Organizer</td>
+        <td><%= text_field 'event','organizer',:size=>'10' %></td>
+        <td>Event Title</td>
+        <td><%= text_field 'event','title',:size=>'10' %></td>
+      </tr>-->
+      <tr>
+        <td colspan="4"><%= submit_tag 'Submit' %></td>    
+      </tr>
+    </table>
+  </form>
+	<% if current_user.roles.map(&:title).include?('Superuser') %>
+		<div>
+			<!--Select Event:-->
+      <%#= select 'events','search',Refinery::Events::Event.all.collect{|e| [e.title,e.id]}, {:selected=>params[:event_id]} %>
+      <div style="float:right;">
+        <%= link_to 'Download', "/User_Report_#{current_user.id}.csv" %>
+      </div>
+		</div>
+  <% else %>
+		<div>
+			<!--Select Event:-->
+      <%#= select 'events','search',Refinery::Events::Event.where(:created_by=>current_user.id).collect{|e| [e.title,e.id]} %>
+      <div style="float:right;">
+        <%= link_to 'Download', "/User_Report_#{current_user.id}.csv" %>
+      </div>
+		</div>
+	<% end %>
+
+	<table width = "100%" border="1px">
+		<tr>
+			<td>S.No</td>
+			<td>Date</td>
+			<td>Ticket Types</td>
+			<td>Contact Details</td>
+      <td>Quantity</td>
+			<td>Status</td>
+			<td>Amount</td>
+    </tr>
+    <% count = 1 %>
+    <% @transctions.each do |registration| %>
+        <tr>
+          <td><%= count %></td>
+          <td><%= registration.created_at.strftime('%d/%m/%Y %H:%M:%S') %></td>
+          <td><%= Refinery::Events::Ticket.find(registration.attendees.collect(&:ticket_id)).collect(&:ticket_name).join(',') %></td>
+          <td>
+            <% registration.attendees.first.contact.each do |hh| %>
+              <%= hh[1] %><br>
+            <% end %>
+          </td>
+          <td><%= registration.no_of_tickets %></td>
+          <td><%= registration.state %></td>
+          <td><%= registration.total %></td>
+          <% count = count + 1 %>
+        </tr>
+		<% end %>
+
+	</table>
+</section>

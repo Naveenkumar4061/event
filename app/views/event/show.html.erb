@@ -35,35 +35,50 @@
       <% unless @event.venue.blank? %>
         <li><a href="#tabs-2" onclick="myMap(event)">Venue</a></li>    
       <% end %>
-            <% unless @event.artists.blank? %>
+
+      <% unless @event.artists.blank? %>
         <li><a href="#tabs-3">Artists</a></li>    
       <% end %>
-            <% unless @event.schedule.blank? %>
+      
+      <% unless @event.schedule.blank? %>
         <li><a href="#tabs-4">Schedule</a></li>    
       <% end %>
-            <% unless @event.galleries.blank? %>
+      
+      <% unless @event.galleries.blank? %>
         <li><a href="#tabs-5">Gallery</a></li>    
       <% end %>
-            <% unless @event.outlets.blank? %>
+      
+      <% unless @event.outlets.blank? %>
         <li><a href="#tabs-6">Outlets</a></li>    
       <% end %>
-            <% unless @event.faqs.blank? %>
+      
+      <% unless @event.faqs.blank? %>
         <li><a href="#tabs-7">FAQs</a></li>    
       <% end %>
-            <% unless @event.terms_conditions.blank? %>
+                  
+      <% unless @event.terms_conditions.blank? %>
         <li><a href="#tabs-8">Terms and Conditions</a></li>    
+      <% end %>
+
+      <% unless @event.parking_info.blank? %>
+        <li><a href="#tabs-9">Parking Info</a></li>
       <% end %>
 
     </ul>
     <div id="tabs-1">
       <h2>Buy Tickets</h2>
       <p><%= form_for @event,:url => "/event/#{@event.id}/registration_step1", :method=>"post" do %>
+          <% if @event.censor_warning.blank? %>
+          <% else %>
+            <%= "=> " + @event.censor_warning %><br>
+          <% end %>
+          <%= @event.print_tickets ? "=> Please carry a printed ticket" : "=> Email confirmation is sufficient, Kindly avoid printing" %>            
           <table width="100%">
             <tr>
-              <td>Ticket Type</td>
-              <td>Price</td>
-              <td>Quantity</td>
-              <td>Cost</td>
+              <th>Ticket Type</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Cost</th>
             </tr>
             <%@event.tickets.each do |t|%>
               <tr class="ticket-row">
@@ -72,7 +87,7 @@
                   <span id="dprice"><%= t.discounted_price %></span>(<span id="oprice" style="text-decoration:line-through;"><%=t.original_price%></span>)
                   <%= hidden_field_tag 'tax_percent', t.is_service_tax ? t.service_tax_percent : 0 %>
                 </td>
-                <td><%= select 'ticket', t.id, 0..9, {} ,{:id=>'no_of_tickets',:onchange=>'calculate_total(this);'} %></td>
+                <td><%= select 'ticket', t.id, 0..9, {} ,{:style=>"width:60px;",:id=>'no_of_tickets',:onchange=>'calculate_total_new(this);'} %></td>
                 <td><div id="total">0</div></td>
               </tr>
             <%end%>
@@ -83,9 +98,11 @@
           <%= hidden_field 'registration', 'sales_tax' %>
           <%= hidden_field 'registration', 'state', :value => 'cart' %>
           
-          
-          <div style="float:right;clear:both;">Tax <span id='tax_display'> 0.0</span> </div>
-          <div style="float:right;clear:both;">Purchase Total(INR): <span id='total_display'> 0.0</span> </div>
+          <section style="border-top: 1px solid rgb(243, 215, 215);border-bottom: 1px solid rgb(243, 215, 215);">
+            <div style="float:right;clear:both;padding:10px;">Purchase Total(INR): <span id='total_display'> 0.0</span> </div>
+            <div style="float:right;padding:10px;">Service Tax :<span id='tax_display'> 0.0</span> </div>
+          </section>
+          <br>
           <div style="float:right;clear:both;"><%= submit_tag 'Buy'%></div>      
         <%end%>
       </p>
@@ -205,6 +222,15 @@
         <h3>Terms & Conditions</h3>
         <div >
           <p><%= @event.terms_conditions %></p>
+        </div>
+      </div>
+    <% end %>
+    
+    <% unless @event.parking_info.blank? %>
+      <div id="tabs-9">
+        <h3>Parking Info</h3>
+        <div >
+          <p><%= @event.parking_info %></p>
         </div>
       </div>
     <% end %>

@@ -1,0 +1,11 @@
+<h3>Upload New Partners</h3>
+<section id="records">
+<%= form_tag '/refinery/admin/users/upload_partners', multipart: true do -%>
+  	<div class="field">
+		<label for="file">File to Upload</label> 
+	    <%= file_field_tag "file" %>
+	</div>
+  <%= submit_tag %>
+<% end -%>
+</section>
+<%= render 'actions' %>

@@ -9,11 +9,11 @@
   <%#= link_to "Forgot password?", new_user_password_path, :style=>"color:orange;" %>
   <%# end %>-->
 
-<%= form_for @user, :url => invitation_path(@user), :html => {:method => :post} do |f| %>
+<%= form_for @user, :url => invitation_path(@user), :html => {:method => :post,:style=>"padding:60px 0px;"} do |f| %>
   <%#= devise_error_messages! %>
 
 <% @user.class.invite_key_fields.each do |field| -%>
-  <p><%= f.label field %><br />
+  <p><%= f.label field %>
   <%= f.email_field field %></p>
 <% end -%>
 

@@ -1,24 +1,19 @@
-<div class="span12 jcarousel-wrapper">
-  <div id="gallery2"  class="jcarousel">
-    <ul>
-      <% Refinery::Events::Event.where( :publish_banner => true ).each do |e| %>
-        <li><%= link_to (image_tag e.banner.url(:original), :size => '900x400'), "/event/#{e.url}" %></li>
-      <% end %>              
-    </ul>
+<div class="span12" style="margin-left:0px !important;">
+  <div id="gallery2"  class="slider2">
+    <% Refinery::Events::Event.where( :publish_banner => true ).each do |e| %>
+      <div class="slide"><%= link_to (image_tag e.banner.url(:original), :size => '930x400'), "/event/#{e.url}" %></div>
+    <% end %>              
   </div> <!-- .gallery -->
 
-  <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
-  <a href="#" class="jcarousel-control-next">&rsaquo;</a>
-  
-  <p class="jcarousel-pagination"></p>
 </div>
 <hr>
-<div class="ifilter container" >
+<div class="ifilter container" style="clear:both;float:left;" >
   <a href="/event?filter=all" class="ifilterlink">All</a>
   <a href="/event?filter=today" class="ifilterlink">Today</a>
   <a href="/event?filter=tomorrow" class="ifilterlink">Tomorrow</a>
   <a href="/event?filter=week" class="ifilterlink">This Week</a>
   <a href="/event?filter=month" class="ifilterlink">This Month</a>
+  <a href="/event?filter=workspace" class="ifilterlink">Workspace</a>
 </div>
 
 <% @events.each_slice(5).each do |events| %>
@@ -31,7 +26,7 @@
         <div class="event_name">
           <%= event.title %>
         </div>
-        <%= link_to 'Book Now', "/event/#{event.url}", :class=>'myButton' %>
+        <%= link_to 'View', "/event/#{event.url}", :class=>'myButton' %>
       </div>
   <% end %>
 <% end %>

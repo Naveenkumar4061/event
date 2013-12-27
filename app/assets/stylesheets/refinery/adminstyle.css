@@ -1,0 +1,16 @@
+table{
+  border-collapse: collapse !important;
+}
+table tr td{
+  padding: 6px;
+}
+a{
+  color: #0190CC;
+}
+.button_box{
+  border: 1px solid #0190CC !important;
+  background-color: #0190CC;
+  font-weight: bold;
+  color: white;
+  padding: 3px;
+}
