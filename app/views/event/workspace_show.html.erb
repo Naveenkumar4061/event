@@ -24,9 +24,9 @@
         <%= @workspace.description %>
         </p>
         <div>
-          <%= link_to 'Will Attend', '#',:class=>'button_box' %>
-          <%= link_to 'Will Not Attend', '#',:class=>'button_box' %>
-          <%= link_to 'May Attend', '#',:class=>'button_box' %>
+          <%= link_to 'Will Attend', "/workspace/#{@workspace.id}/response?r=will_attend",:class=>'button_box' %>
+          <%= link_to 'Will Not Attend', "/workspace/#{@workspace.id}/response?r=willnot_attend",:class=>'button_box' %>
+          <%= link_to 'May Attend', "/workspace/#{@workspace.id}/response?r=may_attend",:class=>'button_box' %>
         </div>
       </div>
     </div>
