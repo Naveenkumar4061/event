@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:deactivate,:profile_update]
 
   def profile
     @user = current_user
@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def profile_update
     @user = current_user
     if @user && @user.update_attributes(params[:user])
-      redirect_to :profile
+      render :profile_update_confirmation,:layout => 'static'
     else
       render :profile
     end
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
   def deactivate
     current_user.update_attribute('deleted_at',Time.now)
-    redirect_to '/'
+    render :deactivate, :layout => "static"
   end
 
 end

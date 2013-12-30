@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles, :join_table => ::RolesUsers.table_name
   has_many :plugins, :class_name => "UserPlugin", :order => "position ASC", :dependent => :destroy
   has_many :registrations, :class_name => "Refinery::Events::Registration"
+  has_many :transactions, :class_name => "Transaction"
   has_one :bank_detail, :class_name => "Refinery::BankDetail"
   belongs_to :partner, :class_name => "Refinery::Partner"
   

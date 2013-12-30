@@ -15,8 +15,8 @@
     <div class="navbar navbar-fixed-top main-menu">
       <div class="navbar-inner">
         <div class="container">
-          <a class="brand" id="logo" href="/"><b>Goevents</b></a>
-          <a href="/users/sign_in" style="float:right;margin-top:25px"><%= image_tag 'sign-button-hover.gif'%></a>
+          <a class="brand" id="logo" href="/"><img src="/assets/logo.png" width="220" height="100" style="height:100px;"></a>
+          <%if current_user.blank?%><a href="/users/sign_in" style="float:right;margin-top:45px"><%= image_tag 'sign-button-hover.gif'%></a><%end%>
           <div class="nav-collapse collapse"></div>
         </div>
       </div>

@@ -11,11 +11,20 @@ class EventController < ApplicationController
     elsif params[:filter] == "week"
       @events = Refinery::Events::Event.where('start_date > ? and end_date < ? and published = ?', "#{Time.now.strftime('%Y-%m-%d %H:%M:%S')}","#{(Time.now+1.week).end_of_day.strftime('%Y-%m-%d %H:%M:%S')}",true)
     elsif params[:filter] == "month"
-      @events = Refinery::Events::Event.where('start_date > ? and end_date < ? and published = ?', "#{Time.now.strftime('%Y-%m-%d %H:%M:%S')}","#{(Time.now+1.month).end_of_day.strftime('%Y-%m-%d %H:%M:%S')}",true)
+      @events = Refinery::Events::Event.where('start_date > ? and end_date < ? and published = ?', "#{Time.now.strftime('%Y-%m-%d %H:%M:%S')}","#{(Time.now+1.month).end_of_day.strftime('%Y-%m-%d %H:%M:%S')}",true)      
     else
       @events = Refinery::Events::Event.where('start_date > ? and published = ?', Time.now,true)      
     end
       
+  end
+
+  def workspace
+    
+    @workspaces = Workspace.where(:partner_id=>current_user.partner_id)
+  end
+
+  def workspace_show
+    @workspace = Workspace.find(params[:id])
   end
 
   def show
@@ -120,8 +129,11 @@ class EventController < ApplicationController
       r.update_attributes(:state=>'complete',:transaction_id=>transaction.id)
     end
 
-    redirect_to '/event/booking_history'
+    redirect_to :controller=>'event',:action=>'checkout_confirm', :id=>transaction.id
+  end
 
+  def checkout_confirm
+    @transaction = current_user.transactions.where(:id=>params[:id]).try(:first)
   end
 
   def booking_history

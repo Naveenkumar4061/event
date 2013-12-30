@@ -1,0 +1,10 @@
+<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post, :style=>"padding:60px 0px;"} do |f| %>
+  <%= devise_error_messages! %>
+
+<% resource.class.invite_key_fields.each do |field| -%>
+  <p><%= f.label field %><br />
+  <%= f.text_field field %></p>
+<% end -%>
+
+  <p><%= f.submit "Join Now" %></p>
+<% end %>

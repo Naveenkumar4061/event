@@ -1,7 +1,21 @@
-<p>Hello <%= @resource.email %>!</p>
+<!--<p>Hello <%= @resource.email %>!</p>
 
 <p>Someone has invited you to GoEvents, you can accept it through the link below.</p>
 <p><%= link_to 'Accept invitation', accept_user_invitation_path(@resource, :invitation_token => @token) %></p>
 
 <p>If you don't want to accept the invitation, please ignore this email.<br />
-Your account won't be created until you access the link above and set your password.</p>
+Your account won't be created until you access the link above and set your password.</p>-->
+
+Hi 
+
+<p>Welcome on-board GoEvents, your journey towards endless entertainment inside and
+outside your office starts here.</p>
+
+<p>To make your life simpler, we've already created a GoEvents account for you. All you
+have to do is set an account password <%= link_to accept_user_invitation_path(@resource, :invitation_token => @token), accept_user_invitation_path(@resource, :invitation_token => @token) %> and turn it on. </p>
+
+<p>If you have any questions, please click <a href="/faqs">here</a>.</p>
+
+The GoEvents Team
+
+***THIS IS AN AUTOMATED MESSAGE***

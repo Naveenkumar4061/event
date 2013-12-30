@@ -3,7 +3,7 @@ class CreateInvites < ActiveRecord::Migration
     create_table :invites do |t|
       t.string :email
       t.integer :partner_id
-      t.boolean :approved, :default => 1
+      t.boolean :approved, :default => true
       t.timestamps
     end
   end

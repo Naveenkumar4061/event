@@ -23,6 +23,8 @@ Goevent::Application.routes.draw do
   #get '/users/profile', :to => 'devise/passwords#profile'
   get '/refinery', :to => 'refinery/events/admin/events#index'
   get 'event', :to=>'event#index'
+  get '/workspace', :to => 'event#workspace'
+  get '/workspace/:id', :to => 'event#workspace_show'
   #get 'event/:id/show', :to => 'event#show'
   get '/refinery/events/transaction_history', :to => 'refinery/events/admin/events#transaction_history'
   get '/refinery/events/users_report', :to => 'refinery/events/admin/events#users_report'
@@ -34,6 +36,7 @@ Goevent::Application.routes.draw do
   
   get '/event/cart', :to => 'event#cart'
   post '/event/checkout', :to => 'event#checkout'
+  get '/event/checkout_confirm', :to => 'event#checkout_confirm'
   get 'event/booking_history', :to => 'event#booking_history'
   get 'event/:id/view_registration', :to => 'event#view_registration'
   get 'event/support', :to => 'event#support'

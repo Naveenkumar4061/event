@@ -1,0 +1,23 @@
+<p>Thank you for choosing GoEvents, it’s our pleasure to serve you.</p>
+
+<h4>Order Summary</h4>
+
+<b>Order Status:</b> <%= @transaction.state %>
+
+<% @transaction.registrations.each do |r| %>
+	<b>Event Title:</b>	<%= r.event.title %><br>
+	<b>Event Venue:</b> <%= r.event.venue.venue %>,<%= r.event.venue.country %>,<%= r.event.venue.state %>,<%= r.event.venue.city %>,<%= r.event.venue.locality %>,<%= r.event.venue.pincode %><br>
+	<b>Event Time: </b> <%= r.event.start_date.strftime('%d-%m-%Y %H:%M %p') %><br>
+	<b>Tickets:<%= Refinery::Events::Ticket.find(r.attendees.collect(&:ticket_id)).collect(&:ticket_name).join(',') %> | Total No of Tickets: <%= r.no_of_tickets %></b><br>
+	<b>Total:</b><%= r.total %><br>
+	<hr>
+<% end %>
+<b>Total Amount Paid:</b><%= @transaction.total %> INR <br>
+
+<p>Note: You can also find your booked tickets on Order History after logging into your account
+
+& all other T & C’s/Info as event page.</p>
+
+<p>If you have any questions, please click <a href="/faqs">here</a>. </p>
+
+<p>Go have a fabulous time at the event!</p>

@@ -1,5 +1,5 @@
 <section id="records">
-<%= form_for @workspace,:url=>'/refinery/admin/workspace',:method=>'post' do |f| -%>
+<%= form_for @workspace,:url=>"/refinery/admin/workspace/#{@workspace.id}",:method=>'put' do |f| -%>
 
 
   <div class='field'>

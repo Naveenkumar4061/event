@@ -1,0 +1,35 @@
+<div class="span12">
+  <span style="font-weight:bold;"><%= @workspace.title.capitalize %></span>
+</div>
+<% unless @workspace.banner_file_name.blank? %>
+  <div class="span12">
+    <div style="width:850px;border:1px solid;margin:5px 0px;">
+      <%= image_tag @workspace.banner.url(:original), :style=>'width:860px;height:300px;' %>
+    </div>
+  </div>
+<% end %>
+<div class="span12" style="margin-bottom:200px;">
+  <div id="tabs">
+    <ul>
+      <li><a href="#tabs-1">Workspace Info</a></li>
+    </ul>
+
+    <div id="tabs-1">
+      <div class="thumb_w" style="width:160px;height:210px;float:left;">
+        <%= image_tag @workspace.thumbnail.url(:original),:style=>'width:150px;height:200px;' %>
+      </div>
+      <div style="float:left;">
+        <p>
+        Description<br>
+        <%= @workspace.description %>
+        </p>
+        <div>
+          <%= link_to 'Will Attend', '#',:class=>'button_box' %>
+          <%= link_to 'Will Not Attend', '#',:class=>'button_box' %>
+          <%= link_to 'May Attend', '#',:class=>'button_box' %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

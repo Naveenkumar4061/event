@@ -33,14 +33,14 @@ class Devise::InvitationsController < DeviseController
         flash[:notice] = "User already registered"
       end
       self.resource = resource_class.new
-      respond_with_navigational(resource) { render :new }
+      respond_with_navigational(resource) { render :no_user, :layout => "static" }
     end
   end
 
   # GET /resource/invitation/accept?invitation_token=abcdef
   def edit
     resource.invitation_token = params[:invitation_token]
-    render :edit
+    render :layout => "static"
   end
 
   # PUT /resource/invitation
@@ -51,7 +51,8 @@ class Devise::InvitationsController < DeviseController
       flash_message = resource.active_for_authentication? ? :updated : :updated_not_active                                                                                        
       set_flash_message :notice, flash_message
       sign_in(resource_name, resource)
-      respond_with resource, :location => after_accept_path_for(resource)
+      render :confirmed, :layout => "static"
+      #respond_with resource, :location => after_accept_path_for(resource)
     else
       respond_with_navigational(resource){ render :edit }
     end

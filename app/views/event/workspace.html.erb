@@ -16,17 +16,17 @@
   <a href="/workspace" class="ifilterlink">Workspace</a>
 </div>
 
-<% @events.each_slice(5).each do |events| %>
+<% @workspaces.each_slice(5).each do |events| %>
   <% events.each do |event| %>
     <section>
       <div class="event_box">
-        <% unless event.photo.blank? %>
-          <%= image_tag event.photo.url %>
+        <% unless event.banner.blank? %>
+          <%= image_tag event.banner.url %>
         <% end %>
         <div class="event_name">
           <%= event.title %>
         </div>
-        <%= link_to 'View', "/event/#{event.url}", :class=>'myButton' %>
+        <%= link_to 'View', "/workspace/#{event.id}", :class=>'myButton' %>
       </div>
   <% end %>
 <% end %>

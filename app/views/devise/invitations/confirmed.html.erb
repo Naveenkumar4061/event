@@ -1,0 +1,33 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		setTimeout(function()
+        {
+          window.location.href = "/"
+        }, 3000);
+	});
+</script>
+<%if is_event_admin?%>
+	<p>Welcome to GoEvents, your endless search and futile attempts of reaching out the right target audience and selling tickets for your next event ends here.</p>
+
+	<p>Now get access to over a 100,000 plus working professionals in Bangalore, with a huge desire for entertainment and an equal spending spending power. </p>
+
+	<p>Create event & sell tickets
+	Just add your event details to open up registration and ticket sales in minutes.</p>
+
+	<p>Spread the word
+	Reach out with personalised emails, wall posters, digital posters, weekly newsletters and customised pre-event activities inside these offices.</p>
+
+	<p>Track attendance
+	See who’s coming to your event and view your sales, all in one place.</p>
+
+	<p>If you have any questions, please click here[link to faq’s page].</p>
+<% else %>
+	<p>Welcome to GoEvents, your journey towards endless entertainment starts here.</p>
+
+	<p>Now get latest updates on events In & outside your office, super exclusive deals & discounts and a detailed order history on your profile dashboard. You also get to buy and Gift-an-Order to friends & colleagues inside your office.</p>
+
+	<p>Stay in touch with the latest news on events in your city and site happenings with our weekly newsletter here. </p>
+
+	<p>If you have any questions, please click <a href="/faqs">here</a>.</p>
+
+<% end %>

@@ -41,7 +41,7 @@
         <td><%= w.start_date.strftime('%d/%m/%Y %H:%M %p') %></td>
         <td><%= w.end_date.strftime('%d/%m/%Y %H:%M %p') %></td>
         <td><%= w.published ? 'Publish' : 'Unpublish' %></td>
-        <td><%= link_to 'Edit','#' %></td>
+        <td><%= link_to 'Edit',"/refinery/admin/workspace/#{w.id}/edit" %></td>
       </tr>
     <% end %>
   </tbody>

@@ -12,9 +12,9 @@
   <div class="navbar navbar-fixed-top main-menu">
     <div class="navbar-inner">
       <div class="container">
-        <a class="brand" id="logo" href="/"><b>Goevents</b></a>
+        <a class="brand" id="logo" href="/"><img src="/assets/logo.png" width="220" height="100" style="height:100px;"></a>
 
-        <div class="login_status" style="float:right;margin-top:30px;">
+        <div class="login_status" style="float:right;margin-top:45px;">
           
           
           <% if is_admin? %>
@@ -50,7 +50,7 @@
     <div>
       <!--<div style="float:left;"><%= text_field 'search','field', :style=>'width:400px;' %><%= submit_tag 'Search'%></div>-->
       <div style="float:right;">
-        <%= link_to 'Booking History', '/event/booking_history' %> | 
+        <%= link_to 'Order History', '/event/booking_history' %> | 
         <%#= link_to 'Print Tickets', '#' %>
         <%= link_to 'Support', '/event/support' %>
       </div>

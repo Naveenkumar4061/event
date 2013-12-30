@@ -3,6 +3,7 @@ class Refinery::Events::Registration < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :event, :class_name => '::Refinery::Events::Event'
+  belongs_to :transaction, :class_name => 'Transaction'
   has_many :attendees, :class_name => '::Refinery::Events::Attendee'
 
   def update_tickets_sold
