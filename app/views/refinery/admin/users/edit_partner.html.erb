@@ -4,7 +4,7 @@
   <%= render '/refinery/admin/error_messages',
              :object => @partner,
              :include_object_name => true %>
-  <%= f.hidden_field :id %>
+  <%= f.hidden_field :id, :name=>'id' %>
   <div class='field'>
     <%= f.label "Partner Name" %>
     <%= f.text_field :company_name %>

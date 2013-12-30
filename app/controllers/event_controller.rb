@@ -19,12 +19,38 @@ class EventController < ApplicationController
   end
 
   def workspace
-    
     @workspaces = Workspace.where(:partner_id=>current_user.partner_id)
   end
 
   def workspace_show
     @workspace = Workspace.find(params[:id])
+  end
+
+  def workspace_response
+    @workspace = Workspace.find(params[:id])
+    @workspace_response = WorkspaceResponse.where( :workspace_id => params[:id], :user_id => current_user.id ).try(:first)
+      
+    if current_user && params[:r] == "will_attend"
+      if @workspace_response.blank?
+        WorkspaceResponse.create(:user_id => current_user.id, :response => "Will Attend", :workspace_id => params[:id])
+      else
+        @workspace_response.update_attributes(:response => "Will Attend")
+      end
+    elsif current_user && params[:r] == "willnot_attend"
+      if @workspace_response.blank?
+        WorkspaceResponse.create(:user_id => current_user.id, :response => "Will Not Attend", :workspace_id => params[:id])
+      else
+        @workspace_response.update_attributes(:response => "Will Not Attend")
+      end
+    elsif current_user && params[:r] == "may_attend"
+      if @workspace_response.blank?
+        WorkspaceResponse.create(:user_id => current_user.id, :response => "May Attend", :workspace_id => params[:id])
+      else
+        @workspace_response.update_attributes(:response => "May Attend")
+      end
+    else  
+    end
+    redirect_to "/workspace/#{@workspace.id}"
   end
 
   def show

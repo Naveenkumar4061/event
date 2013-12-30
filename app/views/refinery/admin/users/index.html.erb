@@ -1,36 +1,55 @@
+<script type="text/javascript" src="/assets/refinery/jquery.tokeninput.js"></script>
+<script type="text/javascript" src="/assets/refinery/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input.css" />
+<link rel="stylesheet" type="text/css" href="/assets/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input-facebook.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/jquery.dataTables.css">
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.tble').dataTable();
+  });
+</script>
 <div>
   <%= render 'top_sub_menu' %>
 </div>
 <br>
 <section id="records">
-<table border="1">
+<%= link_to 'Download', "/User_Details_#{current_user.id}.csv", :style=>'float:right;' %>
+
+<table border="1" class="tble" width="60%">
+    <thead>
 	<tr>
-		<td>#</td>
-    <th>FullName</th>
-		<td>Email</td>
-    <th>Mobile</th>
-		<td>Company</td>
-    <th>Status</th>
-    <th>Joined</th>
-		<td>Actions</td>		
+		<th>#</th>
+        <th>FullName</th>
+		<th>Email</th>
+        <th>Mobile</th>
+        <th>Company</th>
+		<th>Site</th>
+        <!--<th>Status</th>
+        <th>Joined</th>-->
+		<th>Actions</th>
 	</tr>
+    </thead>
 	<% count = 1 %>
-  <% @users.each do |user| %>
-    <% if user.roles.collect(&:title).include?("Superuser") || user.roles.collect(&:title).include?("Refinery") %>
-    <% else %>
-      <tr>
-        <td><%= count %></td>
-        <td><%= user.full_name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.mobile %></td>
-        <td><%= user.partner.try(:company_name) %></td>
-        <td><%= user.deleted_at.nil? ? 'Active' : 'Deactivated' %></td>
-        <td><%= 'Yes' %></td>
-        <td><%= link_to 'Edit', "/refinery/admin/users/#{user.id}/edit" %> | <%= link_to 'Deactivate', "/refinery/admin/users/#{user.id}/inactivate_user" %></td>
-        <% count = count + 1 %>
-      </tr>
-    <% end %>
+    <tbody>
+    <% @users.each do |user| %>
+        <% if user.roles.collect(&:title).include?("Superuser") || user.roles.collect(&:title).include?("Refinery") %>
+        <% else %>
+          <tr>
+            <td><%= count %></td>
+            <td><%= user.full_name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.mobile %></td>
+            <td><%= user.partner.try(:company_name) %></td>
+            <td><%= user.partner.try(:site) %></td>
+            <!--<td><%= user.deleted_at.nil? ? 'Active' : 'Deactivated' %></td>
+            <td><%= 'Yes' %></td>-->
+            <td><%= link_to 'Edit', "/refinery/admin/users/#{user.id}/edit" %> | <%= link_to 'Deactivate', "/refinery/admin/users/#{user.id}/inactivate_user" %></td>
+            <% count = count + 1 %>
+          </tr>
+        <% end %>
 	<% end %>
+    </tbody>
 </table>
 </section>
 <%= render 'actions' %>

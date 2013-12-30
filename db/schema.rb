@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131225201005) do
+ActiveRecord::Schema.define(:version => 20131230195124) do
 
   create_table "activities", :force => true do |t|
     t.integer  "event_id"
@@ -64,27 +64,31 @@ ActiveRecord::Schema.define(:version => 20131225201005) do
     t.text     "description"
     t.integer  "position"
     t.integer  "photo_id"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
     t.integer  "created_by"
     t.integer  "updated_by"
     t.text     "schedule"
     t.text     "terms_conditions"
-    t.boolean  "published",            :default => false
-    t.boolean  "pay_with_card",        :default => true
-    t.boolean  "pay_with_cash",        :default => true
-    t.boolean  "pay_with_check",       :default => true
+    t.boolean  "published",                :default => false
+    t.boolean  "pay_with_card",            :default => true
+    t.boolean  "pay_with_cash",            :default => true
+    t.boolean  "pay_with_check",           :default => true
     t.string   "banner_file_name"
     t.string   "banner_content_type"
     t.integer  "banner_file_size"
     t.datetime "banner_updated_at"
-    t.boolean  "only_master_attendee", :default => true
-    t.boolean  "publish_banner",       :default => false
-    t.boolean  "published_by_eo",      :default => false
+    t.boolean  "only_master_attendee",     :default => true
+    t.boolean  "publish_banner",           :default => false
+    t.boolean  "published_by_eo",          :default => false
     t.integer  "banner_position"
     t.text     "censor_warning"
     t.boolean  "print_tickets"
     t.text     "parking_info"
+    t.string   "venue_image_file_name"
+    t.string   "venue_image_content_type"
+    t.integer  "venue_image_file_size"
+    t.datetime "venue_image_updated_at"
   end
 
   create_table "refinery_events_artists", :force => true do |t|
@@ -188,6 +192,21 @@ ActiveRecord::Schema.define(:version => 20131225201005) do
     t.datetime "created_at",                                    :null => false
     t.datetime "updated_at",                                    :null => false
     t.integer  "transaction_id"
+  end
+
+  create_table "refinery_events_restaurants", :force => true do |t|
+    t.string   "name"
+    t.string   "restaurant_image_file_name"
+    t.string   "restaurant_image_content_type"
+    t.integer  "restaurant_image_file_size"
+    t.datetime "restaurant_image_updated_at"
+    t.string   "address_line1"
+    t.string   "address_line2"
+    t.string   "phone"
+    t.string   "distance"
+    t.integer  "event_id"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "refinery_events_tickets", :force => true do |t|
@@ -426,6 +445,14 @@ ActiveRecord::Schema.define(:version => 20131225201005) do
     t.boolean  "attending"
     t.boolean  "maybe"
     t.boolean  "wont_attend"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "workspace_responses", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "response"
+    t.integer  "workspace_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end

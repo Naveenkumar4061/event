@@ -11,4 +11,6 @@ class Workspace < ActiveRecord::Base
     :path => ":rails_root/public/system/:attachment/:id/:style/:filename",
     :url => "/system/:attachment/:id/:style/:filename"
 
+  has_many :workspace_responses, :class_name => "WorkspaceResponse"
+  belongs_to :partner, :class_name => "Refinery::Partner"
 end

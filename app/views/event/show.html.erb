@@ -64,14 +64,23 @@
         <li><a href="#tabs-9">Parking Info</a></li>
       <% end %>
 
+      <% unless @event.censor_warning.blank? %>
+        <li><a href="#tabs-10">Censor Warning</a></li>
+      <% end %>
+
+      <% unless @event.restaurants.blank? %>
+        <li><a href="#tabs-11">Restaurants</a></li>    
+      <% end %>
+
+      <% unless @event.venue_image == "/venue_images/original/missing.png" %>
+        <li><a href="#tabs-12">Venue Layout</a></li>
+      <% end %>
+
     </ul>
     <div id="tabs-1">
       <h2>Buy Tickets</h2>
-      <p><%= form_for @event,:url => "/event/#{@event.id}/registration_step1", :method=>"post" do %>
-          <% if @event.censor_warning.blank? %>
-          <% else %>
-            <%= "=> " + @event.censor_warning %><br>
-          <% end %>
+      <p><%= form_for @event,:url => "/event/#{@event.id}/registration_step1", :method=>"post" do %>          
+          
           <%= @event.print_tickets ? "=> Please carry a printed ticket" : "=> Email confirmation is sufficient, Kindly avoid printing" %>            
           <table width="100%">
             <tr>
@@ -221,7 +230,7 @@
       <div id="tabs-8">
         <h3>Terms & Conditions</h3>
         <div >
-          <p><%= @event.terms_conditions %></p>
+          <p><%= @event.terms_conditions.html_safe %></p>
         </div>
       </div>
     <% end %>
@@ -235,6 +244,41 @@
       </div>
     <% end %>
 
+    <% unless @event.censor_warning.blank? %>
+      <div id="tabs-10">
+        <h3>Censor Warning</h3>
+        <div >
+          <p><%= @event.censor_warning %></p>
+        </div>
+      </div>
+    <% end %>
+
+
+    <% unless @event.restaurants.blank? %>
+      <div id="tabs-11">
+        <h3>Restaurants</h3>
+        <div >
+          <p>
+            <% @event.restaurants.each do |a| %>
+              <div class="artist row" style="height:120px;">
+                <div class="aimage" style="float:left;width=150px;"><%= image_tag a.restaurant_image.url(:thumb) %></div>
+                <div class="adescription" style="float:left;padding-left:5px;"><b><%= a.name %></b><br><%= a.address_line1 %><br><%= a.address_line2 %><br><%= a.phone %><br><%= a.distance %></div>
+              </div>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @event.venue_image == "/venue_images/original/missing.png" %>
+      <div id="tabs-12">
+        <h3>Venue Layout</h3>
+        <div>
+          <%= image_tag @event.venue_image.url(:original) %>
+        </div>
+      </div>
+    <% end %>
+    
   </div>
 </div>
 

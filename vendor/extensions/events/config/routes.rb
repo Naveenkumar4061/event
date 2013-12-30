@@ -18,6 +18,8 @@ Refinery::Core::Engine.routes.draw do
           put 'update_banner_position'
           get 'venue'
           post 'venue_info'
+          get 'venue_image'
+          put 'venue_image_info'
           get 'contact'
           post 'contact_info'
           get 'publish'
@@ -37,6 +39,7 @@ Refinery::Core::Engine.routes.draw do
         resources :artists
         resources :galleries
         resources :registration
+        resources :restaurants
         collection do
           post :update_positions
         end

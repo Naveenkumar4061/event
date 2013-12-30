@@ -1,0 +1,25 @@
+<section id="records">
+<%= form_for [refinery, :events_admin, @event],:url=>'venue_image_info' do |f| -%>
+  <%= render '/refinery/admin/error_messages',
+              :object => @event,
+              :include_object_name => true %>
+
+
+  <div class='field'>
+    <label>Venue Layout</label>
+    
+    <% if @event.venue_image.url == "/banners/original/missing.png" %>
+      <%= f.file_field :venue_image %>
+    <% else %>      
+      <%= image_tag @event.venue_image.url(:medium) %>
+      <%= f.file_field :venue_image %>
+    <% end %>
+  </div>
+
+
+  <%= submit_tag 'Save' %>
+  <%= link_to 'Cancel',"/refinery/events/#{@event.id}/edit", :class=>'button' %>
+
+<% end -%>
+</section>
+<%= render 'sidebar' %>

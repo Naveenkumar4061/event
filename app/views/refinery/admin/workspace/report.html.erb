@@ -1,0 +1,31 @@
+<script type="text/javascript" src="/assets/refinery/jquery.tokeninput.js"></script>
+<script type="text/javascript" src="/assets/refinery/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input.css" />
+<link rel="stylesheet" type="text/css" href="/assets/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input-facebook.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/jquery.dataTables.css">
+<script type="text/javascript">
+  jQuery(document).ready(function(){
+    $('#dtbles').dataTable();
+  });
+</script>
+<%= link_to 'Back', '/refinery/admin/workspace', :class => "button_box" %>
+<%= link_to 'Download',"/Workspace_Report_#{current_user.id}.csv", :style => "float:right;" %>
+<table id="dtbles">
+  <thead>
+    <tr>
+      <th>Attendee Name</td>
+      <th>Email</th>
+      <th>Response</th>      
+    </tr>
+  </thead>
+  <tbody>
+    <% @workspace.workspace_responses.each do |w| %>
+      <tr>
+        <td><%= w.user.full_name %></td>
+        <td><%= w.user.email %></td>
+        <td><%= w.response %></td>        
+      </tr>
+    <% end %>
+  </tbody>
+</table>

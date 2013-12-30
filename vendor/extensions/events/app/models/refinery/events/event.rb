@@ -5,11 +5,16 @@ module Refinery
       
       after_create :create_default_registration_from
 
-      attr_accessible :title, :start_date, :end_date, :category, :sub_category, :url, :description, :position, :photo_id, :position, :created_by, :updated_by, :schedule, :terms_conditions, :published, :banner, :banner_file_name , :master_details_only, :only_master_attendee, :publish_banner, :published_by_eo, :banner_position, :end_time, :start_time, :censor_warning, :print_tickets, :parking_info
+      attr_accessible :title, :start_date, :end_date, :category, :sub_category, :url, :description, :position, :photo_id, :position, :created_by, :updated_by, :schedule, :terms_conditions, :published, :banner, :banner_file_name , :master_details_only, :only_master_attendee, :publish_banner, :published_by_eo, :banner_position, :end_time, :start_time, :censor_warning, :print_tickets, :parking_info, :venue_image
 
       attr_accessor :start_time, :end_time
 
       has_attached_file :banner,
+      :styles => { :medium => "300x300>", :thumb => "100x100>" },
+      :path => ":rails_root/public/system/:attachment/:id/:style/:filename",
+      :url => "/system/:attachment/:id/:style/:filename"
+
+      has_attached_file :venue_image,
       :styles => { :medium => "300x300>", :thumb => "100x100>" },
       :path => ":rails_root/public/system/:attachment/:id/:style/:filename",
       :url => "/system/:attachment/:id/:style/:filename"
@@ -25,6 +30,7 @@ module Refinery
       has_many :tickets, :class_name => '::Refinery::Events::Ticket'
       has_many :outlets, :class_name => '::Refinery::Events::Outlet'
       has_many :artists, :class_name => '::Refinery::Events::Artist'
+      has_many :restaurants, :class_name => '::Refinery::Events::Restaurant'
       has_many :galleries, :class_name => '::Refinery::Events::Gallery'
       has_many :faqs, :class_name => '::Refinery::Events::Faq'
       has_one :form, :class_name => '::Refinery::Events::Form'

@@ -29,17 +29,23 @@
       <th>Partner Name</th>
       <th>Starts At</th>
       <th>Ends At</th>
+      <th>Attending</th>
+      <th>Not Attending</th>
+      <th>May Attend</th>
       <th>Status</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
     <% @workspace.each do |w| %>
-      <tr>
-        <td><%= link_to w.title, '#' %></td>
-        <td><%= w.partner_id %></td>
+      <tr>        
+        <td><%= link_to w.title, "/refinery/admin/workspace/#{w.id}/report" %></td>        
+        <td><%= w.partner.try(:company_name) %></td>
         <td><%= w.start_date.strftime('%d/%m/%Y %H:%M %p') %></td>
         <td><%= w.end_date.strftime('%d/%m/%Y %H:%M %p') %></td>
+        <td><%= w.workspace_responses.where(:response => "Will Attend").count %></td>
+        <td><%= w.workspace_responses.where(:response => "Will Not Attend").count %></td>
+        <td><%= w.workspace_responses.where(:response => "May Attend").count %></td>
         <td><%= w.published ? 'Publish' : 'Unpublish' %></td>
         <td><%= link_to 'Edit',"/refinery/admin/workspace/#{w.id}/edit" %></td>
       </tr>

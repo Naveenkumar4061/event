@@ -22,9 +22,10 @@ Goevent::Application.routes.draw do
   post '/contactus', :to => 'static#contactus'
   #get '/users/profile', :to => 'devise/passwords#profile'
   get '/refinery', :to => 'refinery/events/admin/events#index'
-  get 'event', :to=>'event#index'
+  get 'event', :to => 'event#index'
   get '/workspace', :to => 'event#workspace'
   get '/workspace/:id', :to => 'event#workspace_show'
+  get '/workspace/:id/response', :to => 'event#workspace_response'
   #get 'event/:id/show', :to => 'event#show'
   get '/refinery/events/transaction_history', :to => 'refinery/events/admin/events#transaction_history'
   get '/refinery/events/users_report', :to => 'refinery/events/admin/events#users_report'
@@ -51,7 +52,11 @@ Goevent::Application.routes.draw do
   root :to => 'static#home'
   namespace :refinery do
     namespace :admin do
-      resources :workspace
+      resources :workspace do
+        member do
+          get 'report'
+        end
+      end
       resources :bank_details do
         collection do 
           get 'add_client'

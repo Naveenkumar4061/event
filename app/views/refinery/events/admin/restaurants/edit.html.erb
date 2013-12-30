@@ -1,0 +1,39 @@
+<%= render 'topbar' %>
+<section id="records">
+<%= form_for @restaurant, :url => "/refinery/events/#{params[:event_id]}/restaurants/#{params[:id]}", :method => :put do |f| -%>
+
+    <div class="field">
+      <label for="artist_question">Artist</label>
+      <%= image_tag @restaurant.restaurant_image.url(:thumb) %>
+      <%= f.file_field :restaurant_image %>
+    </div>
+    <div class="field">
+      <label for="faq_description">Name</label>
+      <%= text_field 'restaurant', 'name', :value => @restaurant.name %>
+    </div>
+    <div class="field">
+      <label for="faq_description">Address Line 1</label>
+      <%= text_field 'restaurant', 'address_line1', :value => @restaurant.address_line1 %>
+    </div>
+    <div class="field">
+      <label for="faq_description">Address Line 2</label>
+      <%= text_field 'restaurant', 'address_line2', :value => @restaurant.address_line2 %>
+    </div>
+    <div class="field">
+      <label for="faq_description">Phone</label>
+      <%= text_field 'restaurant', 'phone', :value => @restaurant.phone %>
+    </div>
+    <div class="field">
+      <label for="faq_description">Distance</label>
+      <%= text_field 'restaurant', 'distance', :value => @restaurant.distance %>
+    </div>
+
+    <div class="form-actions" style="border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+      <div class="form-actions-left">
+        <input class="wymupdate button" id="submit_button" type="submit" value="Save" style="border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px;">
+      </div>
+    </div>
+
+<% end -%>
+</section>
+<%= render '/refinery/events/admin/events/sidebar' %>

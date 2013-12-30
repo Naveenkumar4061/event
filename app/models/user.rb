@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :plugins, :class_name => "UserPlugin", :order => "position ASC", :dependent => :destroy
   has_many :registrations, :class_name => "Refinery::Events::Registration"
   has_many :transactions, :class_name => "Transaction"
+  has_many :workspace_responses, :class_name => "WorkspaceResponse"
   has_one :bank_detail, :class_name => "Refinery::BankDetail"
   belongs_to :partner, :class_name => "Refinery::Partner"
   

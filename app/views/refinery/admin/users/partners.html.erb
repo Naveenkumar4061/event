@@ -1,27 +1,43 @@
+<script type="text/javascript" src="/assets/refinery/jquery.tokeninput.js"></script>
+<script type="text/javascript" src="/assets/refinery/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input.css" />
+<link rel="stylesheet" type="text/css" href="/assets/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input-facebook.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/jquery.dataTables.css">
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.tble').dataTable();
+	});
+</script>
 <div>
   <%= link_to 'New Partner' , "/refinery/admin/users/new_partner", :class => 'button_box' %>
   <%#= link_to 'Deactive Partners' , "/refinery/admin/users/deactive_partners", :class => "button_box" %>
 </div>
+
 <br>
+
 <section id="records">
-<table border="1">
+<table border="1" class="tble">
+	<thead>
 	<tr>
 		<th>#</th>
 		<th>Company</th>
 		<th>Address</th>
-		<th>Area</th>
+		<th>Site</th>
 		<th>City</th>
 		<th>State</th>
 		<th>Employee Strength</th>
 		<th>Actions</th>
 	</tr>
+	</thead>
+	<tbody>
 	<% count = 1 %>
 	<% @partners.each do |p| %>
 		<tr>
 			<td><%= count %></td>
-      <td><%= link_to p.company_name, "/refinery/admin/#{p.id}/partner/users" %></td>
+      		<td><%= link_to p.company_name, "/refinery/admin/#{p.id}/partner/users" %></td>
 			<td><%= p.address %></td>
-			<td><%= p.area %></td>
+			<td><%= p.site %></td>
 			<td><%= p.city %></td>
 			<td><%= p.state %></td>
 			<td><%= p.employee_strength %></td>
@@ -30,6 +46,7 @@
 			<% count = count + 1 %>			
 		</tr>
 	<% end %>
+	</tbody>
 </table>
 </section>
 <%= render 'actions' %>

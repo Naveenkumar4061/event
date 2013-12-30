@@ -24,9 +24,30 @@
         <%= @workspace.description %>
         </p>
         <div>
-          <%= link_to 'Will Attend', "/workspace/#{@workspace.id}/response?r=will_attend",:class=>'button_box' %>
-          <%= link_to 'Will Not Attend', "/workspace/#{@workspace.id}/response?r=willnot_attend",:class=>'button_box' %>
-          <%= link_to 'May Attend', "/workspace/#{@workspace.id}/response?r=may_attend",:class=>'button_box' %>
+        <% wr = current_user.workspace_responses.where(:workspace_id=>params[:id]).try(:first)%>
+          <% unless wr.blank? %>
+            <% if wr.response == "Will Attend" %>
+              <span>You are attending</span>
+              <%#= link_to 'Will Attend', "/workspace/#{@workspace.id}/response?r=will_attend",:class=>'button_box' %>
+              <%= link_to 'Will Not Attend', "/workspace/#{@workspace.id}/response?r=willnot_attend",:class=>'button_box' %>
+              <%= link_to 'May Attend', "/workspace/#{@workspace.id}/response?r=may_attend",:class=>'button_box' %>
+            <% elsif wr.response == "Will Not Attend" %>
+              <span>You are Not Attending</span>
+              <%= link_to 'Will Attend', "/workspace/#{@workspace.id}/response?r=will_attend",:class=>'button_box' %>
+              <%#= link_to 'Will Not Attend', "/workspace/#{@workspace.id}/response?r=willnot_attend",:class=>'button_box' %>
+              <%= link_to 'May Attend', "/workspace/#{@workspace.id}/response?r=may_attend",:class=>'button_box' %>
+            <% elsif wr.response == "May Attend" %>
+              <span>You May be Attending</span>
+              <%= link_to 'Will Attend', "/workspace/#{@workspace.id}/response?r=will_attend",:class=>'button_box' %>
+              <%= link_to 'Will Not Attend', "/workspace/#{@workspace.id}/response?r=willnot_attend",:class=>'button_box' %>
+              <%#= link_to 'May Attend', "/workspace/#{@workspace.id}/response?r=may_attend",:class=>'button_box' %>
+            <% else %>
+            <% end %>
+          <% else %>
+            <%= link_to 'Will Attend', "/workspace/#{@workspace.id}/response?r=will_attend",:class=>'button_box' %>
+            <%= link_to 'Will Not Attend', "/workspace/#{@workspace.id}/response?r=willnot_attend",:class=>'button_box' %>
+            <%= link_to 'May Attend', "/workspace/#{@workspace.id}/response?r=may_attend",:class=>'button_box' %>
+          <% end %>
         </div>
       </div>
     </div>

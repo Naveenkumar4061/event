@@ -1,22 +1,37 @@
+<script type="text/javascript" src="/assets/refinery/jquery.tokeninput.js"></script>
+<script type="text/javascript" src="/assets/refinery/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input.css" />
+<link rel="stylesheet" type="text/css" href="/assets/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input-facebook.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/jquery.dataTables.css">
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.tble').dataTable();
+	});
+</script>
 <%= render :partial => 'nav' %>
 <section id="records">
 	<h3>Promoters</h3>
-	<table border="1" cellpadding="5">
+	<table border="1" cellpadding="5" class="tble">
+		<thead>
 		<tr>
 			<th>Emailid</th>
 			<th>Company</th>
 			<th>Mobile</th>
 			<th>Actions</th>
 		</tr>
-		<% @event_organizers.each do |e| %>
-			<tr>
-				<td><%= e.email %></td>
-				<td><%= e.partner.try(:company_name) %></td>
-				<td><%= e.mobile %></td>
-				<td>
-	        <%= link_to 'Bank Details', "/refinery/admin/bank_details/#{e.id}/details" %> | <%= link_to 'Edit', "/refinery/admin/bank_details/#{e.id}/edit_client" %> | <%= link_to 'Deactivate', "/refinery/admin/bank_details/#{e.id}/deactivate_client" %>
-				</td>
-			</tr>
-		<% end %>
+		</thead>
+		<tbody>
+			<% @event_organizers.each do |e| %>
+				<tr>
+					<td><%= e.email %></td>
+					<td><%= e.partner.try(:company_name) %></td>
+					<td><%= e.mobile %></td>
+					<td>
+		        <%= link_to 'Bank Details', "/refinery/admin/bank_details/#{e.id}/details" %> | <%= link_to 'Edit', "/refinery/admin/bank_details/#{e.id}/edit_client" %> | <%= link_to 'Deactivate', "/refinery/admin/bank_details/#{e.id}/deactivate_client" %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
 	</table>
 </section>

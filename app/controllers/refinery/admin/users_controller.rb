@@ -11,6 +11,16 @@ module Refinery
 
       def index
         @users = User.order('created_at ASC').all
+
+        save_path = Rails.root.join('public',"User_Details_#{current_user.id}.csv")
+        CSV.open(save_path,"wb") do |csv|
+          csv << ["S.No", "Full Name", "Email", "Mobile","Status","Joined","Company Name", "Site"]
+          count=1
+          @users.each do |user|              
+            csv << [count, user.full_name, user.email, user.mobile , Invite.where(:email=>user.email).blank? ? "Not Invited" : "Invited", "Yes", user.partner.try(:company_name), user.partner.try(:site) ]
+            count = count + 1
+          end
+        end
       end
 
       def new
@@ -153,7 +163,7 @@ module Refinery
       end
 
       def update_partner
-        @partner = Refinery::Partner.find(params[:partner][:id])
+        @partner = Refinery::Partner.find(params[:id])
 
         if @partner && @partner.update_attributes(params[:partner])#@partner.update_attributes(:company_name=>params[:partner][:company_name],:address=>params[:partner][:address],:employee_strength=>params[:partner][:employee_strength])
           redirect_to '/refinery/admin/users/partners'
@@ -213,6 +223,16 @@ module Refinery
       def partner_users
         @partner = Refinery::Partner.find(params[:id])
         @users = User.unscoped.where(:partner_id=>params[:id])
+
+        save_path = Rails.root.join('public',"Partner_Report_#{current_user.id}.csv")
+        CSV.open(save_path,"wb") do |csv|
+          csv << ["S.No", "Full Name", "Email", "Mobile","Status","Joined"]
+          count=1
+          @users.each do |user|              
+            csv << [count, user.full_name, user.email, user.mobile , Invite.where(:email=>user.email).blank? ? "Not Invited" : "Invited", "Yes" ]
+            count = count + 1
+          end
+        end
       end
 
       protected

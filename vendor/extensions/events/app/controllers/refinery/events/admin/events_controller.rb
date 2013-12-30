@@ -97,6 +97,16 @@ module Refinery
           redirect_to (:back)
         end
 
+        def venue_image
+          @event = Refinery::Events::Event.find(params[:id])          
+        end
+
+        def venue_image_info          
+          @event = Refinery::Events::Event.find(params[:id])          
+          @event.update_attributes(params[:event])
+          redirect_to "/refinery/events/#{@event.id}/venue_image"
+        end
+
         def contact
           @event = Refinery::Events::Event.find(params[:id])
           @contact = @event.contact.blank? ? Refinery::Events::Contact.new : @event.contact

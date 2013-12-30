@@ -1,6 +1,19 @@
+<script type="text/javascript" src="/assets/refinery/jquery.tokeninput.js"></script>
+<script type="text/javascript" src="/assets/refinery/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input.css" />
+<link rel="stylesheet" type="text/css" href="/assets/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/token-input-facebook.css" />
+<link rel="stylesheet" type="text/css" href="/assets/refinery/jquery.dataTables.css">
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.tble').dataTable();
+  });
+</script>
 <section id="records">
 <h3><%= @partner.company_name %></h3>
-<table border="1">
+<%= link_to 'Download', "/Partner_Report_#{current_user.id}.csv", :style=>'float:right;' %>
+<table border="1" class="tble">
+  <thead>
   <tr>
     <th>#</th>
     <th>FullName</th>
@@ -9,7 +22,9 @@
     <th>Status</th>
     <th>Joined</th>
   </tr>
+  </thead>
   <% count = 0 %>
+  <tbody>
   <%@users.each do |user|%>
     <% count = count + 1 %>
     <tr>
@@ -21,6 +36,7 @@
       <td><%= 'Yes' %></td>
     </tr>
   <% end %>
+  </tbody>
 </table>
 </section>
 <%= render 'actions' %>
