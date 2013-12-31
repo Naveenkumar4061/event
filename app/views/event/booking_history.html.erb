@@ -4,6 +4,7 @@
 		<td>Event Title</td>
 		<td>No of Tickets</td>
 		<td>Purchase Total</td>
+		<td></td>
 	</tr>
 <% @registrations.each do |registration| %>
 	<tr>
@@ -11,6 +12,7 @@
 		<td><%= link_to registration.event.title, "/event/#{registration.id}/view_registration" %></td>
 		<td><%= registration.no_of_tickets %></td>
 		<td><%= registration.total %></td>
+		<td><%= link_to 'Gift the Order', '#', :class=>"button_box" %></td>
 	</tr>
 <% end %>
 </table>
