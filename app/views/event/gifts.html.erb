@@ -1,0 +1,17 @@
+<b>Gifts</b>
+<table>
+  <thead>
+    <th>Registration Id</th>
+    <th>Event Id</th>
+    <th>Event Date</th>
+    <th>Ticket</th>
+  </thead>
+  <% @gifts.each do |gift| %>
+  <tr>
+    <td><%= gift.registration_id %></td>
+    <td><%= gift.event_id %></td>
+    <td><%= gift.event.start_date %></td>
+    <td><%= Refinery::Events::Attendee.find(gift.attendee_id).ticket.ticket_name %></td>
+  </tr>
+  <% end %>
+</table>

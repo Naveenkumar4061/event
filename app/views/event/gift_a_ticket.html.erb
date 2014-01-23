@@ -9,17 +9,22 @@
   }
 </style>
 <div>
-	<h3>Registration Details</h3>
+	<h3>Gifting Order</h3>
   <div style="float:right;margin-top:70px;">
-    <%= link_to 'Print','#',:onclick=>'email();' %> <br>
-    <%= link_to 'Resend-Email','#',:onclick=>'window.print();' %>
+    <%#= link_to 'Print','#',:onclick=>'email();' %> <br>
+    <%#= link_to 'Resend-Email','#',:onclick=>'window.print();' %>
   </div>
 </div>
+<%= form_tag("/event/#{@registration.event.id}/send_as_gift") do -%>
+<b>Gift To Email:</b> <%= email_field_tag 'to_email' %><br>
 <% if @registration.event.master_details_only %>
+	<%= hidden_field_tag 'registrationid',@registration.id %>
+	<%= hidden_field_tag 'eventid',@registration.event.id %>
 	<div style="float:left;">
-		<%= image_tag @registration.event.photo.try(:url) %>
+		<%#= image_tag @registration.event.photo.try(:url) %>
 	</div>
-	<div style="margin-left:200px;">
+	<!--<div style="margin-left:200px;">-->
+	<div style="float:left;">
 		<table>		
 			<tr>
 				<td><b>Event : </b><%= @registration.event.title %></td>
@@ -29,9 +34,6 @@
 		    </tr>
 		    <tr>
 		      	<td><b>Venue : </b><%= (@registration.event.venue.venue rescue "")  +  ",Bangalore,Karnataka." %>
-			</tr>
-			<tr>
-			    <td><b>Ticket : </b><%= Refinery::Events::Ticket.find(@registration.attendees.collect(&:ticket_id)).collect(&:ticket_name).join(',') %> | Total No of Tickets: <%= @registration.no_of_tickets %></td>
 			</tr>
 			<tr>
 				<td><b>Name: </b><%= @registration.attendees.first.attendee_details.where(:field_id=>@registration.event.form.form_fields.where(:field_name=>'Full Name').first.id).first.value %>
@@ -46,6 +48,17 @@
 			<tr>
 				<td>Address: <%= @registration.attendees.first.attendee_details.where(:field_id=>@registration.event.form.form_fields.where(:field_name=>'Address').first.try(:id)).first.try(:value) %>
 				</td>
+			</tr>
+			<tr>
+			    <td><b>Tickets:</b> <br/>
+				    <%@registration.attendees.each do |attendee|%>
+					<%= check_box_tag 'attendee[]',attendee.id  %><%= attendee.ticket.ticket_name %><br>
+				    <%end%>
+			    </td>
+			</tr>
+			<tr>
+  			   <td></td>
+       			   <td><%=submit_tag 'Send'%></td>
 			</tr>
 		</table>
 	</div>
@@ -62,4 +75,5 @@
 			</tr>
 		<% end %>
 	</table>
+<% end %>
 <% end %>

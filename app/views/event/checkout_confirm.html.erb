@@ -6,7 +6,7 @@
 
 <% @transaction.registrations.each do |r| %>
 	<b>Event Title:</b>	<%= r.event.title %><br>
-	<b>Event Venue:</b> <%= r.event.venue.venue %>,<%= r.event.venue.country %>,<%= r.event.venue.state %>,<%= r.event.venue.city %>,<%= r.event.venue.locality %>,<%= r.event.venue.pincode %><br>
+	<b>Event Venue:</b> <%= r.event.try(:venue).try(:venue) %>,<%= r.event.try(:venue).try(:country) %>,<%= r.event.try(:venue).try(:state) %>,<%= r.event.try(:venue).try(:city) %>,<%= r.event.try(:venue).try(:locality) %>,<%= r.event.try(:venue).try(:pincode) %><br>
 	<b>Event Time: </b> <%= r.event.start_date.strftime('%d-%m-%Y %H:%M %p') %><br>
 	<b>Tickets:<%= Refinery::Events::Ticket.find(r.attendees.collect(&:ticket_id)).collect(&:ticket_name).join(',') %> | Total No of Tickets: <%= r.no_of_tickets %></b><br>
 	<b>Total:</b><%= r.total %><br>

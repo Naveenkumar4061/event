@@ -170,6 +170,36 @@ class EventController < ApplicationController
     @registration = Refinery::Events::Registration.find(params[:id])
   end
 
+  def gift_a_ticket
+    @registration = Refinery::Events::Registration.find(params[:id])
+  end
+
+  def send_as_gift
+    @invite = Invite.where(:email=>params[:to_email]).first
+    if(!Invite.where('email=?',params[:to_email]).blank? && User.where('email=?',params[:to_email]).blank?)
+      #send mail to user
+      @registration = Refinery::Events::Registration.find(params[:registrationid].to_i)
+      params[:attendee].each do |attendee_id|
+        Gift.create(:invite_id=>@invite.id,:registration_id=>params[:registrationid].to_i,:event_id=>params[:eventid].to_i,:attendee_id=>attendee_id.to_i,:ticket_id=>@registration.attendees.where(:id=>attendee_id).first.ticket_id,:gifted_by=>current_user.id)
+      end
+      #create and assign gift to the invite
+    elsif (!Invite.where('email=?',params[:to_email]).blank? && !User.where('email=?',params[:to_email]).blank?)
+      #send mail to user
+      @registration = Refinery::Events::Registration.find(params[:registrationid].to_i)
+      params[:attendee].each do |attendee_id|
+        Gift.create(:invite_id=>@invite.id,:registration_id=>params[:registrationid].to_i,:event_id=>params[:eventid].to_i,:attendee_id=>attendee_id.to_i,:ticket_id=>@registration.attendees.where(:id=>attendee_id).first.ticket_id,:gifted_by=>current_user.id,:user_id=>current_user.id)
+      end
+
+      #create and assign gift to the invite and the user
+    else
+    end
+    redirect_to '/event/booking_history'
+  end
+
+  def gifts
+    @gifts = Invite.where(:email=>current_user.email).first.gifts
+  end
+
   def support_feedback
     #send mail to admin
     UserEnquirey.create(:email=>params[:from_email],:subject=>params[:subject],:category=>params[:category][:name],:subcategory=>params[:subcategory][:name],:description=>params[:message],:user_id=>current_user.id)

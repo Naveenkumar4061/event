@@ -18,6 +18,11 @@
     <%= f.date_select :end_date -%>
     Time:<%= f.time_select :end_date, :ignore_date=>true %>
   </div>
+  
+ <div class='field'>
+    <%= f.label "Partner" -%>
+    <%= f.select :partner_id, Refinery::Partner.all.collect { |t| [t.company_name,t.id] }, :include_blank => true  %>
+  </div>
 
   <div class='field'>
     <%= f.label :category -%>

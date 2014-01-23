@@ -5,4 +5,5 @@ class Invite < ActiveRecord::Base
   validate :email, uniqueness: true
   validate :partner_id, presence: true
   belongs_to :partner, :class_name => 'Refinery::Partner'
+  has_many :gifts
 end

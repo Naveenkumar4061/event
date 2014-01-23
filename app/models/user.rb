@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   has_many :workspace_responses, :class_name => "WorkspaceResponse"
   has_one :bank_detail, :class_name => "Refinery::BankDetail"
   belongs_to :partner, :class_name => "Refinery::Partner"
+  has_many :gifts
+  belongs_to :invite
   
   def username
     self.email

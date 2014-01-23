@@ -20,6 +20,12 @@ class Devise::InvitationsController < DeviseController
     if !Invite.where(:email=>params[:user][:email]).blank? && User.where(:email=>params[:user][:email]).blank?
       self.resource = invite_resource
 
+      @invite = Invite.where(:email=>params[:user][:email]).first
+      if @invite
+      	@invite.gifts.each do |gift|
+	  gift.update_attributes(:user_id=>User.where(:email=>params[:user][:email]).first.id)
+	end
+      end
       if resource.errors.empty?
         set_flash_message :notice, :send_instructions, :email => self.resource.email if self.resource.invitation_sent_at
         respond_with resource, :location => after_invite_path_for(resource)

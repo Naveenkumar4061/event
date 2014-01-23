@@ -36,10 +36,13 @@ Goevent::Application.routes.draw do
   get '/refinery/admin/:id/partner/users', :to => 'refinery/admin/users#partner_users'
   
   get '/event/cart', :to => 'event#cart'
+  get '/event/gifts', :to => 'event#gifts'
   post '/event/checkout', :to => 'event#checkout'
   get '/event/checkout_confirm', :to => 'event#checkout_confirm'
   get 'event/booking_history', :to => 'event#booking_history'
   get 'event/:id/view_registration', :to => 'event#view_registration'
+  get 'event/:id/gift_a_ticket', :to => 'event#gift_a_ticket'
+  post 'event/:id/send_as_gift', :to => 'event#send_as_gift'
   get 'event/support', :to => 'event#support'
   post 'event/support_feedback', :to => 'event#support_feedback'
   
